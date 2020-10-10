@@ -35,7 +35,7 @@ const CardWidgetProperties = (props) => {
     console.log('useEffect')
 
     axios
-    .get('http://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=395', {
+    .get('https://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=395', {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
@@ -53,7 +53,7 @@ const CardWidgetProperties = (props) => {
     })
 
     axios
-    .get('http://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
+    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
