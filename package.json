@@ -3,18 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react-select": "~3.1.0",
     "@material-ui/core": " ~4.11.0",
     "@material-ui/icons": "~4.9.1",
     "@material-ui/lab": "latest",
-    "axios": "~0.19.2",
-    "flex-splitter-directive": "~0.1.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "~0.19.2",
+    "flex-splitter-directive": "~0.1.2",
+    "json-query": "^2.2.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-select": "~3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

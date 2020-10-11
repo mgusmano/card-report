@@ -7,11 +7,14 @@ import CardWidget from './widgets/skillnet/CardWidget'
 
 const CardReport = () => {
   return (
-<div style={{flex:'auto', display:'flex', flexDirection:'row'}}>
-      <CardWidget/>
-</div>
-
+    <CardWidget/>
   )
+
 }
 
 export default CardReport
+
+// {/* <div style={{flex:'auto', display:'flex', flexDirection:'row'}}>
+//       <CardWidget/>
+// </div> */}
+

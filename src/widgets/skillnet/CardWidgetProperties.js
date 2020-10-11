@@ -21,9 +21,9 @@ const CardWidgetProperties = (props) => {
   //height:700//height:
 
   const [positions, setPositions] = useState(null)
-  const [filteredpositions, setFilteredPositions] = useState(null)
+  const [filteredpositions, setFilteredPositions] = useState([])
   const [locations, setLocations] = useState(null)
-  const [filteredlocations, setFilteredLocations] = useState(null)
+  const [filteredlocations, setFilteredLocations] = useState([])
   const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
 
   const {propertywidth, onChange} = props
@@ -82,26 +82,45 @@ const CardWidgetProperties = (props) => {
   };
 
   const positionsChanged = (event, value, reason) => {
-    console.log(event)
-    console.log(value)
-    setFilteredPositions(value)
-    console.log(reason)
+    //console.log(event)
+    console.log('positionsChanged',value)
+
+    var filtersJobs = value.map(position => {
+      return position.JobName
+    })
+    console.log(filtersJobs)
+
+    setFilteredPositions(filtersJobs)
+    //console.log(reason)
     setButtonLabel('Apply All Filters')
   };
 
   const locationsChanged = (event, value, reason) => {
-    console.log(event)
-    console.log(value)
-    setFilteredLocations(value)
-    console.log(reason)
+
+    console.log('locationsChanged',value)
+
+    var filtersLocation = value.map(location => {
+      return location.LocationName
+    })
+    console.log(filtersLocation)
+
+    setFilteredLocations(filtersLocation)
+    //console.log(reason)
     setButtonLabel('Apply All Filters')
+
+
+    // console.log(event)
+    // console.log(value)
+    // setFilteredLocations(value)
+    // console.log(reason)
+    // setButtonLabel('Apply All Filters')
   };
 
   return (
-    <>
+    <div style={{width:propertywidth,padding:'10px'}}>
       <Button
         ref={refApplyButton}
-        style={{width:propertywidth}}
+        style={{width:'100%'}}
         variant="contained"
         onClick={onApplyClick}
       >
@@ -112,9 +131,9 @@ const CardWidgetProperties = (props) => {
         <Autocomplete
           ref={refPositions}
           onChange={positionsChanged}
-          style={{width:propertywidth,marginTop:'20px'}}
+          style={{width:'100%',marginTop:'20px'}}
           multiple
-          disableCloseOnSelect={false}
+          disableCloseOnSelect={true}
           options={positions}
           getOptionLabel={(position) => position.JobName}
           defaultValue={[]}
@@ -144,9 +163,9 @@ const CardWidgetProperties = (props) => {
         <Autocomplete
           ref={refLocations}
           onChange={locationsChanged}
-          style={{width:propertywidth,marginTop:'20px'}}
+          style={{width:'100%',marginTop:'20px'}}
           multiple
-          disableCloseOnSelect={false}
+          disableCloseOnSelect={true}
           options={locations}
           getOptionLabel={(location) => location.LocationName}
           defaultValue={[]}
@@ -171,7 +190,7 @@ const CardWidgetProperties = (props) => {
           )}
         />
       }
-    </>
+    </div>
   )
 }
 
