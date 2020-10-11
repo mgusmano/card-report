@@ -26,7 +26,7 @@ const CardWidgetProperties = (props) => {
   const [filteredlocations, setFilteredLocations] = useState([])
   const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
 
-  const {propertywidth, onChange} = props
+  const {propertywidth} = props
   const refApplyButton = useRef(null);
   const refPositions = useRef(null);
   const refLocations = useRef(null);
@@ -72,13 +72,31 @@ const CardWidgetProperties = (props) => {
 
   }, []);
 
+
+  const SendIt = (type, payload) => {
+    window.dispatchEvent(new CustomEvent('mjg',{detail:{type:type,payload:payload}}));
+
+
+  }
+
+
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
     setButtonLabel('Filters Are Applied')
-    onChange({
+    // onChange({
+    //   filteredlocations: filteredlocations,
+    //   filteredpositions: filteredpositions
+    // })
+
+    SendIt('fromcard', {filters: {
       filteredlocations: filteredlocations,
       filteredpositions: filteredpositions
-    })
+    }})
+
+    //window.dispatchEvent(new CustomEvent('mjg',{detail:{type:'fromcard',payload:payload}}));
+
+
+
   };
 
   const positionsChanged = (event, value, reason) => {

@@ -7,12 +7,10 @@ import Splitter from '../../layout/Splitter'
 
 import CardWidgetProperties from'./CardWidgetProperties'
 import Card from'./Card'
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import FormatAlignCenter from '@material-ui/icons/FormatAlignCenter';
 
-import jsonQuery from 'json-query'
+//import jsonQuery from 'json-query'
 
 //http://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395
 //http://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=395
@@ -25,13 +23,16 @@ const CardWidget = (props) => {
   //width:1000//width:
   //height:700//height:
 
-  const [originalusers, setOriginalUsers] = useState(null)
+  //const [originalusers, setOriginalUsers] = useState(null)
   const [users, setUsers] = useState(null)
-  const [propertywidth, setPropertyWidth] = useState('350px')
+  const [propertywidth] = useState('350px')
   const [filterdisplay, setFilterDisplay] = useState('block')
+  const [filteredpositions, setFilteredpositions] = useState([])
+  const [filteredlocations, setFilteredlocations] = useState([])
+  var originalusers
 
   useEffect(() => {
-    console.log('useEffect')
+    console.log('useEffect CardWidget')
 
     axios
     .get('https://skillnetusersapi.azurewebsites.net/api/users', {
@@ -39,17 +40,41 @@ const CardWidget = (props) => {
     })
     .then((response) => {
       console.log('users',response.data)
-      setOriginalUsers(response.data)
+      //setOriginalUsers(response.data)
       setUsers(response.data)
+      originalusers = response.data
     })
     .catch((error) => {
       console.log(error)
     })
 
+    window.addEventListener('mjg', onMessage);
+    return function cleanup() {
+      window.removeEventListener('mjg', onMessage);
+    };
+
+
   }, []);
+
+  const onMessage = (e) => {
+    if (!e.detail) {return}
+    var type = e.detail.type
+    var payload = e.detail.payload
+    switch (type) {
+      case 'fromcard':
+        onChange(payload.filters)
+        break;
+    }
+  }
+
 
   const onChange = (filterdata) => {
     console.log('onChange',filterdata)
+    console.log('originalusers',originalusers)
+
+    setFilteredpositions(filterdata.filteredpositions)
+    setFilteredlocations(filterdata.filteredlocations)
+
     var filteredPositions = filterIt('JobName', filterdata.filteredpositions, originalusers)
     var filteredLocations = filterIt('Location', filterdata.filteredlocations, filteredPositions)
     setUsers(filteredLocations)
@@ -97,7 +122,7 @@ const CardWidget = (props) => {
 
         </div>
         <Splitter/>
-        <div style={{display:'flex',flex:'1',flexWrap:'wrap',flexDirection:'row',overflow:'auto'}} xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>
+        <div style={{display:'flex',flex:'1',flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}} xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>
           {users !== null &&
             users.map((user, index) => {
               return (
@@ -108,7 +133,7 @@ const CardWidget = (props) => {
         </div>
         <Splitter/>
         <div style={{xflex:'1',background:'white',color:'black',textAlign:'center',fontSize:'11px',padding:'20px'}}>
-          Report Footer
+        Jobs: {filteredpositions.join()} &nbsp;&nbsp;&nbsp; Locations: {filteredlocations.join()}
         </div>
       </Vertical>
       <Splitter/>
