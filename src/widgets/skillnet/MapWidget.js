@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import GoogleMapReact from 'google-map-react';
 import Horizontal from '../../layout/Horizontal'
 import Marker from './Marker';
+import axios from "axios";
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const MapWidget = (props) => {
 
   const [places, setPlaces] = useState([])
+  const [locations, setLocations] = useState(null)
 
   const fetchPlaces = async () => {
     fetch('places.json')
@@ -16,6 +19,26 @@ const MapWidget = (props) => {
 
   useEffect(() => {
     fetchPlaces();
+
+    axios
+    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      var arrayLocations = response.data.map(item => {
+        return {
+          PartnerLocationID: item.PartnerLocationID,
+          LocationName: item.LocationName,
+          Latitude: item.Latitude,
+          Longitude: item.Longitude
+        }
+      })
+      console.log('locations',arrayLocations)
+      setLocations(arrayLocations)
+    })
+
+
+
   }, [])
 
 
@@ -27,7 +50,7 @@ const MapWidget = (props) => {
   };
 
   const handleApiLoaded = (map, maps) => {
-    new maps.Marker({position: {lat: 30.267153,lng:-97.743057}, map, title: "Austin, TX",});
+    //new maps.Marker({position: {lat: 30.267153,lng:-97.743057}, map, title: "Austin, TX",});
   };
 
 
@@ -41,7 +64,7 @@ const MapWidget = (props) => {
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
       >
-        {places !== null &&
+        {/* {places !== null &&
         places.map((place) => (
           <Marker
             key={place.id}
@@ -49,6 +72,25 @@ const MapWidget = (props) => {
             lat={place.geometry.location.lat}
             lng={place.geometry.location.lng}
           />
+        ))} */}
+
+        {locations !== null &&
+        locations.map((location) => (
+          <Marker
+            key={location.PartnerLocationID}
+            text={location.LocationName}
+            lat={location.Latitude}
+            lng={location.Longitude}
+          />
+
+          // <AnyReactComponent
+          //   key={location.PartnerLocationID}
+          //   text={location.LocationName}
+          //   lat={location.Latitude}
+          //   lng={location.Longitude}
+          // />
+
+
         ))}
       </GoogleMapReact>
     </div>

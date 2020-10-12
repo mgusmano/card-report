@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+
 const Wrapper = styled.div`
   position: absolute;
   top: 50%;
@@ -21,10 +22,13 @@ const Wrapper = styled.div`
 
 const Marker = ({ text, onClick }) => (
   <Wrapper
+    title={text}
     alt={text}
     onClick={onClick}
-  />
-);
+  ></Wrapper>
+
+
+)
 
 Marker.defaultProps = {
   onClick: null,
