@@ -1,5 +1,6 @@
 import React from 'react'
 import CardWidget from './widgets/skillnet/CardWidget'
+
 // import Horizontal from './layout/Horizontal'
 // import Vertical from './layout/Vertical'
 // import Splitter from './layout/Splitter'
@@ -7,7 +8,10 @@ import CardWidget from './widgets/skillnet/CardWidget'
 
 const CardReport = () => {
   return (
+    <>
     <CardWidget/>
+
+    </>
   )
 
 }

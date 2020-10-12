@@ -35,6 +35,27 @@ const CardWidgetProperties = (props) => {
     console.log('useEffect')
 
     axios
+    .get('http://skillnetusersapi.azurewebsites.net/api/managers', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log(response.data)
+      return
+      // var arrayPositions = response.data.map(item => {
+      //   return {
+      //     JobID: item.JobID,
+      //     JobName: item.JobName
+      //   }
+      // })
+      // console.log('positions',arrayPositions)
+      // setPositions(arrayPositions)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+
+    axios
     .get('https://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=395', {
       auth: {username: 'skillnet',password: 'demo'}
     })
