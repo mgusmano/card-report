@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import GoogleMapReact from 'google-map-react';
 import Horizontal from '../../layout/Horizontal'
+import Marker from './Marker';
 
 const MapWidget = (props) => {
+
+  const [places, setPlaces] = useState([])
+
+  const fetchPlaces = async () => {
+    fetch('places.json')
+    .then((response) => response.json())
+    .then((data) => setPlaces(data.results))
+  }
+
+  useEffect(() => {
+    fetchPlaces();
+  }, [])
+
+
+
 
   const defaultProps = {
     center: {lat: 39.099728,lng: -94.578568},
@@ -23,7 +40,17 @@ const MapWidget = (props) => {
       defaultZoom={defaultProps.zoom}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-    />
+      >
+        {places !== null &&
+        places.map((place) => (
+          <Marker
+            key={place.id}
+            text={place.name}
+            lat={place.geometry.location.lat}
+            lng={place.geometry.location.lng}
+          />
+        ))}
+      </GoogleMapReact>
     </div>
   )
 
