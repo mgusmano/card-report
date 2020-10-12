@@ -6,6 +6,9 @@ import Marker from './Marker';
 import axios from "axios";
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
+
+
+
 const MapWidget = (props) => {
 
   const [places, setPlaces] = useState([])
@@ -53,11 +56,78 @@ const MapWidget = (props) => {
     //new maps.Marker({position: {lat: 30.267153,lng:-97.743057}, map, title: "Austin, TX",});
   };
 
+  const _onBoundsChange = (center, zoom, bounds, marginBounds) => {
+    console.log('a')
+    // if (this.props.onBoundsChange) {
+    //   this.props.onBoundsChange({center, zoom, bounds, marginBounds});
+    // } else {
+    //   this.props.onCenterChange(center);
+    //   this.props.onZoomChange(zoom);
+    // }
+  }
+
+  const _onChildClick = (key, childProps) => {
+    console.log('b')
+    // const markerId = childProps.marker.get('id');
+    // const index = this.props.markers.findIndex(m => m.get('id') === markerId);
+    // if (this.props.onChildClick) {
+    //   this.props.onChildClick(index);
+    // }
+  }
+
+  const _onChildMouseEnter = (key, childProps) => {
+    // console.log('_onChildMouseEnter')
+    // const markerId = childProps.marker.get('id');
+    // console.log(markerId)
+    // const index = this.props.markers.findIndex(m => m.get('id') === markerId);
+    // if (this.props.onMarkerHover) {
+    //   this.props.onMarkerHover(index);
+    // }
+  }
+
+  const _onChildMouseLeave = (/* key, childProps */) => {
+    console.log('_onChildMouseLeave')
+    // if (this.props.onMarkerHover) {
+    //   this.props.onMarkerHover(-1);
+    // }
+  }
+
+  const _onBalloonCloseClick = () => {
+    console.log('e')
+    // if (this.props.onChildClick) {
+    //   this.props.onChildClick(-1);
+    // }
+  }
+
+  // const _distanceToMouse = () => {
+  //   console.log('f')
+
+  // }
+
+  const K_MARGIN_TOP = 30;
+  const K_MARGIN_RIGHT = 30;
+  const K_MARGIN_BOTTOM = 30;
+  const K_MARGIN_LEFT = 30;
+
+  const K_HOVER_DISTANCE = 30;
+
 
   return (
     <div style={{display:'flex',flex:'1',flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}} xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>
 
     <GoogleMapReact
+
+
+onBoundsChange={_onBoundsChange}
+onChildClick={_onChildClick}
+onChildMouseEnter={_onChildMouseEnter}
+onChildMouseLeave={_onChildMouseLeave}
+margin={[K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT]}
+hoverDistance={K_HOVER_DISTANCE}
+// distanceToMouse={_distanceToMouse}
+
+
+
       bootstrapURLKeys={{ key: 'AIzaSyDv9gi5-vgfA99lixssMPEKrcTHrQLNKDw' }}
       defaultCenter={defaultProps.center}
       defaultZoom={defaultProps.zoom}
@@ -75,9 +145,9 @@ const MapWidget = (props) => {
         ))} */}
 
         {locations !== null &&
-        locations.map((location) => (
+        locations.map((location, index) => (
           <Marker
-            key={location.PartnerLocationID}
+            key={index}
             text={location.LocationName}
             lat={location.Latitude}
             lng={location.Longitude}
