@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
 // InfoWindow component
 const InfoWindow = (props) => {
-  const { place } = props;
+  const { place, text } = props;
   const infoWindowStyle = {
     position: 'relative',
-    bottom: 150,
-    left: '-45px',
+    bottom: 88,
+    left: '-95px',
     width: 220,
     backgroundColor: 'white',
     boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
@@ -21,7 +20,7 @@ const InfoWindow = (props) => {
   return (
     <div style={infoWindowStyle}>
       <div style={{ fontSize: 16 }}>
-        {place.name}
+        {text}
       </div>
       <div style={{ fontSize: 14 }}>
         <span style={{ color: 'grey' }}>
@@ -48,18 +47,14 @@ const InfoWindow = (props) => {
   );
 };
 
-
-
-
-
 const Wrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 18px;
+  width: 24px;
   height: 18px;
   background-color: #000;
-  border: 2px solid #fff;
+  border: 4px solid #fff;
   border-radius: 100%;
   user-select: none;
   transform: translate(-50%, -50%);
@@ -68,7 +63,6 @@ const Wrapper = styled.div`
     z-index: 1;
   }
 `;
-
 
 const place = {
   types: [
@@ -79,20 +73,20 @@ const place = {
   }
 }
 
-const num = 3
-const Marker = ({ text, onClick }) => (
+const Marker = ({ text, onClick, show, num }) => (
+  <>
   <Wrapper
+    style={{display:'flex',alignItems:'center',justifyContent:'center'}}
     title={text}
     alt={text}
     onClick={onClick}
   >
-    {text == 'Austin, TX, USA' &&
-<InfoWindow place={place} />
-}
-
+    <div style={{color:'white'}}>{num}</div>
   </Wrapper>
-
-
+  {show === true &&
+    <InfoWindow place={place} text={text} />
+  }
+  </>
 )
 
 Marker.defaultProps = {

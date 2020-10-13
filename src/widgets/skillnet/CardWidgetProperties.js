@@ -26,34 +26,44 @@ const CardWidgetProperties = (props) => {
   const [filteredlocations, setFilteredLocations] = useState([])
   const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
 
+  const [managers, setManagers] = useState([])
+  const [filteredmanagers, setFilteredManagers] = useState([])
+  const [skills, setSkills] = useState([])
+  const [filteredskills, setFilteredSkills] = useState([])
+
   const {propertywidth} = props
   const refApplyButton = useRef(null);
   const refPositions = useRef(null);
   const refLocations = useRef(null);
+  const refManagers = useRef(null);
+  const refSkills = useRef(null);
 
   useEffect(() => {
-    console.log('useEffect')
+    console.log('useEffect CardWidgetProperties')
 
     axios
-    .get('http://skillnetusersapi.azurewebsites.net/api/managers', {
+    .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=275399', {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
-      console.log(response.data)
-      return
-      // var arrayPositions = response.data.map(item => {
-      //   return {
-      //     JobID: item.JobID,
-      //     JobName: item.JobName
-      //   }
-      // })
-      // console.log('positions',arrayPositions)
-      // setPositions(arrayPositions)
+      console.log('managers',response.data)
+      setManagers(response.data)
     })
     .catch((error) => {
       console.log(error)
     })
 
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=275399', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log('skills',response.data)
+      setSkills(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 
     axios
     .get('https://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=395', {
@@ -79,9 +89,13 @@ const CardWidgetProperties = (props) => {
     })
     .then((response) => {
       var arrayLocations = response.data.map(item => {
+        var n = item.LocationName.indexOf(',');
+        var city = item.LocationName.substring(0,n)
+        //console.log(city)
         return {
           PartnerLocationID: item.PartnerLocationID,
-          LocationName: item.LocationName
+          LocationName: item.LocationName,
+          City: city
         }
       })
       console.log('locations',arrayLocations)
@@ -96,10 +110,7 @@ const CardWidgetProperties = (props) => {
 
   const SendIt = (type, payload) => {
     window.dispatchEvent(new CustomEvent('mjg',{detail:{type:type,payload:payload}}));
-
-
   }
-
 
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
@@ -110,13 +121,13 @@ const CardWidgetProperties = (props) => {
     // })
 
     SendIt('fromcard', {filters: {
+      filteredpositions: filteredpositions,
       filteredlocations: filteredlocations,
-      filteredpositions: filteredpositions
+      filteredmanagers: filteredmanagers,
+      filteredskills: filteredskills,
     }})
 
     //window.dispatchEvent(new CustomEvent('mjg',{detail:{type:'fromcard',payload:payload}}));
-
-
 
   };
 
@@ -134,12 +145,23 @@ const CardWidgetProperties = (props) => {
     setButtonLabel('Apply All Filters')
   };
 
+  const skillsChanged = (event, value, reason) => {
+    console.log('skillsChanged',value)
+    var filtersSkill = value.map(skill => {
+      return skill.SkillName
+    })
+    console.log(filtersSkill)
+    setFilteredSkills(filtersSkill)
+    setButtonLabel('Apply All Filters')
+  };
+
   const locationsChanged = (event, value, reason) => {
 
     console.log('locationsChanged',value)
 
     var filtersLocation = value.map(location => {
       return location.LocationName
+      //return location.City
     })
     console.log(filtersLocation)
 
@@ -154,6 +176,19 @@ const CardWidgetProperties = (props) => {
     // console.log(reason)
     // setButtonLabel('Apply All Filters')
   };
+
+  const managersChanged = (event, value, reason) => {
+    console.log('managersChanged',value)
+    var filtersManager = value.map(manager => {
+      return manager.ManagerID
+    })
+    console.log(filtersManager)
+    setFilteredManagers(filtersManager)
+    //console.log(reason)
+    setButtonLabel('Apply All Filters')
+  };
+
+
 
   return (
     <div style={{width:propertywidth,padding:'10px'}}>
@@ -198,6 +233,39 @@ const CardWidgetProperties = (props) => {
         />
       }
 
+{     skills !== null &&
+        <Autocomplete
+          ref={refSkills}
+          onChange={skillsChanged}
+          style={{width:'100%',marginTop:'20px'}}
+          multiple
+          disableCloseOnSelect={true}
+          options={skills}
+          getOptionLabel={(skill) => skill.SkillName}
+          defaultValue={[]}
+          renderOption={(skills, { selected }) => (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {skills.SkillName}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Skills"
+              placeholder=""
+            />
+          )}
+        />
+      }
+
+
       {locations !== null &&
         <Autocomplete
           ref={refLocations}
@@ -229,6 +297,46 @@ const CardWidgetProperties = (props) => {
           )}
         />
       }
+
+      {managers !== null &&
+        <Autocomplete
+          ref={refManagers}
+          onChange={managersChanged}
+          style={{width:'100%',marginTop:'20px'}}
+          multiple
+          disableCloseOnSelect={true}
+          options={managers}
+          getOptionLabel={(manager) => manager.ManagerName}
+          defaultValue={[]}
+          renderOption={(managers, { selected }) => (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {managers.ManagerName}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Managers"
+              placeholder=""
+            />
+          )}
+        />
+      }
+
+
+
+
+
+
+
+
     </div>
   )
 }
