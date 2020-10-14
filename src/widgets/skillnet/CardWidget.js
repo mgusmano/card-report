@@ -32,14 +32,30 @@ const CardWidget = (props) => {
     var filteredLocations = filterIt('Location', filterdata.filteredlocations, filteredPositions)
     var filteredManagers = filterIt('DirectManagerID', filterdata.filteredmanagers, filteredLocations)
 
-    setUsers(filteredManagers)
+    var filteredFitPercent = filterIt2('ManagerRating', filterdata.filteredfitpercent, filteredManagers)
+
+    console.log(filteredManagers)
+    console.log(filteredFitPercent)
+    console.log(filterdata.filteredfitpercent)
+
+
+    //setUsers(filteredManagers)
+    setUsers(filteredFitPercent)
+
+
+
+
+//ManagerRating
+
+
 
     SendIt('fromcardwidget', {
       filteredusers: filteredManagers,
-      filteredpositions: filterdata.filteredpositions,
       filteredskills: filterdata.filteredskills,
+      filteredpositions: filterdata.filteredpositions,
       filteredlocations: filterdata.filteredlocations,
       filteredmanagers: filterdata.filteredmanagers,
+      filteredfitpercent: filterdata.filteredfitpercent
     })
 
   };
@@ -134,6 +150,31 @@ const CardWidget = (props) => {
     })
     return filteredResult
   };
+
+  const filterIt2 = (name, filtersSelected, start) => {
+    if (filtersSelected.length === 0) {
+      return start
+    }
+    var filteredResult = start.filter(obj => {
+      var found = false;
+        //for (var i = 0; i < filtersSelected.length; i++) {
+          //console.log(obj[name])
+          //console.log(filtersSelected)
+          if (obj[name] >= filtersSelected) {
+            //console.log('found')
+            found = true;
+            //break;
+          }
+          else {
+            found = false;
+          }
+        //}
+        return found
+    })
+    return filteredResult
+  };
+
+
 
   return (
         <div ref={cardRef} style={{display:'flex',flex:props.flex,flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}} xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>

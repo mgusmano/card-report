@@ -32,7 +32,7 @@ const CardWidgetProperties = (props) => {
 
 
   const [fitpercents, setFitpercents] = useState(null)
-  const [fitpercent, setFitpercent] = useState('')
+  const [filteredfitpercent, setFilteredfitpercent] = useState('')
 
   const {propertywidth} = props
   const refApplyButton = useRef(null);
@@ -110,14 +110,20 @@ const CardWidgetProperties = (props) => {
     })
 
     var arrayFitpercents = [
-      { Name:'40% and below', value: 40 },
-      { Name:'45% and below', value: 45 },
-      { Name:'50% and below', value: 50 }
+      { Name:'40% and above', value: 40 },
+      { Name:'45% and above', value: 45 },
+      { Name:'50% and above', value: 50 },
+      { Name:'55% and above', value: 55 },
+      { Name:'60% and above', value: 60 },
+      { Name:'65% and above', value: 65 },
+      { Name:'70% and above', value: 70 },
+      { Name:'75% and above', value: 75 },
+      { Name:'80% and above', value: 80 },
+      { Name:'85% and above', value: 85 },
+      { Name:'90% and above', value: 90 },
+      { Name:'95% and above', value: 95 },
     ]
     setFitpercents(arrayFitpercents)
-
-
-
   }, []);
 
 
@@ -135,9 +141,10 @@ const CardWidgetProperties = (props) => {
 
     SendIt('fromcard', {filters: {
       filteredpositions: filteredpositions,
+      filteredskills: filteredskills,
       filteredlocations: filteredlocations,
       filteredmanagers: filteredmanagers,
-      filteredskills: filteredskills,
+      filteredfitpercent: filteredfitpercent
     }})
 
     //window.dispatchEvent(new CustomEvent('mjg',{detail:{type:'fromcard',payload:payload}}));
@@ -202,13 +209,8 @@ const CardWidgetProperties = (props) => {
 
   const fitpercentsChanged = (event, value, reason) => {
     console.log('fitpercentsChanged',value)
-    // var filtersManager = value.map(manager => {
-    //   return manager.ManagerID
-    // })
-    // console.log(filtersManager)
-    setFitpercent(value.value)
-    // //console.log(reason)
-    // setButtonLabel('Apply All Filters')
+    setFilteredfitpercent(value.value)
+    setButtonLabel('Apply All Filters')
   };
 
 

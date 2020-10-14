@@ -9,7 +9,7 @@ const Card = (props) => {
   const [display, setDisplay] = useState('none')
 
   useEffect(() => {
-    console.log('useEffect Card')
+    //console.log('useEffect Card')
 
     var f = user.BFirstName.charAt(0)
     switch (f) {
@@ -27,7 +27,7 @@ const Card = (props) => {
         break;
     }
 
-    console.log(user.BFirstName.charAt(0))
+    //console.log(user.BFirstName.charAt(0))
 
 
 
@@ -59,7 +59,7 @@ const Card = (props) => {
 
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
     <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>ID: {user.PersonID} - ManagerID: {user.DirectManagerID}</div>
-      <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile</div>
+  <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile ({user.ManagerRating})</div>
     </div>
 
   </div>
