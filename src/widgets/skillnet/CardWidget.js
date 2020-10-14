@@ -119,6 +119,7 @@ const CardWidget = (props) => {
 
 
   const filterIt = (name, filtersSelected, start) => {
+    debugger
     if (filtersSelected.length === 0) {
       return start
     }

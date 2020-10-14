@@ -19,16 +19,16 @@ const CardWidgetProperties = (props) => {
   //width:1000//width:
   //height:700//height:
 
-  const [positions, setPositions] = useState(null)
-  const [filteredpositions, setFilteredPositions] = useState(null)
-  const [locations, setLocations] = useState(null)
-  const [filteredlocations, setFilteredLocations] = useState(null)
+  const [positions, setPositions] = useState([])
+  const [filteredpositions, setFilteredPositions] = useState([])
+  const [locations, setLocations] = useState([])
+  const [filteredlocations, setFilteredLocations] = useState([])
   const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
 
-  const [managers, setManagers] = useState(null)
-  const [filteredmanagers, setFilteredManagers] = useState(null)
-  const [skills, setSkills] = useState(null)
-  const [filteredskills, setFilteredSkills] = useState(null)
+  const [managers, setManagers] = useState([])
+  const [filteredmanagers, setFilteredManagers] = useState([])
+  const [skills, setSkills] = useState([])
+  const [filteredskills, setFilteredSkills] = useState([])
 
 
   const [fitpercents, setFitpercents] = useState(null)
