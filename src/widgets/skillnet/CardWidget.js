@@ -119,7 +119,6 @@ const CardWidget = (props) => {
 
 
   const filterIt = (name, filtersSelected, start) => {
-    debugger
     if (filtersSelected.length === 0) {
       return start
     }
@@ -136,10 +135,7 @@ const CardWidget = (props) => {
     return filteredResult
   };
 
-
-
   return (
-
         <div ref={cardRef} style={{display:'flex',flex:props.flex,flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}} xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>
           {users !== null &&
             users.map((user, index) => {
@@ -149,7 +145,6 @@ const CardWidget = (props) => {
             })
           }
         </div>
-
   )
 
 }

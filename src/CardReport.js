@@ -17,6 +17,8 @@ import Tv from '@material-ui/icons/Tv';
 import Map from '@material-ui/icons/Map';
 import AllInclusive from '@material-ui/icons/AllInclusive';
 
+import Star from '@material-ui/icons/Star';
+
 import Menu from '@material-ui/icons/Menu';
 
 
