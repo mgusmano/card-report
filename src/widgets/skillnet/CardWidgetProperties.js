@@ -34,6 +34,9 @@ const CardWidgetProperties = (props) => {
   const [fitpercents, setFitpercents] = useState(null)
   const [filteredfitpercent, setFilteredfitpercent] = useState('')
 
+  const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
+  const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
+
   const {propertywidth} = props
   const refApplyButton = useRef(null);
   const refPositions = useRef(null);
@@ -41,6 +44,7 @@ const CardWidgetProperties = (props) => {
   const refManagers = useRef(null);
   const refSkills = useRef(null);
   const refFitpercents = useRef(null);
+  const refSubjectmatterexperts = useRef(null);
 
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
@@ -124,6 +128,15 @@ const CardWidgetProperties = (props) => {
       { Name:'95% and above', value: 95 },
     ]
     setFitpercents(arrayFitpercents)
+
+    var arraySubjectmatterexperts = [
+      { Name:'Gold', value: 'A' },
+      { Name:'Silver', value: 'B' },
+      { Name:'Bronze', value: 'C' },
+    ]
+    setSubjectmatterexperts(arraySubjectmatterexperts)
+
+
   }, []);
 
 
@@ -209,7 +222,12 @@ const CardWidgetProperties = (props) => {
 
   const fitpercentsChanged = (event, value, reason) => {
     console.log('fitpercentsChanged',value)
-    setFilteredfitpercent(value.value)
+    if (value == null) {
+      setFilteredfitpercent('')
+    }
+    else {
+      setFilteredfitpercent(value.value)
+    }
     setButtonLabel('Apply All Filters')
   };
 
@@ -393,6 +411,50 @@ const CardWidgetProperties = (props) => {
           )}
         />
       }
+
+{subjectmatterexperts !== null &&
+        <Autocomplete
+          ref={refSubjectmatterexperts}
+          onChange={fitpercentsChanged}
+          style={{width:'100%',marginTop:'20px'}}
+
+          disableCloseOnSelect={true}
+          options={subjectmatterexperts}
+          getOptionLabel={(subjectmatterexperts) => {
+            //console.log(fitpercents.Name)
+            //if (fitpercent.length > 0) {
+              return subjectmatterexperts.Name
+            //}
+            //else {
+            //  return 'select fit percent'
+            //}
+          }}
+          defaultValue={[]}
+          renderOption={(subjectmatterexperts, { selected }) => (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {subjectmatterexperts.Name}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Subject Matter Experts"
+              placeholder=""
+            />
+          )}
+        />
+      }
+
+
+
+
 
     </div>
   )

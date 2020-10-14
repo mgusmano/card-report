@@ -5,7 +5,7 @@ import Star from '@material-ui/icons/Star';
 
 const Card = (props) => {
   const {user} = props
-  const [color, setColor] = useState('red')
+  const [color, setColor] = useState('gold')
   const [display, setDisplay] = useState('none')
 
   useEffect(() => {
@@ -14,11 +14,15 @@ const Card = (props) => {
     var f = user.BFirstName.charAt(0)
     switch (f) {
       case 'B':
-        setColor('green')
+        setColor('#C0C0C0')
         setDisplay('block')
         break;
       case 'A':
-        setColor('red')
+        setColor('#FFD700')
+        setDisplay('block')
+        break;
+      case 'C':
+        setColor('#cd7f32')
         setDisplay('block')
         break;
       default:
