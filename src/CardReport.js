@@ -9,12 +9,56 @@ import Splitter from './layout/Splitter'
 //import Separator from './layout/Separator'
 
 import CardWidgetProperties from'./widgets/skillnet/CardWidgetProperties'
-import IconButton from '@material-ui/core/IconButton';
-import FormatAlignCenter from '@material-ui/icons/FormatAlignCenter';
+//import IconButton from '@material-ui/core/IconButton';
+
+
+
+import Tv from '@material-ui/icons/Tv';
+import Map from '@material-ui/icons/Map';
+import AllInclusive from '@material-ui/icons/AllInclusive';
+
+import Menu from '@material-ui/icons/Menu';
+
+
+
+
+//import ButtonGroup from '@material-ui/core/ButtonGroup';
+//import Button from '@material-ui/core/Button';
+
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = () => {
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('350px')
+
+  const [cardflex, setCardflex] = useState(1)
+  const [mapflex, setMapflex] = useState(0)
+
+  const [alignment, setAlignment] = React.useState('Card');
+
+
+  const handleAlignment = (event, newAlignment) => {
+    setAlignment(newAlignment);
+    switch(newAlignment) {
+      case 'Card':
+        setCardflex(1)
+        setMapflex(0)
+        break;
+      case 'Map':
+        setCardflex(0)
+        setMapflex(1)
+        break;
+      case 'Both':
+        setCardflex(1)
+        setMapflex(1)
+        break;
+      default:
+        // code block
+    }
+  };
+
+
 
   const onCloseClick = () => {
     console.log('onCloseClick')
@@ -25,6 +69,7 @@ const CardReport = () => {
       setFilterDisplay('block')
     }
   };
+  //https://material-ui.com/components/material-icons/
 
   return (
     <Horizontal >
@@ -34,14 +79,46 @@ const CardReport = () => {
           <div style={{padding:'10px 0 0 20px'}}>
             SkillNet Card Report
           </div>
-          <IconButton color="primary" component="span" onClick={onCloseClick}>
-            <FormatAlignCenter />
-          </IconButton>
+
+          <div>
+
+            <ToggleButtonGroup
+              style={{padding:'5px',border:'none',marginRight:'20px'}}
+              size="small"
+              value={alignment}
+              exclusive
+              onChange={handleAlignment}
+            >
+              <ToggleButton value="Card" style={{width:'100px'}}>
+                <Tv />&nbsp;Card
+              </ToggleButton>
+              <ToggleButton value="Map" style={{width:'100px'}}>
+                <Map />&nbsp;Map
+              </ToggleButton>
+              <ToggleButton value="Both" style={{width:'100px'}}>
+                <AllInclusive />&nbsp;Both
+              </ToggleButton>
+            </ToggleButtonGroup>
+
+            <ToggleButtonGroup
+              style={{padding:'5px',marginRight:'20px'}}
+              size="small"
+              value={alignment}
+              exclusive
+              onChange={handleAlignment}
+            >
+              <ToggleButton cxolor="primary" style={{width:'100px'}} onClick={onCloseClick}>
+                <Menu />&nbsp;Filters
+              </ToggleButton>
+            </ToggleButtonGroup>
+
+          </div>
+
         </div>
         <Splitter/>
-        <CardWidget/>
+        <CardWidget flex={cardflex}/>
         <Splitter/>
-        <MapWidget/>
+        <MapWidget flex={mapflex}/>
         <Splitter/>
         <CardReportFooter/>
       </Vertical>

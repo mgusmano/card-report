@@ -25,7 +25,7 @@ const Card = (props) => {
     </div>
 
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-    <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{user.PersonID}-{user.DirectManagerID}</div>
+    <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>ID: {user.PersonID} - ManagerID: {user.DirectManagerID}</div>
       <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile</div>
     </div>
 

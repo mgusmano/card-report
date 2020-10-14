@@ -12,7 +12,6 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-
 const CardWidgetProperties = (props) => {
   //title:Card Report//title:
   //x:30//x:
@@ -21,15 +20,19 @@ const CardWidgetProperties = (props) => {
   //height:700//height:
 
   const [positions, setPositions] = useState(null)
-  const [filteredpositions, setFilteredPositions] = useState([])
+  const [filteredpositions, setFilteredPositions] = useState(null)
   const [locations, setLocations] = useState(null)
-  const [filteredlocations, setFilteredLocations] = useState([])
+  const [filteredlocations, setFilteredLocations] = useState(null)
   const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
 
-  const [managers, setManagers] = useState([])
-  const [filteredmanagers, setFilteredManagers] = useState([])
-  const [skills, setSkills] = useState([])
-  const [filteredskills, setFilteredSkills] = useState([])
+  const [managers, setManagers] = useState(null)
+  const [filteredmanagers, setFilteredManagers] = useState(null)
+  const [skills, setSkills] = useState(null)
+  const [filteredskills, setFilteredSkills] = useState(null)
+
+
+  const [fitpercents, setFitpercents] = useState(null)
+  const [fitpercent, setFitpercent] = useState('')
 
   const {propertywidth} = props
   const refApplyButton = useRef(null);
@@ -37,6 +40,7 @@ const CardWidgetProperties = (props) => {
   const refLocations = useRef(null);
   const refManagers = useRef(null);
   const refSkills = useRef(null);
+  const refFitpercents = useRef(null);
 
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
@@ -105,6 +109,15 @@ const CardWidgetProperties = (props) => {
       console.log(error)
     })
 
+    var arrayFitpercents = [
+      { Name:'40% and below', value: 40 },
+      { Name:'45% and below', value: 45 },
+      { Name:'50% and below', value: 50 }
+    ]
+    setFitpercents(arrayFitpercents)
+
+
+
   }, []);
 
 
@@ -169,7 +182,6 @@ const CardWidgetProperties = (props) => {
     //console.log(reason)
     setButtonLabel('Apply All Filters')
 
-
     // console.log(event)
     // console.log(value)
     // setFilteredLocations(value)
@@ -186,6 +198,17 @@ const CardWidgetProperties = (props) => {
     setFilteredManagers(filtersManager)
     //console.log(reason)
     setButtonLabel('Apply All Filters')
+  };
+
+  const fitpercentsChanged = (event, value, reason) => {
+    console.log('fitpercentsChanged',value)
+    // var filtersManager = value.map(manager => {
+    //   return manager.ManagerID
+    // })
+    // console.log(filtersManager)
+    setFitpercent(value.value)
+    // //console.log(reason)
+    // setButtonLabel('Apply All Filters')
   };
 
 
@@ -233,7 +256,7 @@ const CardWidgetProperties = (props) => {
         />
       }
 
-{     skills !== null &&
+      {skills !== null &&
         <Autocomplete
           ref={refSkills}
           onChange={skillsChanged}
@@ -264,7 +287,6 @@ const CardWidgetProperties = (props) => {
           )}
         />
       }
-
 
       {locations !== null &&
         <Autocomplete
@@ -330,12 +352,45 @@ const CardWidgetProperties = (props) => {
         />
       }
 
+      {fitpercents !== null &&
+        <Autocomplete
+          ref={refFitpercents}
+          onChange={fitpercentsChanged}
+          style={{width:'100%',marginTop:'20px'}}
 
-
-
-
-
-
+          disableCloseOnSelect={true}
+          options={fitpercents}
+          getOptionLabel={(fitpercents) => {
+            //console.log(fitpercents.Name)
+            //if (fitpercent.length > 0) {
+              return fitpercents.Name
+            //}
+            //else {
+            //  return 'select fit percent'
+            //}
+          }}
+          defaultValue={[]}
+          renderOption={(fitpercents, { selected }) => (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {fitpercents.Name}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Fit Percent"
+              placeholder=""
+            />
+          )}
+        />
+      }
 
     </div>
   )

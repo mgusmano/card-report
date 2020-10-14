@@ -170,7 +170,7 @@ const MapWidget = (props) => {
   const K_HOVER_DISTANCE = 30;
 
   return (
-    <div style={{display:'flex',flex:'1',flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}}
+    <div style={{display:'flex',flex:props.flex,flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}}
     xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>
       <GoogleMap
         onChange={_onBoundsChange}
