@@ -14,6 +14,14 @@ const CardWidget = (props) => {
   //width:1000//width:
   //height:700//height:
 
+  const { PartnerID, PartnerName, PersonID } = props;
+
+
+  //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
+  //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
+  //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
+
+
   const cardRef = useRef(null);
   //const [originalusers, setOriginalUsers] = useState(null)
   const [users, setUsers] = useState(null)
@@ -74,16 +82,29 @@ const CardWidget = (props) => {
     }
   }, [])
 
+
   useEffect(() => {
     console.log('useEffect CardWidget')
     const card = cardRef.current
 
+
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const partnerid = parseInt(urlParams.get('partnerid'));
+    // const partnername = urlParams.get('partnername');
+    // console.log('partnerid',partnerid)
+    // console.log('partnerid',Number.isInteger(partnerid))
+    // if (Number.isInteger(partnerid)) {
+    //   PartnerID = Number.isInteger(partnerid)
+    //   PartnerName = partnername
+    // }
+
+
     axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/users', {
+    .get('https://skillnetusersapi.azurewebsites.net/api/users?partnerid=' + PartnerID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
-      //console.log('users with Test',response.data)
+      console.log('users with Test',response.data)
 
       var Users = response.data.filter(user => {
         if (user.BLastName !== 'Test') {
@@ -181,7 +202,7 @@ const CardWidget = (props) => {
           {users !== null &&
             users.map((user, index) => {
               return (
-                <Card key={index} user={user}/>
+                <Card key={index} user={user} PartnerName={PartnerName}/>
               )
             })
           }

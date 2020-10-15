@@ -4,12 +4,16 @@ import Star from '@material-ui/icons/Star';
 
 
 const Card = (props) => {
-  const {user} = props
+  const {user, PartnerName} = props
   const [color, setColor] = useState('gold')
   const [display, setDisplay] = useState('none')
 
   useEffect(() => {
     //console.log('useEffect Card')
+
+    if (user.Avatar == "https://azureportal.skillnet.net/") {
+      user.Avatar = 'a.png'
+    }
 
     var f = user.BFirstName.charAt(0)
     switch (f) {
@@ -50,7 +54,7 @@ const Card = (props) => {
         <div style={{fontSize:'11px',fontWeight:'bold',marginTop:'1px',textAlign:'right'}}>{user.BFirstName} {user.BLastName}</div>
         <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{user.JobName}</div>
         <div style={{fontSize:'11px',marginTop:'10px',textAlign:'right'}}></div>
-        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>CNA</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{PartnerName}</div>
         <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{user.Location}</div>
 
       </div>

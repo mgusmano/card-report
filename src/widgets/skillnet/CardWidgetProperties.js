@@ -46,11 +46,16 @@ const CardWidgetProperties = (props) => {
   const refFitpercents = useRef(null);
   const refSubjectmatterexperts = useRef(null);
 
+  const { PartnerID, PartnerName, PersonID } = props;
+
+  //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
+  //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
+
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
 
     axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=275399', {
+    .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
@@ -62,7 +67,7 @@ const CardWidgetProperties = (props) => {
     })
 
     axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=275399', {
+    .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=' + PersonID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
@@ -74,7 +79,7 @@ const CardWidgetProperties = (props) => {
     })
 
     axios
-    .get('https://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=395', {
+    .get('https://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=' + PartnerID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
@@ -92,7 +97,7 @@ const CardWidgetProperties = (props) => {
     })
 
     axios
-    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
+    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {

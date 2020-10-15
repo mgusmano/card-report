@@ -11,13 +11,11 @@ import Splitter from './layout/Splitter'
 import CardWidgetProperties from'./widgets/skillnet/CardWidgetProperties'
 //import IconButton from '@material-ui/core/IconButton';
 
-
-
 import Tv from '@material-ui/icons/Tv';
 import Map from '@material-ui/icons/Map';
 import AllInclusive from '@material-ui/icons/AllInclusive';
 
-import Star from '@material-ui/icons/Star';
+//import Star from '@material-ui/icons/Star';
 
 import Menu from '@material-ui/icons/Menu';
 
@@ -31,6 +29,13 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = () => {
+  var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
+  //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
+  //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
+
+
+
+
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('350px')
 
@@ -118,16 +123,16 @@ const CardReport = () => {
 
         </div>
         <Splitter/>
-        <CardWidget flex={cardflex}/>
+        <CardWidget flex={cardflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} />
         <Splitter/>
-        <MapWidget flex={mapflex}/>
+        <MapWidget flex={mapflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
         <Splitter/>
         <CardReportFooter/>
       </Vertical>
       <Splitter/>
       {/* column 2 */}
       <Vertical style={{display:filterdisplay,width:propertywidth}}>
-        <CardWidgetProperties propertywidth={propertywidth}/>
+        <CardWidgetProperties propertywidth={propertywidth} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
       </Vertical>
     </Horizontal>
   )

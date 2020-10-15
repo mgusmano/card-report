@@ -92,9 +92,14 @@ const MapWidget = (props) => {
       for (const [key, value] of Object.entries(hist)) {
         //console.log(`${key}: ${value}`);
         var result = findObjectByKey(originallocations, 'LocationName', key);
-        result.num = value
-        //console.log(result)
-        finallocations.push(result)
+        if (result !== null) {
+          result.num = value
+          //console.log(result)
+          finallocations.push(result)
+        }
+        else {
+          finallocations.push([])
+        }
       }
 
       //console.log('finallocations',finallocations)
