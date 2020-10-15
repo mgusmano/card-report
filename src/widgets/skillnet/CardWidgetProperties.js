@@ -35,7 +35,7 @@ const CardWidgetProperties = (props) => {
   const [filteredfitpercent, setFilteredfitpercent] = useState('')
 
   const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
-  const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState(null)
+  const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState([])
   //const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
 
   const {propertywidth} = props
@@ -175,7 +175,7 @@ const CardWidgetProperties = (props) => {
     var filtersJobs = value.map(position => {
       return position.JobName
     })
-    console.log('positionsChanged',filtersJobs)
+    console.log('positionsChanged',filtersJobs.toString())
     setFilteredPositions(filtersJobs)
     setButtonLabel('Apply All Filters')
   };
