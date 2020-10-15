@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+
+import GMI from './images/GMI.png';
+import CNA from './images/CNA.png';
+import logoImg from './images/logo.png';
+
+
 import CardWidget from './widgets/skillnet/CardWidget'
 import MapWidget from './widgets/skillnet/MapWidget'
 import CardReportFooter from './CardReportFooter'
@@ -6,7 +12,7 @@ import CardReportFooter from './CardReportFooter'
 import Horizontal from './layout/Horizontal'
 import Vertical from './layout/Vertical'
 import Splitter from './layout/Splitter'
-//import Separator from './layout/Separator'
+import Separator from './layout/Separator'
 
 import CardWidgetProperties from'./widgets/skillnet/CardWidgetProperties'
 //import IconButton from '@material-ui/core/IconButton';
@@ -19,9 +25,6 @@ import AllInclusive from '@material-ui/icons/AllInclusive';
 
 import Menu from '@material-ui/icons/Menu';
 
-
-
-
 //import ButtonGroup from '@material-ui/core/ButtonGroup';
 //import Button from '@material-ui/core/Button';
 
@@ -32,9 +35,9 @@ const CardReport = () => {
   var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
-
-
-
+  console.log('PartnerID',PartnerID)
+  console.log('PartnerName',PartnerName)
+  console.log('PersonID',PersonID)
 
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('350px')
@@ -43,7 +46,6 @@ const CardReport = () => {
   const [mapflex, setMapflex] = useState(0)
 
   const [alignment, setAlignment] = React.useState('Card');
-
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -65,8 +67,6 @@ const CardReport = () => {
     }
   };
 
-
-
   const onCloseClick = () => {
     console.log('onCloseClick')
     if (filterdisplay === 'block') {
@@ -83,16 +83,29 @@ const CardReport = () => {
       {/* column 1 */}
       <Vertical style={{flex:'1'}}>
         <div style={{display:'flex',justifyContent:'space-between',flexDirection:'row',background:'lightgray',color:'black',textAlign:'center',fontSize:'24px'}}>
-          <div style={{padding:'10px 0 0 20px'}}>
-            SkillNet Card Report
+
+          <div style={{padding:'5px 0 0 20px',fontSize:'12px'}}>
+              <img src={logoImg} alt="SKILLNET" style={{width:'90px'}} />
+              <span style={{xmarginLeft:'-2px'}}><i>Card Report</i></span>
           </div>
 
-          <div>
+          {PartnerName === 'CNA' &&
+          <div style={{padding:'5px 0 0 0',fontSize:'12px'}}>
+          <img src={CNA} style={{marginTop:'10px'}} alt="CNA" style={{width:'90px'}} />
+          </div>
+          }
 
+          {PartnerName === 'General Mills' &&
+          <div style={{padding:'5px 0 0 0',fontSize:'12px'}}>
+              <img src={GMI} style={{marginTop:'10px'}} alt="GMI" style={{width:'90px'}} />
+          </div>
+          }
+
+          <div>
             <ToggleButtonGroup
-              style={{padding:'5px',border:'none',marginRight:'20px'}}
+              style={{padding:'15px 0 0 0',border:'none',marginRight:'20px'}}
               size="small"
-              value={alignment}
+              //value={alignment}
               exclusive
               onChange={handleAlignment}
             >
@@ -114,7 +127,7 @@ const CardReport = () => {
               exclusive
               onChange={handleAlignment}
             >
-              <ToggleButton cxolor="primary" style={{width:'100px'}} onClick={onCloseClick}>
+              <ToggleButton value="Close" cxolor="primary" style={{width:'100px'}} onClick={onCloseClick}>
                 <Menu />&nbsp;Filters
               </ToggleButton>
             </ToggleButtonGroup>
@@ -122,7 +135,7 @@ const CardReport = () => {
           </div>
 
         </div>
-        <Splitter/>
+        <Separator/>
         <CardWidget flex={cardflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} />
         <Splitter/>
         <MapWidget flex={mapflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>

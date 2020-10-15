@@ -35,7 +35,8 @@ const CardWidgetProperties = (props) => {
   const [filteredfitpercent, setFilteredfitpercent] = useState('')
 
   const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
-  const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
+  const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState(null)
+  //const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
 
   const {propertywidth} = props
   const refApplyButton = useRef(null);
@@ -46,7 +47,7 @@ const CardWidgetProperties = (props) => {
   const refFitpercents = useRef(null);
   const refSubjectmatterexperts = useRef(null);
 
-  const { PartnerID, PartnerName, PersonID } = props;
+  const { PartnerID, PersonID } = props;
 
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
@@ -135,14 +136,14 @@ const CardWidgetProperties = (props) => {
     setFitpercents(arrayFitpercents)
 
     var arraySubjectmatterexperts = [
-      { Name:'Gold', value: 'A' },
-      { Name:'Silver', value: 'B' },
-      { Name:'Bronze', value: 'C' },
+      { Name:'Gold',   value: 'Gold' },
+      { Name:'Silver', value: 'Silver' },
+      { Name:'Bronze', value: 'Bronze' },
     ]
     setSubjectmatterexperts(arraySubjectmatterexperts)
 
 
-  }, []);
+  }, [PartnerID, PersonID]);
 
 
   const SendIt = (type, payload) => {
@@ -162,7 +163,8 @@ const CardWidgetProperties = (props) => {
       filteredskills: filteredskills,
       filteredlocations: filteredlocations,
       filteredmanagers: filteredmanagers,
-      filteredfitpercent: filteredfitpercent
+      filteredfitpercent: filteredfitpercent,
+      filteredsubjectmatterexperts: filteredsubjectmatterexperts
     }})
 
     //window.dispatchEvent(new CustomEvent('mjg',{detail:{type:'fromcard',payload:payload}}));
@@ -170,73 +172,60 @@ const CardWidgetProperties = (props) => {
   };
 
   const positionsChanged = (event, value, reason) => {
-    //console.log(event)
-    console.log('positionsChanged',value)
-
     var filtersJobs = value.map(position => {
       return position.JobName
     })
-    console.log(filtersJobs)
-
+    console.log('positionsChanged',filtersJobs)
     setFilteredPositions(filtersJobs)
-    //console.log(reason)
     setButtonLabel('Apply All Filters')
   };
 
   const skillsChanged = (event, value, reason) => {
-    console.log('skillsChanged',value)
-    var filtersSkill = value.map(skill => {
+    var filtersSkills = value.map(skill => {
       return skill.SkillName
     })
-    console.log(filtersSkill)
-    setFilteredSkills(filtersSkill)
+    console.log('skillsChanged',filtersSkills)
+    setFilteredSkills(filtersSkills)
     setButtonLabel('Apply All Filters')
   };
 
   const locationsChanged = (event, value, reason) => {
-
-    console.log('locationsChanged',value)
-
-    var filtersLocation = value.map(location => {
+    var filtersLocations = value.map(location => {
       return location.LocationName
-      //return location.City
     })
-    console.log(filtersLocation)
-
-    setFilteredLocations(filtersLocation)
-    //console.log(reason)
+    console.log('locationsChanged',filtersLocations)
+    setFilteredLocations(filtersLocations)
     setButtonLabel('Apply All Filters')
-
-    // console.log(event)
-    // console.log(value)
-    // setFilteredLocations(value)
-    // console.log(reason)
-    // setButtonLabel('Apply All Filters')
   };
 
   const managersChanged = (event, value, reason) => {
-    console.log('managersChanged',value)
     var filtersManager = value.map(manager => {
       return manager.ManagerID
     })
-    console.log(filtersManager)
+    console.log('managersChanged',filtersManager)
     setFilteredManagers(filtersManager)
-    //console.log(reason)
     setButtonLabel('Apply All Filters')
   };
 
   const fitpercentsChanged = (event, value, reason) => {
-    console.log('fitpercentsChanged',value)
     if (value == null) {
       setFilteredfitpercent('')
     }
     else {
       setFilteredfitpercent(value.value)
     }
+    console.log('fitpercentsChanged',value.value)
     setButtonLabel('Apply All Filters')
   };
 
-
+  const subjectmatterexpertsChanged = (event, value, reason) => {
+    var filtersSubjectmatterexperts = value.map(subjectmatterexpert => {
+      return subjectmatterexpert.Name
+    })
+    console.log('subjectmatterexpertsChanged',filtersSubjectmatterexperts)
+    setFilteredsubjectmatterexperts(filtersSubjectmatterexperts)
+    setButtonLabel('Apply All Filters')
+  };
 
   return (
     <div style={{width:propertywidth,padding:'10px'}}>
@@ -257,8 +246,9 @@ const CardWidgetProperties = (props) => {
           multiple
           disableCloseOnSelect={true}
           options={positions}
-          getOptionLabel={(position) => position.JobName}
-          defaultValue={[]}
+          //getOptionLabel={(position) => position.JobName}
+          getOptionLabel={position => typeof position === 'string' ? position : position.JobName}
+          //defaultValue=''
           renderOption={(position, { selected }) => (
             <React.Fragment>
               <Checkbox
@@ -289,7 +279,8 @@ const CardWidgetProperties = (props) => {
           multiple
           disableCloseOnSelect={true}
           options={skills}
-          getOptionLabel={(skill) => skill.SkillName}
+          //getOptionLabel={(skill) => skill.SkillName}
+          getOptionLabel={skill => typeof skill === 'string' ? skill : skill.SkillName}
           defaultValue={[]}
           renderOption={(skills, { selected }) => (
             <React.Fragment>
@@ -321,8 +312,9 @@ const CardWidgetProperties = (props) => {
           multiple
           disableCloseOnSelect={true}
           options={locations}
-          getOptionLabel={(location) => location.LocationName}
-          defaultValue={[]}
+          //getOptionLabel={(location) => location.LocationName}
+          getOptionLabel={location => typeof location === 'string' ? location : location.LocationName}
+          //defaultValue={[]}
           renderOption={(locations, { selected }) => (
             <React.Fragment>
               <Checkbox
@@ -353,8 +345,9 @@ const CardWidgetProperties = (props) => {
           multiple
           disableCloseOnSelect={true}
           options={managers}
-          getOptionLabel={(manager) => manager.ManagerName}
-          defaultValue={[]}
+          //getOptionLabel={(manager) => manager.ManagerName}
+          getOptionLabel={manager => typeof manager === 'string' ? manager : manager.ManagerName}
+          //defaultValue={[]}
           renderOption={(managers, { selected }) => (
             <React.Fragment>
               <Checkbox
@@ -382,19 +375,19 @@ const CardWidgetProperties = (props) => {
           ref={refFitpercents}
           onChange={fitpercentsChanged}
           style={{width:'100%',marginTop:'20px'}}
-
           disableCloseOnSelect={true}
           options={fitpercents}
-          getOptionLabel={(fitpercents) => {
-            //console.log(fitpercents.Name)
-            //if (fitpercent.length > 0) {
-              return fitpercents.Name
-            //}
-            //else {
-            //  return 'select fit percent'
-            //}
-          }}
-          defaultValue={[]}
+          // getOptionLabel={(fitpercents) => {
+          //   //console.log(fitpercents.Name)
+          //   //if (fitpercent.length > 0) {
+          //     return fitpercents.Name
+          //   //}
+          //   //else {
+          //   //  return 'select fit percent'
+          //   //}
+          // }}
+          getOptionLabel={fitpercents => typeof fitpercents === 'string' ? fitpercents : fitpercents.Name}
+          //defaultValue={[]}
           renderOption={(fitpercents, { selected }) => (
             <React.Fragment>
               <Checkbox
@@ -417,24 +410,25 @@ const CardWidgetProperties = (props) => {
         />
       }
 
-{subjectmatterexperts !== null &&
+      {subjectmatterexperts !== null &&
         <Autocomplete
           ref={refSubjectmatterexperts}
-          onChange={fitpercentsChanged}
+          onChange={subjectmatterexpertsChanged}
           style={{width:'100%',marginTop:'20px'}}
-
+          multiple
           disableCloseOnSelect={true}
           options={subjectmatterexperts}
-          getOptionLabel={(subjectmatterexperts) => {
-            //console.log(fitpercents.Name)
-            //if (fitpercent.length > 0) {
-              return subjectmatterexperts.Name
-            //}
-            //else {
-            //  return 'select fit percent'
-            //}
-          }}
-          defaultValue={[]}
+          // getOptionLabel={(subjectmatterexperts) => {
+          //   //console.log(fitpercents.Name)
+          //   //if (fitpercent.length > 0) {
+          //     return subjectmatterexperts.Name
+          //   //}
+          //   //else {
+          //   //  return 'select fit percent'
+          //   //}
+          // }}
+          getOptionLabel={subjectmatterexperts => typeof subjectmatterexperts === 'string' ? subjectmatterexperts : subjectmatterexperts.Name}
+          //defaultValue={[]}
           renderOption={(subjectmatterexperts, { selected }) => (
             <React.Fragment>
               <Checkbox

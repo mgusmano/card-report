@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Marker from './Marker';
 import GoogleMap from './GoogleMap';
 import axios from "axios";
@@ -9,55 +9,16 @@ const MapWidget = (props) => {
   var originallocations = null
   const [currid, setCurrId] = useState(null)
 
-  const onMessage = useCallback((e) => {
-    if (!e.detail) {return}
-    var type = e.detail.type
-    var payload = e.detail.payload
-    switch (type) {
-      case 'fromcardwidget':
-        onChange(payload)
-        break;
-      default:
-        break;
-    }
-  }, [])
-
-  useEffect(() => {
-
-    axios
-    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayLocations = response.data.map(item => {
-        return {
-          PartnerLocationID: item.PartnerLocationID,
-          LocationName: item.LocationName,
-          Latitude: item.Latitude,
-          Longitude: item.Longitude
-        }
-      })
-      console.log('locations',arrayLocations)
-      originallocations = arrayLocations
-      //setLocations(arrayLocations)
-      //setFilteredlocations(arrayLocations)
-    })
-
-    window.addEventListener('mjg', onMessage);
-    return function cleanup() {
-      window.removeEventListener('mjg', onMessage);
-    };
-
-  }, [])
 
   const onChange = (payload) => {
     console.log('MapWidget.onChange',payload)
     if (payload.filteredpositions.length === 0 &&
         payload.filteredskills.length === 0 &&
         payload.filteredlocations.length === 0 &&
-        payload.filteredmanagers.length === 0) {
-      //setFilteredlocations(originallocations)
-      setFilteredlocations([])
+        payload.filteredmanagers.length === 0 &&
+        payload.filteredsubjectmatterexperts.length === 0) {
+      setFilteredlocations(originallocations)
+      //setFilteredlocations([])
     }
     else {
       var thelocations = []
@@ -68,7 +29,9 @@ const MapWidget = (props) => {
           if (userlocation !== '') {
             thelocations.push(userlocation)
         }
+        //return
       })
+      //console.log(m)
       //console.log(thelocations)
 
       function findObjectByKey(array, key, value) {
@@ -108,6 +71,64 @@ const MapWidget = (props) => {
 
   };
 
+
+
+  // const onMessage = useCallback((e) => {
+  //   if (!e.detail) {return}
+  //   var type = e.detail.type
+  //   var payload = e.detail.payload
+  //   switch (type) {
+  //     case 'fromcardwidget':
+  //       onChange(payload)
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }, [onChange])
+
+
+  const onMessage = (e) => {
+    if (!e.detail) {return}
+    var type = e.detail.type
+    var payload = e.detail.payload
+    switch (type) {
+      case 'fromcardwidget':
+        onChange(payload)
+        break;
+      default:
+        break;
+    }
+  }
+
+  useEffect(() => {
+
+    axios
+    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      var arrayLocations = response.data.map(item => {
+        return {
+          PartnerLocationID: item.PartnerLocationID,
+          LocationName: item.LocationName,
+          Latitude: item.Latitude,
+          Longitude: item.Longitude
+        }
+      })
+      //console.log('locations',arrayLocations)
+      originallocations = arrayLocations
+      setFilteredlocations(originallocations)
+      //setLocations(arrayLocations)
+      //setFilteredlocations(arrayLocations)
+    })
+
+    window.addEventListener('mjg', onMessage);
+    return function cleanup() {
+      window.removeEventListener('mjg', onMessage);
+    };
+
+  }, [])
+
   const defaultProps = {
     center: {lat: 39.099728,lng: -94.578568},
     zoom: 4.5
@@ -118,7 +139,8 @@ const MapWidget = (props) => {
   };
 
   const _onBoundsChange = (center, zoom, bounds, marginBounds) => {
-    console.log('_onBoundsChange')
+    //console.log('_onBoundsChange')
+
     // if (this.props.onBoundsChange) {
     //   this.props.onBoundsChange({center, zoom, bounds, marginBounds});
     // } else {
@@ -156,12 +178,9 @@ const MapWidget = (props) => {
     // }
   }
 
-  const _onBalloonCloseClick = () => {
-    console.log('_onBalloonCloseClick')
-    // if (this.props.onChildClick) {
-    //   this.props.onChildClick(-1);
-    // }
-  }
+  // const _onBalloonCloseClick = () => {
+  //   console.log('_onBalloonCloseClick')
+  // }
 
   // const _distanceToMouse = () => {
   //   console.log('f')

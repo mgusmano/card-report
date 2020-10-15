@@ -14,7 +14,7 @@ const CardWidget = (props) => {
   //width:1000//width:
   //height:700//height:
 
-  const { PartnerID, PartnerName, PersonID } = props;
+  const { PartnerID, PartnerName } = props;
 
 
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
@@ -29,45 +29,49 @@ const CardWidget = (props) => {
   //const [filteredlocations, setFilteredlocations] = useState([])
   //var originalusers
 
+  const filterArray = (array, filters) => {
+    const filterKeys = Object.keys(filters);
+    return array.filter(item => {
+      // validates all filter criteria
+      return filterKeys.every(key => {
+        // ignores non-function predicates
+        if (typeof filters[key] !== 'function') return true;
+        return filters[key](item[key]);
+      });
+    });
+  }
+
   const onChange = (filterdata) => {
-    console.log('onChange',filterdata)
-    console.log('originalusers',cardRef.current.originalusers)
-
-    //setFilteredpositions(filterdata.filteredpositions)
-    //setFilteredlocations(filterdata.filteredlocations)
-
-    var filteredPositions = filterIt('JobName', filterdata.filteredpositions, cardRef.current.originalusers)
-    var filteredLocations = filterIt('Location', filterdata.filteredlocations, filteredPositions)
-    var filteredManagers = filterIt('DirectManagerID', filterdata.filteredmanagers, filteredLocations)
-
-    var filteredFitPercent = filterIt2('ManagerRating', filterdata.filteredfitpercent, filteredManagers)
-
-    console.log(filteredManagers)
-    console.log(filteredFitPercent)
-    console.log(filterdata.filteredfitpercent)
-
-
-    //setUsers(filteredManagers)
-    setUsers(filteredFitPercent)
-
-
-
-
-//ManagerRating
-
-
+    //https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72
+    const filters = {}
+    if (filterdata.filteredpositions.length > 0) {
+      filters.JobName = JobName => filterdata.filteredpositions.includes(JobName)
+    }
+    if (filterdata.filteredlocations.length > 0) {
+      filters.Location = Location => filterdata.filteredlocations.includes(Location)
+    }
+    if (filterdata.filteredmanagers.length > 0) {
+      filters.DirectManagerID = DirectManagerID => filterdata.filteredmanagers.includes(DirectManagerID)
+    }
+    if (filterdata.filteredfitpercent !== '') {
+      filters.ManagerRating = ManagerRating => (ManagerRating >= filterdata.filteredfitpercent) ? true : false
+    }
+    if (filterdata.filteredsubjectmatterexperts.length > 0) {
+      filters.sme = sme => filterdata.filteredsubjectmatterexperts.includes(sme)
+    }
+    const filtered = filterArray(cardRef.current.originalusers, filters);
+    setUsers(filtered)
 
     SendIt('fromcardwidget', {
-      filteredusers: filteredManagers,
+      filteredusers: filtered,
       filteredskills: filterdata.filteredskills,
       filteredpositions: filterdata.filteredpositions,
       filteredlocations: filterdata.filteredlocations,
       filteredmanagers: filterdata.filteredmanagers,
-      filteredfitpercent: filterdata.filteredfitpercent
+      filteredfitpercent: filterdata.filteredfitpercent,
+      filteredsubjectmatterexperts: filterdata.filteredsubjectmatterexperts,
     })
-
-  };
-
+  }
 
   const onMessage = useCallback((e) => {
     if (!e.detail) {return}
@@ -87,7 +91,6 @@ const CardWidget = (props) => {
     console.log('useEffect CardWidget')
     const card = cardRef.current
 
-
     // const urlParams = new URLSearchParams(window.location.search);
     // const partnerid = parseInt(urlParams.get('partnerid'));
     // const partnername = urlParams.get('partnername');
@@ -98,25 +101,38 @@ const CardWidget = (props) => {
     //   PartnerName = partnername
     // }
 
-
     axios
     .get('https://skillnetusersapi.azurewebsites.net/api/users?partnerid=' + PartnerID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
-      console.log('users with Test',response.data)
-
+      //console.log('users with Test',response.data)
       var Users = response.data.filter(user => {
         if (user.BLastName !== 'Test') {
           return user
         }
-        //return location.City
       })
-      console.log('users',Users)
-
-      //setOriginalUsers(response.data)
-      setUsers(Users)
-      card.originalusers = Users
+      var Users2 = Users.map(function (user) {
+        var f = user.BFirstName.charAt(0)
+        switch (f) {
+          case 'A':
+            user.sme = 'Gold'
+            break;
+          case 'B':
+            user.sme = 'Silver'
+            break;
+          case 'C':
+            user.sme = 'Bronze'
+            break;
+          default:
+            user.sme = ''
+            break;
+        }
+        return user
+      });
+      console.log('users',Users2)
+      setUsers(Users2)
+      card.originalusers = Users2
     })
     .catch((error) => {
       console.log(error)
@@ -155,45 +171,45 @@ const CardWidget = (props) => {
 
 
 
-  const filterIt = (name, filtersSelected, start) => {
-    if (filtersSelected.length === 0) {
-      return start
-    }
-    var filteredResult = start.filter(obj => {
-      var found = false;
-        for (var i = 0; i < filtersSelected.length; i++) {
-          if (obj[name] === filtersSelected[i]) {
-            found = true;
-            break;
-          }
-        }
-        return found
-    })
-    return filteredResult
-  };
+  // const filterIt = (name, filtersSelected, start) => {
+  //   if (filtersSelected.length === 0) {
+  //     return start
+  //   }
+  //   var filteredResult = start.filter(obj => {
+  //     var found = false;
+  //       for (var i = 0; i < filtersSelected.length; i++) {
+  //         if (obj[name] === filtersSelected[i]) {
+  //           found = true;
+  //           break;
+  //         }
+  //       }
+  //       return found
+  //   })
+  //   return filteredResult
+  // };
 
-  const filterIt2 = (name, filtersSelected, start) => {
-    if (filtersSelected.length === 0) {
-      return start
-    }
-    var filteredResult = start.filter(obj => {
-      var found = false;
-        //for (var i = 0; i < filtersSelected.length; i++) {
-          //console.log(obj[name])
-          //console.log(filtersSelected)
-          if (obj[name] >= filtersSelected) {
-            //console.log('found')
-            found = true;
-            //break;
-          }
-          else {
-            found = false;
-          }
-        //}
-        return found
-    })
-    return filteredResult
-  };
+  // const filterIt2 = (name, filtersSelected, start) => {
+  //   if (filtersSelected.length === 0) {
+  //     return start
+  //   }
+  //   var filteredResult = start.filter(obj => {
+  //     var found = false;
+  //       //for (var i = 0; i < filtersSelected.length; i++) {
+  //         //console.log(obj[name])
+  //         //console.log(filtersSelected)
+  //         if (obj[name] >= filtersSelected) {
+  //           //console.log('found')
+  //           found = true;
+  //           //break;
+  //         }
+  //         else {
+  //           found = false;
+  //         }
+  //       //}
+  //       return found
+  //   })
+  //   return filteredResult
+  // };
 
 
 

@@ -38,7 +38,7 @@ const CardReportFooter = () => {
   }, [onMessage]);
 
   const onChange = (filterdata) => {
-    console.log('onChange',filterdata)
+    //console.log('onChange',filterdata)
     //console.log('originalusers',cardRef.current.originalusers)
 
     setFilteredpositions(filterdata.filteredpositions)

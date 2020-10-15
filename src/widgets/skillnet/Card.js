@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Star from '@material-ui/icons/Star';
 
@@ -11,21 +11,21 @@ const Card = (props) => {
   useEffect(() => {
     //console.log('useEffect Card')
 
-    if (user.Avatar == "https://azureportal.skillnet.net/") {
+    if (user.Avatar === "https://azureportal.skillnet.net/") {
       user.Avatar = 'a.png'
     }
 
-    var f = user.BFirstName.charAt(0)
+    var f = user.sme
     switch (f) {
-      case 'B':
-        setColor('#C0C0C0')
-        setDisplay('block')
-        break;
-      case 'A':
+      case 'Gold':
         setColor('#FFD700')
         setDisplay('block')
         break;
-      case 'C':
+      case 'Silver':
+        setColor('#C0C0C0')
+        setDisplay('block')
+        break;
+      case 'Bronze':
         setColor('#cd7f32')
         setDisplay('block')
         break;
@@ -39,7 +39,7 @@ const Card = (props) => {
 
 
 
-  }, []);
+  }, [user.Avatar, user.BFirstName]);
 
 
   return (
