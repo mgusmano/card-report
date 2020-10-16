@@ -4,12 +4,14 @@ import styled from 'styled-components';
 
 // InfoWindow component
 const InfoWindow = (props) => {
-  const { place, text } = props;
+  const { place, text, users } = props;
+
+
   const infoWindowStyle = {
     position: 'relative',
-    bottom: 88,
+    bottom: 188,
     left: '-95px',
-    width: 220,
+    width: 400,
     backgroundColor: 'white',
     boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
     padding: 10,
@@ -17,32 +19,18 @@ const InfoWindow = (props) => {
     zIndex: 100,
   };
 
+  //console.log(users)
   return (
     <div style={infoWindowStyle}>
-      <div style={{ fontSize: 16 }}>
-        {text}
-      </div>
-      <div style={{ fontSize: 14 }}>
-        <span style={{ color: 'grey' }}>
-          {place.rating}
-          {' '}
-        </span>
-        <span style={{ color: 'orange' }}>
-          {String.fromCharCode(9733).repeat(Math.floor(place.rating))}
-        </span>
-        <span style={{ color: 'lightgrey' }}>
-          {String.fromCharCode(9733).repeat(5 - Math.floor(place.rating))}
-        </span>
-      </div>
-      <div style={{ fontSize: 14, color: 'grey' }}>
-        {place.types[0]}
-      </div>
-      <div style={{ fontSize: 14, color: 'grey' }}>
-        {'$'.repeat(place.price_level)}
-      </div>
-      <div style={{ fontSize: 14, color: 'green' }}>
-        {place.opening_hours.open_now ? 'Open' : 'Closed'}
-      </div>
+      <div>{text}</div>
+      <p></p>
+      {users !== null &&
+        users.map((user, index) => {
+          return (
+            <div key={index}>{user.BFirstName} {user.BLastName} - {user.Email}</div>
+          )
+        })
+      }
     </div>
   );
 };
@@ -73,7 +61,7 @@ const place = {
   }
 }
 
-const Marker = ({ text, onClick, show, num }) => (
+const Marker = ({ text, onClick, show, num, users}) => (
   <>
   <Wrapper
     style={{display:'flex',alignItems:'center',justifyContent:'center'}}
@@ -84,7 +72,7 @@ const Marker = ({ text, onClick, show, num }) => (
     <div style={{color:'white'}}>{num}</div>
   </Wrapper>
   {show === true &&
-    <InfoWindow place={place} text={text} />
+    <InfoWindow place={place} text={text} users={users} />
   }
   </>
 )

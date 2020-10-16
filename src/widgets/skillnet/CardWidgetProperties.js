@@ -150,24 +150,55 @@ const CardWidgetProperties = (props) => {
     window.dispatchEvent(new CustomEvent('mjg',{detail:{type:type,payload:payload}}));
   }
 
+
+
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
-    setButtonLabel('Filters Are Applied')
-    // onChange({
+
+    const filters = {}
+    if (filteredpositions.length > 0) {
+      filters.JobName = JobName => filteredpositions.includes(JobName)
+    }
+    if (filteredlocations.length > 0) {
+      filters.Location = Location => filteredlocations.includes(Location)
+    }
+    if (filteredmanagers.length > 0) {
+      filters.DirectManagerID = DirectManagerID => filteredmanagers.includes(DirectManagerID)
+    }
+    if (filteredfitpercent !== '') {
+      filters.ManagerRating = ManagerRating => (ManagerRating >= filteredfitpercent) ? true : false
+    }
+    if (filteredsubjectmatterexperts.length > 0) {
+      filters.sme = sme => filteredsubjectmatterexperts.includes(sme)
+    }
+
+    SendIt('fromcard2', {filters: filters})
+
+
+
+
+
+    // //const filtered = filterArray(cardRef.current.originalusers, filters);
+    // //setUsers(filtered)
+
+
+
+
+
+    // SendIt('fromcard', {filters: {
+    //   filteredusers: filtered,
+    //   filteredpositions: filteredpositions,
+    //   filteredskills: filteredskills,
     //   filteredlocations: filteredlocations,
-    //   filteredpositions: filteredpositions
-    // })
+    //   filteredmanagers: filteredmanagers,
+    //   filteredfitpercent: filteredfitpercent,
+    //   filteredsubjectmatterexperts: filteredsubjectmatterexperts
+    // }})
 
-    SendIt('fromcard', {filters: {
-      filteredpositions: filteredpositions,
-      filteredskills: filteredskills,
-      filteredlocations: filteredlocations,
-      filteredmanagers: filteredmanagers,
-      filteredfitpercent: filteredfitpercent,
-      filteredsubjectmatterexperts: filteredsubjectmatterexperts
-    }})
+    setButtonLabel('Filters Are Applied')
 
-    //window.dispatchEvent(new CustomEvent('mjg',{detail:{type:'fromcard',payload:payload}}));
+
+
 
   };
 

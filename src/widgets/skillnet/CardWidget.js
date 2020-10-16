@@ -29,6 +29,24 @@ const CardWidget = (props) => {
   //const [filteredlocations, setFilteredlocations] = useState([])
   //var originalusers
 
+
+  const onMessage = useCallback((e) => {
+    if (!e.detail) {return}
+    var type = e.detail.type
+    var payload = e.detail.payload
+    switch (type) {
+      case 'fromcard':
+        onChange(payload.filters)
+        break;
+
+      case 'fromcard2':
+        onChange2(payload.filters)
+        break;
+      default:
+        break;
+    }
+  }, [])
+
   const filterArray = (array, filters) => {
     const filterKeys = Object.keys(filters);
     return array.filter(item => {
@@ -41,50 +59,55 @@ const CardWidget = (props) => {
     });
   }
 
-  const onChange = (filterdata) => {
-    //https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72
-    const filters = {}
-    if (filterdata.filteredpositions.length > 0) {
-      filters.JobName = JobName => filterdata.filteredpositions.includes(JobName)
-    }
-    if (filterdata.filteredlocations.length > 0) {
-      filters.Location = Location => filterdata.filteredlocations.includes(Location)
-    }
-    if (filterdata.filteredmanagers.length > 0) {
-      filters.DirectManagerID = DirectManagerID => filterdata.filteredmanagers.includes(DirectManagerID)
-    }
-    if (filterdata.filteredfitpercent !== '') {
-      filters.ManagerRating = ManagerRating => (ManagerRating >= filterdata.filteredfitpercent) ? true : false
-    }
-    if (filterdata.filteredsubjectmatterexperts.length > 0) {
-      filters.sme = sme => filterdata.filteredsubjectmatterexperts.includes(sme)
-    }
-    const filtered = filterArray(cardRef.current.originalusers, filters);
-    setUsers(filtered)
 
-    SendIt('fromcardwidget', {
-      filteredusers: filtered,
-      filteredskills: filterdata.filteredskills,
-      filteredpositions: filterdata.filteredpositions,
-      filteredlocations: filterdata.filteredlocations,
-      filteredmanagers: filterdata.filteredmanagers,
-      filteredfitpercent: filterdata.filteredfitpercent,
-      filteredsubjectmatterexperts: filterdata.filteredsubjectmatterexperts,
-    })
+  const SendIt = (type, payload) => {
+    window.dispatchEvent(new CustomEvent('mjg',{detail:{type:type,payload:payload}}));
   }
 
-  const onMessage = useCallback((e) => {
-    if (!e.detail) {return}
-    var type = e.detail.type
-    var payload = e.detail.payload
-    switch (type) {
-      case 'fromcard':
-        onChange(payload.filters)
-        break;
-      default:
-        break;
-    }
-  }, [])
+  const onChange2 = (filters) => {
+    const filteredusers = filterArray(cardRef.current.originalusers, filters);
+    setUsers(filteredusers)
+
+    console.log(filteredusers)
+    SendIt('filteredusers', filteredusers)
+
+  }
+
+
+  const onChange = (filterdata) => {
+    //https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72
+    // const filters = {}
+    // if (filterdata.filteredpositions.length > 0) {
+    //   filters.JobName = JobName => filterdata.filteredpositions.includes(JobName)
+    // }
+    // if (filterdata.filteredlocations.length > 0) {
+    //   filters.Location = Location => filterdata.filteredlocations.includes(Location)
+    // }
+    // if (filterdata.filteredmanagers.length > 0) {
+    //   filters.DirectManagerID = DirectManagerID => filterdata.filteredmanagers.includes(DirectManagerID)
+    // }
+    // if (filterdata.filteredfitpercent !== '') {
+    //   filters.ManagerRating = ManagerRating => (ManagerRating >= filterdata.filteredfitpercent) ? true : false
+    // }
+    // if (filterdata.filteredsubjectmatterexperts.length > 0) {
+    //   filters.sme = sme => filterdata.filteredsubjectmatterexperts.includes(sme)
+    // }
+    // const filtered = filterArray(cardRef.current.originalusers, filters);
+    //setUsers(filtered)
+
+    setUsers(filterdata.filteredusers)
+
+    // SendIt('fromcardwidget', {
+    //   filteredusers: filtered,
+    //   filteredskills: filterdata.filteredskills,
+    //   filteredpositions: filterdata.filteredpositions,
+    //   filteredlocations: filterdata.filteredlocations,
+    //   filteredmanagers: filterdata.filteredmanagers,
+    //   filteredfitpercent: filterdata.filteredfitpercent,
+    //   filteredsubjectmatterexperts: filterdata.filteredsubjectmatterexperts,
+    // })
+  }
+
 
 
   useEffect(() => {
@@ -165,9 +188,6 @@ const CardWidget = (props) => {
   //   }
   // }
 
-  const SendIt = (type, payload) => {
-    window.dispatchEvent(new CustomEvent('mjg',{detail:{type:type,payload:payload}}));
-  }
 
 
 

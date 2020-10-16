@@ -9,99 +9,161 @@ const MapWidget = (props) => {
   var originallocations = null
   const [currid, setCurrId] = useState(null)
 
-
-  const onChange = (payload) => {
-    console.log('MapWidget.onChange',payload)
-    if (payload.filteredpositions.length === 0 &&
-        payload.filteredskills.length === 0 &&
-        payload.filteredlocations.length === 0 &&
-        payload.filteredmanagers.length === 0 &&
-        payload.filteredsubjectmatterexperts.length === 0) {
-      setFilteredlocations(originallocations)
-      //setFilteredlocations([])
-    }
-    else {
-      var thelocations = []
-      payload.filteredusers.map(user => {
-        var userlocation = user.Location
-        //console.log(userlocation)
-        if (userlocation !== undefined)
-          if (userlocation !== '') {
-            thelocations.push(userlocation)
-        }
-        //return
-      })
-      //console.log(m)
-      //console.log(thelocations)
-
-      function findObjectByKey(array, key, value) {
-        for (var i = 0; i < array.length; i++) {
-          if (array[i][key] === value) {
-            return array[i];
-          }
-        }
-        return null;
-      }
-
-      var hist = {};
-      thelocations.map( function (a) {
-        //console.log(a)
-        if (a in hist) hist[a] ++; else hist[a] = 1;
-      } );
-      //console.log(hist);
-      //console.log(originallocations)
-
-      var finallocations = []
-      for (const [key, value] of Object.entries(hist)) {
-        //console.log(`${key}: ${value}`);
-        var result = findObjectByKey(originallocations, 'LocationName', key);
-        if (result !== null) {
-          result.num = value
-          //console.log(result)
-          finallocations.push(result)
-        }
-        else {
-          finallocations.push([])
-        }
-      }
-
-      //console.log('finallocations',finallocations)
-      setFilteredlocations(finallocations)
-    }
-
-  };
-
-
-
-  // const onMessage = useCallback((e) => {
-  //   if (!e.detail) {return}
-  //   var type = e.detail.type
-  //   var payload = e.detail.payload
-  //   switch (type) {
-  //     case 'fromcardwidget':
-  //       onChange(payload)
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }, [onChange])
-
-
   const onMessage = (e) => {
     if (!e.detail) {return}
     var type = e.detail.type
     var payload = e.detail.payload
     switch (type) {
-      case 'fromcardwidget':
-        onChange(payload)
+
+      // case 'fromcard':
+      //   onChange(payload.filters)
+      //   break;
+
+      case 'filteredusers':
+        console.log(payload)
+        onChange2(payload)
         break;
+
+
       default:
         break;
     }
   }
 
-  useEffect(() => {
+  const onChange2 = (filteredusers) => {
+    console.log(filteredusers)
+    var thelocations = []
+    filteredusers.map(user => {
+      var userlocation = user.Location
+      //console.log(userlocation)
+      if (userlocation !== undefined)
+        if (userlocation !== '') {
+          thelocations.push(userlocation)
+      }
+      //return
+    })
 
+    function findObjectByKey(array, key, value) {
+      for (var i = 0; i < array.length; i++) {
+        if (array[i][key] === value) {
+          return array[i];
+        }
+      }
+      return null;
+    }
+
+
+
+    var hist = {};
+    thelocations.map( function (a) {
+      //console.log(a)
+      if (a in hist) hist[a] ++; else hist[a] = 1;
+    } );
+    //console.log(hist);
+    //console.log(originallocations)
+
+    var finallocations = []
+    for (const [key, value] of Object.entries(hist)) {
+      //console.log(`${key}: ${value}`);
+      var result = findObjectByKey(originallocations, 'LocationName', key);
+      if (result !== null) {
+        result.num = value
+        //console.log(result)
+        finallocations.push(result)
+      }
+      else {
+        finallocations.push([])
+      }
+    }
+
+    var i;
+    for (i = 0; i < finallocations.length; i++) {
+      const users = filteredusers.filter(user => user.Location == finallocations[i].LocationName);
+      finallocations[i].users = users
+    }
+
+    console.log('finallocations',finallocations)
+    setFilteredlocations(finallocations)
+  }
+
+
+  // const onChange = (filterdata) => {
+  //   setFilteredlocations(filterdata.filteredusers)
+  //     //setFilteredlocations([])
+  //   return
+
+
+  //   console.log('MapWidget.onChange',payload)
+  //   if (filterdata.filteredpositions.length === 0 &&
+  //       filterdata.filteredskills.length === 0 &&
+  //       filterdata.filteredlocations.length === 0 &&
+  //       filterdata.filteredmanagers.length === 0 &&
+  //       filterdata.filteredsubjectmatterexperts.length === 0) {
+  //     setFilteredlocations(originallocations)
+  //     //setFilteredlocations([])
+  //   }
+  //   else {
+
+  //     console.log('filteredsers',filteredsers)
+
+
+
+  //     var thelocations = []
+  //     payload.filteredusers.map(user => {
+  //       var userlocation = user.Location
+  //       //console.log(userlocation)
+  //       if (userlocation !== undefined)
+  //         if (userlocation !== '') {
+  //           thelocations.push(userlocation)
+  //       }
+  //       //return
+  //     })
+  //     //console.log(m)
+  //     //console.log(thelocations)
+
+
+
+
+  //     function findObjectByKey(array, key, value) {
+  //       for (var i = 0; i < array.length; i++) {
+  //         if (array[i][key] === value) {
+  //           return array[i];
+  //         }
+  //       }
+  //       return null;
+  //     }
+
+  //     var hist = {};
+  //     thelocations.map( function (a) {
+  //       //console.log(a)
+  //       if (a in hist) hist[a] ++; else hist[a] = 1;
+  //     } );
+  //     //console.log(hist);
+  //     //console.log(originallocations)
+
+  //     var finallocations = []
+  //     for (const [key, value] of Object.entries(hist)) {
+  //       //console.log(`${key}: ${value}`);
+  //       var result = findObjectByKey(originallocations, 'LocationName', key);
+  //       if (result !== null) {
+  //         result.num = value
+  //         //console.log(result)
+  //         finallocations.push(result)
+  //       }
+  //       else {
+  //         finallocations.push([])
+  //       }
+  //     }
+
+  //     //console.log('finallocations',finallocations)
+  //     setFilteredlocations(finallocations)
+  //   }
+
+  // };
+
+
+
+  useEffect(() => {
     axios
     .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
       auth: {username: 'skillnet',password: 'demo'}
@@ -131,7 +193,7 @@ const MapWidget = (props) => {
 
   const defaultProps = {
     center: {lat: 39.099728,lng: -94.578568},
-    zoom: 4.5
+    zoom: 4
   };
 
   const handleApiLoaded = (map, maps) => {
@@ -171,7 +233,7 @@ const MapWidget = (props) => {
   }
 
   const _onChildMouseLeave = (/* key, childProps */) => {
-    console.log('_onChildMouseLeave')
+    //console.log('_onChildMouseLeave')
     setCurrId(0)
     // if (this.props.onMarkerHover) {
     //   this.props.onMarkerHover(-1);
@@ -219,6 +281,7 @@ const MapWidget = (props) => {
             text={location.LocationName}
             lat={location.Latitude}
             lng={location.Longitude}
+            users={location.users}
           />
         ))}
       </GoogleMap>
