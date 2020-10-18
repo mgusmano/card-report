@@ -1345,7 +1345,7 @@ class Dashboard extends Component {
     //console.log(filterObj.is_eb)
 //      <div style={{flex:'auto', display:'flex', flexDirection:'column', padding:'10px'}}>
     return (
-<React.Fragment>
+<Horizontal>
   <Vertical style={{flex:'4'}}>
 
     {/* header */}
@@ -1471,7 +1471,7 @@ class Dashboard extends Component {
     />
   </Vertical>
 
-</React.Fragment>
+</Horizontal>
     );
   }
 }
