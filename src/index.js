@@ -48,7 +48,7 @@ switch (type) {
   case 'cardgmi':
     ReactDOM.render(<CardReport PartnerID='434'/>,document.getElementById('root'));
       break;
-  case 'benchmark':
+  case 'benchmarkgmi':
     ReactDOM.render(<Dashboard />,document.getElementById('root'));
     break;
   default:
@@ -64,7 +64,7 @@ switch (type) {
               <li><Link to="/">Covid CNA</Link></li>
               <li><Link to="/cardcna">Card CNA</Link></li>
               <li><Link to="/cardgmi">Card GMI</Link></li>
-              <li><Link to="/benchmarkreport">Benchmark GMI</Link></li>
+              <li><Link to="/benchmarkgmi">Benchmark GMI</Link></li>
             </ul>
             </span>
             <Splitter/>
