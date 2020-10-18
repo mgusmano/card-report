@@ -49,21 +49,25 @@ switch (type) {
           <Separator/>
           <Horizontal style={{width:'100%',background:'blue'}}>
             {/* <Menu/> */}
-            <span style={{flex:'1',width:'100%',height:'100%'}}>
+            <span style={{xwidth:'100%',height:'100%'}}>
             <ul style={{paddingTop:'30px'}}>
               <li>
-                <Link to="/">CardReport</Link>
+                <Link to="/">Covid Report</Link>
               </li>
               <li>
-                <Link className="xactive" to="/covidreport">Covid Report</Link>
+                <Link to="/cardreportcna">CardReport CNA</Link>
+              </li>
+              <li>
+                <Link to="/cardreportgmi">CardReport GMI</Link>
               </li>
             </ul>
             </span>
             <Splitter/>
             {/* <Center/> */}
             <Switch>
-              <Route path="/" component={() => <CardReport PartnerID={PartnerID}/>} exact />
-              <Route path="/covidreport" component={() => {return <CovidReport/>}} />
+              <Route path="/" component={() => <CovidReport PartnerID={PartnerID}/>} exact />
+              <Route path="/cardreportcna" component={() => <CardReport PartnerID='395'/>}  />
+              <Route path="/cardreportgmi" component={() => <CardReport PartnerID='434'/>}  />
             </Switch>
             {/* center */}
             {/* <Splitter/>
