@@ -42,6 +42,9 @@ switch (type) {
   case 'covid':
     ReactDOM.render(<CovidReport />,document.getElementById('root'));
     break;
+  case 'benchmark':
+    ReactDOM.render(<Dashboard />,document.getElementById('root'));
+    break;
   default:
     ReactDOM.render(
       <Router>
