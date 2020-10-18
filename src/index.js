@@ -23,7 +23,7 @@ console.log(window.location.search);
 //=> '?foo=bar'
 
 const parsed = queryString.parse(window.location.search);
-console.log(parsed.report);
+console.log(parsed);
 //=> {foo: 'bar'}
 
 
@@ -32,9 +32,11 @@ console.log(parsed.report);
 //var type = 'covidreport'
 //var type = 'allreport'
 var type = parsed.report
+var PartnerID = parsed.partnerid
+console.log(PartnerID)
 switch (type) {
   case 'card':
-    ReactDOM.render(<CardReport />,document.getElementById('root'));
+    ReactDOM.render(<CardReport PartnerID={PartnerID}/>,document.getElementById('root'));
     break;
   case 'covid':
     ReactDOM.render(<CovidReport />,document.getElementById('root'));
@@ -58,7 +60,7 @@ switch (type) {
             <Splitter/>
             {/* <Center/> */}
             <Switch>
-              <Route path="/" component={() => <CardReport/>} exact />
+              <Route path="/" component={() => <CardReport PartnerID={PartnerID}/>} exact />
               <Route path="/covidreport" component={() => {return <CovidReport/>}} />
             </Switch>
             {/* center */}

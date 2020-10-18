@@ -34,14 +34,7 @@ import Menu from '@material-ui/icons/Menu';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-const CardReport = () => {
-  //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
-  var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399; //sandbox
-  //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
-  console.log('PartnerID',PartnerID)
-  console.log('PartnerName',PartnerName)
-  console.log('PersonID',PersonID)
-
+const CardReport = (props) => {
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('350px')
 
@@ -49,6 +42,42 @@ const CardReport = () => {
   const [mapflex, setMapflex] = useState(0)
 
   const [alignment, setAlignment] = React.useState('Card');
+
+  var PartnerID; var PartnerName; var PersonID;
+    //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
+    //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399; //sandbox
+    //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
+    console.log(props)
+  switch(props.PartnerID) {
+    case '434':
+      PartnerID = 434
+      PartnerName = 'General Mills';
+      PersonID = 275399;
+      break;
+    case '426':
+      PartnerID = 426
+      PartnerName = 'General Mills';
+      PersonID = 277356;
+      break;
+    case '395':
+      PartnerID = 395
+      PartnerName = 'CNA';
+      PersonID = 275399;
+      break;
+    default:
+      return (
+        <div>No partnerid or incorrect partnerid specified</div>
+      )
+
+      // code block
+  }
+
+
+  console.log('PartnerID',PartnerID)
+  console.log('PartnerName',PartnerName)
+  console.log('PersonID',PersonID)
+
+
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
