@@ -10,6 +10,7 @@ import './menu.css';
 
 import CardReport from './CardReport';
 import CovidReport from './pages/covidreport/CovidReport';
+import Dashboard from './pages/benchmarkreport/Dashboard';
 
 import Horizontal from './layout/Horizontal'
 import Vertical from './layout/Vertical'
@@ -49,17 +50,12 @@ switch (type) {
           <Separator/>
           <Horizontal style={{width:'100%',background:'blue'}}>
             {/* <Menu/> */}
-            <span style={{xwidth:'100%',height:'100%'}}>
+            <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
             <ul style={{paddingTop:'30px'}}>
-              <li>
-                <Link to="/">Covid Report</Link>
-              </li>
-              <li>
-                <Link to="/cardreportcna">CardReport CNA</Link>
-              </li>
-              <li>
-                <Link to="/cardreportgmi">CardReport GMI</Link>
-              </li>
+              <li><Link to="/">Covid Report</Link></li>
+              <li><Link to="/cardreportcna">Card Report CNA</Link></li>
+              <li><Link to="/cardreportgmi">Card Report GMI</Link></li>
+              <li><Link to="/benchmarkreport">Benchmark GMI</Link></li>
             </ul>
             </span>
             <Splitter/>
@@ -68,6 +64,7 @@ switch (type) {
               <Route path="/" component={() => <CovidReport PartnerID={PartnerID}/>} exact />
               <Route path="/cardreportcna" component={() => <CardReport PartnerID='395'/>}  />
               <Route path="/cardreportgmi" component={() => <CardReport PartnerID='434'/>}  />
+              <Route path="/benchmarkreport" component={() => <Dashboard PartnerID='434'/>}  />
             </Switch>
             {/* center */}
             {/* <Splitter/>

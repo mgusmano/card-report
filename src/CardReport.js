@@ -118,7 +118,7 @@ const CardReport = (props) => {
 
 
 
-        <div style={{display:'flex',justifyContent:'space-between',flexDirection:'row',background:'lightgray',color:'black',textAlign:'center',fontSize:'24px'}}>
+        <div style={{height:'75px',display:'flex',justifyContent:'space-between',flexDirection:'row',background:'lightgray',color:'black',textAlign:'center',fontSize:'24px'}}>
 
           <div style={{padding:'5px 0 0 20px',fontSize:'12px'}}>
               <img src={logoImg} alt="SKILLNET" style={{width:'90px'}} />
@@ -132,7 +132,7 @@ const CardReport = (props) => {
           }
 
           {PartnerName === 'General Mills' &&
-          <div style={{padding:'5px 0 0 0',fontSize:'12px'}}>
+          <div style={{padding:'15px 0 0 0',fontSize:'12px'}}>
               <img src={GMI} style={{marginTop:'10px'}} alt="GMI" style={{width:'90px'}} />
           </div>
           }
