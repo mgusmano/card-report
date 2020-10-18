@@ -47,12 +47,12 @@ switch (type) {
           <Separator/>
           <Horizontal style={{width:'100%',background:'blue'}}>
             {/* <Menu/> */}
-            <ul>
+            <ul style={{paddingTop:'30px'}}>
               <li>
                 <Link to="/">CardReport</Link>
               </li>
               <li>
-                <Link className="active" to="/covidreport">Covid Report</Link>
+                <Link className="xactive" to="/covidreport">Covid Report</Link>
               </li>
             </ul>
             <Splitter/>

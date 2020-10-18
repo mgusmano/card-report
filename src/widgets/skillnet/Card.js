@@ -43,7 +43,7 @@ const Card = (props) => {
 
 
   return (
-    <div key={user.PersonID} style={{display:'flex',flexDirection:'column',margin:'10px 10px 10px 10px',padding:'10px',width:'250px',height:'100px',border:'1px solid lightgray',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}}>
+    <div key={user.PersonID} style={{display:'flex',flexDirection:'column',margin:'10px 10px 10px 10px',padding:'10px',width:'300px',xheight:'150px',border:'1px solid lightgray',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}}>
 
     <div style={{display:'flex',flexDirection:'row',alignContent:'flex-start',justifyContent:'space-between'}}>
     <div style={{display:'flex',alignItems:'flex-start',}}>
@@ -52,10 +52,20 @@ const Card = (props) => {
       </div>
       <div style={{display:'flex',flexDirection:'column',alignContent:'flex-end'}}>
         <div style={{fontSize:'11px',fontWeight:'bold',marginTop:'1px',textAlign:'right'}}>{user.BFirstName} {user.BLastName}</div>
-        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{user.JobName}</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>&nbsp;{user.JobName}</div>
         <div style={{fontSize:'11px',marginTop:'10px',textAlign:'right'}}></div>
-        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{PartnerName}</div>
-        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{user.Location}</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>&nbsp;{PartnerName}</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Location: {user.Location}</div>
+
+        {PartnerName === 'General Mills' &&
+        <>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Segment: {user.Segment}</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Function: {user.Function}</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>SubFunction: {user.SubFunction}</div>
+        </>
+        }
+
+
 
       </div>
 

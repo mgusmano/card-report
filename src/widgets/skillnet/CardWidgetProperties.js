@@ -38,6 +38,22 @@ const CardWidgetProperties = (props) => {
   const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState([])
   //const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
 
+
+  const [segments, setSegments] = useState(null)
+  const [filteredsegments, setFilteredSegments] = useState([])
+  const refSegments = useRef(null);
+
+  const segmentsChanged = (event, value, reason) => {
+    var filtersSegments = value.map(segment => {
+      return segment.SegmentName
+    })
+    console.log('segmentsChanged',filtersSegments.toString())
+    setFilteredSegments(filtersSegments)
+    setButtonLabel('Apply All Filters')
+  };
+
+
+
   const {propertywidth} = props
   const refApplyButton = useRef(null);
   const refPositions = useRef(null);
@@ -47,13 +63,33 @@ const CardWidgetProperties = (props) => {
   const refFitpercents = useRef(null);
   const refSubjectmatterexperts = useRef(null);
 
-  const { PartnerID, PersonID } = props;
+  const { PartnerID, PartnerName, PersonID } = props;
 
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
 
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
+
+    // axios
+    // .get('https://skillnetsegmentsapi.azurewebsites.net/api/segments?personid=' + PersonID, {
+    //   auth: {username: 'skillnet',password: 'demo'}
+    // })
+    // .then((response) => {
+    //   console.log('segments',response.data)
+    //   setSegments(response.data)
+    // })
+    // .catch((error) => {
+    //   console.log(error)
+    // })
+
+    if (PartnerName == 'General Mills') {
+      setSegments([
+        { SegmentID: 1, SegmentName: 'Segment 1'}
+      ])
+    }
+
+
 
     axios
     .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
@@ -408,15 +444,6 @@ const CardWidgetProperties = (props) => {
           style={{width:'100%',marginTop:'20px'}}
           disableCloseOnSelect={true}
           options={fitpercents}
-          // getOptionLabel={(fitpercents) => {
-          //   //console.log(fitpercents.Name)
-          //   //if (fitpercent.length > 0) {
-          //     return fitpercents.Name
-          //   //}
-          //   //else {
-          //   //  return 'select fit percent'
-          //   //}
-          // }}
           getOptionLabel={fitpercents => typeof fitpercents === 'string' ? fitpercents : fitpercents.Name}
           //defaultValue={[]}
           renderOption={(fitpercents, { selected }) => (
@@ -449,15 +476,6 @@ const CardWidgetProperties = (props) => {
           multiple
           disableCloseOnSelect={true}
           options={subjectmatterexperts}
-          // getOptionLabel={(subjectmatterexperts) => {
-          //   //console.log(fitpercents.Name)
-          //   //if (fitpercent.length > 0) {
-          //     return subjectmatterexperts.Name
-          //   //}
-          //   //else {
-          //   //  return 'select fit percent'
-          //   //}
-          // }}
           getOptionLabel={subjectmatterexperts => typeof subjectmatterexperts === 'string' ? subjectmatterexperts : subjectmatterexperts.Name}
           //defaultValue={[]}
           renderOption={(subjectmatterexperts, { selected }) => (
@@ -476,6 +494,38 @@ const CardWidgetProperties = (props) => {
               {...params}
               variant="standard"
               label="Subject Matter Experts"
+              placeholder=""
+            />
+          )}
+        />
+      }
+
+      {segments !== null &&
+        <Autocomplete
+          ref={refSegments}
+          onChange={segmentsChanged}
+          style={{width:'100%',marginTop:'20px'}}
+          multiple
+          disableCloseOnSelect={true}
+          options={segments}
+          getOptionLabel={segments => typeof segments === 'string' ? segments : segments.SegmentName}
+          //defaultValue={[]}
+          renderOption={(segments, { selected }) => (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {segments.SegmentName}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Segments"
               placeholder=""
             />
           )}

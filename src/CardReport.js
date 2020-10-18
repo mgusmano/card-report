@@ -36,7 +36,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = () => {
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
-  var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
+  var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399; //sandbox
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
   console.log('PartnerID',PartnerID)
   console.log('PartnerName',PartnerName)
