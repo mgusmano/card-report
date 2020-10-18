@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import Pie from './charts/pie/Pie'
+
 import GMI from './images/GMI.png';
 import CNA from './images/CNA.png';
 import logoImg from './images/logo.png';
@@ -7,6 +9,7 @@ import logoImg from './images/logo.png';
 
 import CardWidget from './widgets/skillnet/CardWidget'
 import MapWidget from './widgets/skillnet/MapWidget'
+//import ChartWidget from './widgets/skillnet/ChartWidget'
 import CardReportFooter from './CardReportFooter'
 
 import Horizontal from './layout/Horizontal'
@@ -32,8 +35,8 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = () => {
-  var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
-  //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
+  //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
+  var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
   console.log('PartnerID',PartnerID)
   console.log('PartnerName',PartnerName)
@@ -82,6 +85,10 @@ const CardReport = () => {
     <Horizontal >
       {/* column 1 */}
       <Vertical style={{flex:'1'}}>
+
+
+
+
         <div style={{display:'flex',justifyContent:'space-between',flexDirection:'row',background:'lightgray',color:'black',textAlign:'center',fontSize:'24px'}}>
 
           <div style={{padding:'5px 0 0 20px',fontSize:'12px'}}>
@@ -135,6 +142,7 @@ const CardReport = () => {
           </div>
 
         </div>
+
         <Separator/>
         <CardWidget flex={cardflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} />
         <Splitter/>

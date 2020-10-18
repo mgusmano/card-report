@@ -1,0 +1,33 @@
+{
+  "chart": {
+      "caption": "Authorized by State (or province or country)",
+      "xsubCaption": "Last month",
+      "yAxisName": "Percent",
+      "numberSuffix": "%",
+      "theme": "fusion"
+  },
+  "data": [
+      {"label": "Alabama","value": "100"},
+      {"label": "Alaska","value": "50"},
+      {"label": "Arizona","value": "50"},
+      {"label": "Arkansas","value": "50"},
+      {"label": "California","value": "50"},
+      {"label": "Colorado","value": "50"},
+      {"label": "Connecticut","value": "50"},
+      {"label": "Delaware","value": "50"},
+      {"label": "Florida","value": "50"},
+      {"label": "Georgia","value": "50"},
+      {"label": "Hawaii","value": "50"},
+      {"label": "Idaho","value": "50"},
+      {"label": "Illinois","value": "50"},
+      {"label": "Indiana","value": "50"},
+      {"label": "Iowa","value": "50"},
+      {"label": "Kansas","value": "50"},
+      {"label": "Kentucky","value": "50"},
+      {"label": "Louisiana","value": "50"},
+      {"label": "Maine","value": "50"},
+      {"label": "Maryland","value": "50"},
+      {"label": "Massachusetts","value": "50"},
+      {"label": "Michigan","value": "50"}
+  ]
+}

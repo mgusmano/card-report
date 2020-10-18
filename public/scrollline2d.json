@@ -1,0 +1,109 @@
+{
+  "chart": {
+    "caption": "Assessment Report",
+    "scrollColor": "#32CD32",
+    "subcaption": "2020, Quarter - 1",
+    "theme": "fusion",
+    "adjustDiv": "0",
+    "yAxisValueDecimals": "2",
+    "forceYAxisValueDecimals": "1",
+    "yAxisMaxValue": "5.00",
+    "yAxisMinValue": "0.00",
+    "numDivLines": "9",
+    "labelDisplay": "rotate",
+    "canvasPadding": "30",
+    "baseFontSize": "16",
+    "showToolTip": "1",
+    "lineThickness": "3",
+    "flatScrollBars": "1",
+    "scrollheight": "10",
+    "numVisiblePlot": "20",
+    "plottooltext": "$displayValue",
+    "decimals": "2"
+  },
+  "categories": [
+    {
+      "category": [
+        {
+          "label": "Russell Holloman"
+        },
+        {
+          "label": "Alex Maciejewski"
+        },
+        {
+          "label": "Ryan Martin"
+        }
+      ]
+    }
+  ],
+  "dataset": [
+    {
+      "seriesname": "Individual",
+      "data": [
+        {
+          "value": 2.473684210526316,
+          "displayValue": "<div>Name: Russell Holloman, Individual Rating: 2.47</div>"
+        },
+        {
+          "value": 2.3947368421052633,
+          "displayValue": "<div>Name: Alex Maciejewski, Individual Rating: 2.39</div>"
+        },
+        {
+          "value": 2.3157894736842106,
+          "displayValue": "<div>Name: Ryan Martin, Individual Rating: 2.32</div>"
+        }
+      ]
+    },
+    {
+      "seriesname": "Target Rating",
+      "data": [
+        {
+          "value": "3.50",
+          "displayValue": "<div>Target Rating: 3.50</div>"
+        },
+        {
+          "value": "3.50",
+          "displayValue": "<div>Target Rating: 3.50</div>"
+        },
+        {
+          "value": "3.50",
+          "displayValue": "<div>Target Rating: 3.50</div>"
+        }
+      ]
+    },
+    {
+      "seriesname": "Group Avg",
+      "data": [
+        {
+          "value": 2.571848225214198,
+          "displayValue": "<div>Position: Experienced Professional, Position Rating: 2.57</div>"
+        },
+        {
+          "value": 2.571848225214198,
+          "displayValue": "<div>Position: Experienced Professional, Position Rating: 2.57</div>"
+        },
+        {
+          "value": 2.571848225214198,
+          "displayValue": "<div>Position: Experienced Professional, Position Rating: 2.57</div>"
+        }
+      ]
+    },
+    {
+      "seriesname": "Manager Rating",
+      "data": [
+        {
+          "value": 2.473684210526316,
+          "displayValue": "<div>Manager: Aaron Garcia, Manager Rating: 2.47</div>"
+        },
+        {
+          "value": 2.3947368421052633,
+          "displayValue": "<div>Manager: Aaron Anderson, Manager Rating: 2.39</div>"
+        },
+        {
+          "value": 2.3157894736842106,
+          "displayValue": "<div>Manager: Abbey Witt, Manager Rating: 2.32</div>"
+        }
+      ]
+    }
+  ]
+}

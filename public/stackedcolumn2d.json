@@ -1,0 +1,112 @@
+{
+  "chart": {
+      "caption": "Admissions by Date",
+      "zzzsubCaption": "Harry's SuperMart",
+      "xAxisname": "Feburary, 2020",
+      "yAxisName": "Number",
+      "numberPrefix": "",
+      "theme": "fusion"
+  },
+  "categories": [
+      {
+          "category": [
+              {"label": "Feb 01"},
+              {"label": "Feb 02"},
+              {"label": "Feb 03"},
+              {"label": "Feb 04"},
+              {"label": "Feb 05"},
+              {"label": "Feb 06"},
+              {"label": "Feb 07"},
+              {"label": "Feb 08"},
+              {"label": "Feb 09"},
+              {"label": "Feb 10"},
+              {"label": "Feb 11"},
+              {"label": "Feb 12"},
+              {"label": "Feb 13"},
+              {"label": "Feb 14"},
+              {"label": "Feb 15"},
+              {"label": "Feb 16"},
+              {"label": "Feb 17"},
+              {"label": "Feb 18"},
+              {"label": "Feb 19"},
+              {"label": "Feb 20"},
+              {"label": "Feb 21"},
+              {"label": "Feb 22"},
+              {"label": "Feb 23"},
+              {"label": "Feb 24"},
+              {"label": "Feb 25"},
+              {"label": "Feb 26"},
+              {"label": "Feb 27"},
+              {"label": "Feb 28"}
+          ]
+      }
+  ],
+  "dataset": [
+      {
+          "seriesname": "Authorized",
+          "data": [
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"},
+              {"value": "60"}
+          ]
+      },
+      {
+          "seriesname": "Not Authorized",
+          "data": [
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"},
+              {"value": "40"}
+          ]
+      }
+  ]
+}

@@ -1,0 +1,11 @@
+.x-toolbar-default .x-toolbar-separator-horizontal {
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #bdbdbd;
+    height: 20px;
+}
+
+.toolbar {
+  background:rgb(5,55,75);
+  color:white;
+  height:60px;
+}
