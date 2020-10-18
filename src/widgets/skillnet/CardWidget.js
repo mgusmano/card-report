@@ -65,6 +65,7 @@ const CardWidget = (props) => {
   }
 
   const onChange2 = (filters) => {
+    console.log(filters)
     const filteredusers = filterArray(cardRef.current.originalusers, filters);
     setUsers(filteredusers)
 

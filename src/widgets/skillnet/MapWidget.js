@@ -165,7 +165,7 @@ const MapWidget = (props) => {
 
   useEffect(() => {
     axios
-    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=395', {
+    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + props.PartnerID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {

@@ -49,6 +49,7 @@ switch (type) {
           <Separator/>
           <Horizontal style={{width:'100%',background:'blue'}}>
             {/* <Menu/> */}
+            <span style={{flex:'1',width:'100%',height:'100%'}}>
             <ul style={{paddingTop:'30px'}}>
               <li>
                 <Link to="/">CardReport</Link>
@@ -57,6 +58,7 @@ switch (type) {
                 <Link className="xactive" to="/covidreport">Covid Report</Link>
               </li>
             </ul>
+            </span>
             <Splitter/>
             {/* <Center/> */}
             <Switch>

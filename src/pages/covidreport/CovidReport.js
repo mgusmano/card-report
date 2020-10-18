@@ -39,9 +39,10 @@ const CovidReport = () => {
 
     }, []);
 
+    ///  {/* <Horizontal style={{background:'gray'}}> */}
   return (
-      <Horizontal style={{background:'gray'}}>
-        {/* column 1 */}
+
+
         <Vertical style={{flex:'1',background:'lightgray'}}>
           <div style={{display:'flex',padding:'10px 0 10px 20px',justifyContent:'space-between',flexDirection:'row',background:'rgb(94,100,179)',color:'white',textAlign:'center',fontSize:'24px'}}>
             CNA Covid Reporting
@@ -66,16 +67,18 @@ const CovidReport = () => {
 
 
         </Vertical>
-        <Splitter/>
-        {/* column 2 */}
-        {/* <Vertical style={{display:filterdisplay,width:propertywidth}}>
-          <CardWidgetProperties propertywidth={propertywidth} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
-        </Vertical> */}
-      </Horizontal>
-
 
 
   )
 }
 
 export default CovidReport
+
+
+      //   {/* <Splitter/> */}
+      //   {/* column 2 */}
+      //   {/* <Vertical style={{display:filterdisplay,width:propertywidth}}>
+      //     <CardWidgetProperties propertywidth={propertywidth} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
+      //   </Vertical> */}
+      // {/* </Horizontal> */}
+

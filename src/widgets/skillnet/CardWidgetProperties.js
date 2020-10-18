@@ -12,6 +12,43 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
+const DropDown = (props) => {
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+  const { who, onChanged, options, name} = props
+  return (
+    <Autocomplete
+      //ref={refSegments}
+      onChange={onChanged}
+      style={{width:'100%',marginTop:'20px'}}
+      multiple
+      disableCloseOnSelect={true}
+      options={options}
+      getOptionLabel={options => typeof options === 'string' ? options : options[name]}
+      //defaultValue={[]}
+      renderOption={(options, { selected }) => (
+        <React.Fragment>
+          <Checkbox
+            icon={icon}
+            checkedIcon={checkedIcon}
+            style={{ marginRight: 8 }}
+            checked={selected}
+          />
+          {options[name]}
+        </React.Fragment>
+      )}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          variant="standard"
+          label={who}
+          placeholder=""
+        />
+      )}
+    />
+  )
+}
+
 const CardWidgetProperties = (props) => {
   //title:Card Report//title:
   //x:30//x:
@@ -39,18 +76,44 @@ const CardWidgetProperties = (props) => {
   //const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
 
 
+
   const [segments, setSegments] = useState(null)
   const [filteredsegments, setFilteredSegments] = useState([])
   const refSegments = useRef(null);
-
   const segmentsChanged = (event, value, reason) => {
     var filtersSegments = value.map(segment => {
       return segment.SegmentName
     })
-    console.log('segmentsChanged',filtersSegments.toString())
+    console.log('segmentsChanged',filtersSegments)
     setFilteredSegments(filtersSegments)
     setButtonLabel('Apply All Filters')
   };
+
+  const [functions, setFunctions] = useState(null)
+  const [filteredfunctions, setFilteredFunctions] = useState([])
+  //const refSegments = useRef(null);
+  const functionsChanged = (event, value, reason) => {
+    var filtersFunctions = value.map(funct => {
+      return funct.FunctionName
+    })
+    console.log('functionsChanged',filtersFunctions)
+    setFilteredFunctions(filtersFunctions)
+    setButtonLabel('Apply All Filters')
+  };
+
+  const [subfunctions, setSubfunctions] = useState(null)
+  const [filteredsubfunctions, setFilteredSubfunctions] = useState([])
+  //const refSegments = useRef(null);
+  const subfunctionsChanged = (event, value, reason) => {
+    var filtersSubfunctions = value.map(subfunct => {
+      return subfunct.SubfunctionName
+    })
+    console.log('subfunctionsChanged',filtersSubfunctions)
+    setFilteredSubfunctions(filtersSubfunctions)
+    setButtonLabel('Apply All Filters')
+  };
+
+
 
 
 
@@ -85,7 +148,16 @@ const CardWidgetProperties = (props) => {
 
     if (PartnerName == 'General Mills') {
       setSegments([
-        { SegmentID: 1, SegmentName: 'Segment 1'}
+        { SegmentID: 1, SegmentName: 'North American Retail'},
+        { SegmentID: 2, SegmentName: 'Asia & Latin America'}
+      ])
+      setFunctions([
+        { FunctionID: 1, FunctionName: 'Supply Chain'},
+        { FunctionID: 1, FunctionName: 'Finance'}
+      ])
+      setSubfunctions([
+        { SubfunctionID: 1, SubfunctionName: 'Logistics'},
+        { SubfunctionID: 1, SubfunctionName: 'Finance'}
       ])
     }
 
@@ -191,6 +263,7 @@ const CardWidgetProperties = (props) => {
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
 
+    console.log('a')
     const filters = {}
     if (filteredpositions.length > 0) {
       filters.JobName = JobName => filteredpositions.includes(JobName)
@@ -207,6 +280,19 @@ const CardWidgetProperties = (props) => {
     if (filteredsubjectmatterexperts.length > 0) {
       filters.sme = sme => filteredsubjectmatterexperts.includes(sme)
     }
+    if (filteredsegments.length > 0) {
+      filters.Segment = Segment => filteredsegments.includes(Segment)
+    }
+    if (filteredfunctions.length > 0) {
+      filters.Function = Function => filteredfunctions.includes(Function)
+    }
+    if (filteredsubfunctions.length > 0) {
+      filters.SubFunction = SubFunction => filteredsubfunctions.includes(SubFunction)
+    }
+
+
+
+    console.log('filters',filters)
 
     SendIt('fromcard2', {filters: filters})
 
@@ -468,7 +554,12 @@ const CardWidgetProperties = (props) => {
         />
       }
 
-      {subjectmatterexperts !== null &&
+
+{subjectmatterexperts !== null &&
+<DropDown who="Subject Matter Experts" onChanged={subjectmatterexpertsChanged} options={subjectmatterexperts} name="Name"/>
+}
+
+      {null !== null &&
         <Autocomplete
           ref={refSubjectmatterexperts}
           onChange={subjectmatterexpertsChanged}
@@ -500,7 +591,11 @@ const CardWidgetProperties = (props) => {
         />
       }
 
-      {segments !== null &&
+{segments !== null &&
+<DropDown who="Segments" onChanged={segmentsChanged} options={segments} name="SegmentName"/>
+}
+
+      {null !== null &&
         <Autocomplete
           ref={refSegments}
           onChange={segmentsChanged}
@@ -532,6 +627,13 @@ const CardWidgetProperties = (props) => {
         />
       }
 
+
+{functions !== null &&
+<DropDown who="Functions" onChanged={functionsChanged} options={functions} name="FunctionName"/>
+}
+{subfunctions !== null &&
+<DropDown who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
+}
 
 
 

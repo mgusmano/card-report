@@ -1,4 +1,4 @@
-ul {
+span ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@ ul {
   background-color: #f1f1f1;
 }
 
-li a {
+span li a {
   display: block;
   color: #000;
   padding: 8px 16px;
@@ -14,18 +14,18 @@ li a {
 }
 
 /* Change the link color on hover */
-li a:hover {
+span li a:hover {
   background-color: #555;
   color: white;
 }
 
 
-li a.active {
+span li a.active {
   background-color: #4CAF50;
   color: white;
 }
 
-li a:hover:not(.active) {
+span li a:hover:not(.active) {
   background-color: #555;
   color: white;
 }
