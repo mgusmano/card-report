@@ -65,15 +65,17 @@ switch (type) {
               <li><Link to="/cardcna">Card CNA</Link></li>
               <li><Link to="/cardgmi">Card GMI</Link></li>
               <li><Link to="/benchmarkgmi">Benchmark GMI</Link></li>
+              <li><Link to="/covidcna">Covid CNA</Link></li>
             </ul>
             </span>
             <Splitter/>
             {/* <Center/> */}
             <Switch>
-              <Route path="/" component={() => <CovidReport PartnerID={PartnerID}/>} exact />
-              <Route path="/cardcna" component={() => <CardReport PartnerID='395'/>}  />
-              <Route path="/cardgmi" component={() => <CardReport PartnerID='434'/>}  />
-              <Route path="/benchmarkreport" component={() => <Dashboard PartnerID='434'/>}  />
+              <Route path="/" component={() => <CovidReport/>} exact />
+              <Route path="/cardcna" component={() => <CardReport PartnerID='395'/>} />
+              <Route path="/cardgmi" component={() => <CardReport PartnerID='434'/>} />
+              <Route path="/benchmarkgmi" component={() => <Dashboard PartnerID='434'/>}  />
+              <Route path="/covidcna" component={() => <CovidReport/>} />
             </Switch>
             {/* center */}
             {/* <Splitter/>
