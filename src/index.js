@@ -8,6 +8,7 @@ import queryString from 'query-string'
 import './index.css';
 import './menu.css';
 
+import Home from './pages/home/Home';
 import CardReport from './CardReport';
 import CovidReport from './pages/covidreport/CovidReport';
 import Dashboard from './pages/benchmarkreport/Dashboard';
@@ -61,7 +62,7 @@ switch (type) {
             {/* <Menu/> */}
             <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
             <ul style={{paddingTop:'30px'}}>
-              <li><Link to="/">Covid CNA</Link></li>
+              <li><Link to="/">Home</Link></li>
               <li><Link to="/cardcna">Card CNA</Link></li>
               <li><Link to="/cardgmi">Card GMI</Link></li>
               <li><Link to="/benchmarkgmi">Benchmark GMI</Link></li>
@@ -71,7 +72,7 @@ switch (type) {
             <Splitter/>
             {/* <Center/> */}
             <Switch>
-              <Route path="/" component={() => <CovidReport/>} exact />
+              <Route path="/" component={() => <Home/>} exact />
               <Route path="/cardcna" component={() => <CardReport PartnerID='395'/>} />
               <Route path="/cardgmi" component={() => <CardReport PartnerID='434'/>} />
               <Route path="/benchmarkgmi" component={() => <Dashboard PartnerID='434'/>}  />
