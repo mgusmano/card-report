@@ -140,7 +140,7 @@ const CardWidgetProperties = (props) => {
 
 
       axios
-      .get('http://skillnetusersapi.azurewebsites.net/api/segments/', {
+      .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
         auth: {username: 'skillnet',password: 'demo'}
       })
       .then((response) => {
@@ -158,7 +158,7 @@ const CardWidgetProperties = (props) => {
       })
 
       axios
-      .get('http://skillnetusersapi.azurewebsites.net/api/functions/', {
+      .get('https://skillnetusersapi.azurewebsites.net/api/functions/', {
         auth: {username: 'skillnet',password: 'demo'}
       })
       .then((response) => {
@@ -176,7 +176,7 @@ const CardWidgetProperties = (props) => {
       })
 
       axios
-      .get('http://skillnetusersapi.azurewebsites.net/api/subfunctions/', {
+      .get('https://skillnetusersapi.azurewebsites.net/api/subfunctions/', {
         auth: {username: 'skillnet',password: 'demo'}
       })
       .then((response) => {
