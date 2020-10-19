@@ -134,31 +134,83 @@ const CardWidgetProperties = (props) => {
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
 
-    // axios
-    // .get('https://skillnetsegmentsapi.azurewebsites.net/api/segments?personid=' + PersonID, {
-    //   auth: {username: 'skillnet',password: 'demo'}
-    // })
-    // .then((response) => {
-    //   console.log('segments',response.data)
-    //   setSegments(response.data)
-    // })
-    // .catch((error) => {
-    //   console.log(error)
-    // })
+
 
     if (PartnerName == 'General Mills') {
-      setSegments([
-        { SegmentID: 1, SegmentName: 'North American Retail'},
-        { SegmentID: 2, SegmentName: 'Asia & Latin America'}
-      ])
-      setFunctions([
-        { FunctionID: 1, FunctionName: 'Supply Chain'},
-        { FunctionID: 1, FunctionName: 'Finance'}
-      ])
-      setSubfunctions([
-        { SubfunctionID: 1, SubfunctionName: 'Logistics'},
-        { SubfunctionID: 1, SubfunctionName: 'Finance'}
-      ])
+
+
+      axios
+      .get('http://skillnetusersapi.azurewebsites.net/api/segments/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        var arraySegments = response.data.map(item => {
+          return {
+            SegmentID: item.CustomAttributeID,
+            SegmentName: item.CustomAttributeValue
+          }
+        })
+        console.log('segments',arraySegments)
+        setSegments(arraySegments)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      axios
+      .get('http://skillnetusersapi.azurewebsites.net/api/functions/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        var arrayFunctions = response.data.map(item => {
+          return {
+            FunctionID: item.CustomAttributeID,
+            FunctionName: item.CustomAttributeValue
+          }
+        })
+        console.log('functions',arrayFunctions)
+        setFunctions(arrayFunctions)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      axios
+      .get('http://skillnetusersapi.azurewebsites.net/api/subfunctions/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        var arraySubfunctions = response.data.map(item => {
+          return {
+            SubfunctionID: item.CustomAttributeID,
+            SubfunctionName: item.CustomAttributeValue
+          }
+        })
+        console.log('functions',arraySubfunctions)
+        setSubfunctions(arraySubfunctions)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
+
+      //http://skillnetusersapi.azurewebsites.net//api/functions/
+      //http://skillnetusersapi.azurewebsites.net//api/subfunctions/
+
+
+      // setSegments([
+      //   { SegmentID: 1, SegmentName: 'North American Retail'},
+      //   { SegmentID: 2, SegmentName: 'Asia & Latin America'}
+      // ])
+      // setFunctions([
+      //   { FunctionID: 1, FunctionName: 'Supply Chain'},
+      //   { FunctionID: 1, FunctionName: 'Finance'}
+      // ])
+      // setSubfunctions([
+      //   { SubfunctionID: 1, SubfunctionName: 'Logistics'},
+      //   { SubfunctionID: 1, SubfunctionName: 'Finance'}
+      // ])
     }
 
 
