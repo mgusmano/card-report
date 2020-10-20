@@ -3,6 +3,7 @@ import Horizontal from '../../layout/Horizontal'
 import Vertical from '../../layout/Vertical'
 import Splitter from '../../layout/Splitter'
 import Separator from '../../layout/Separator'
+import axios from "axios";
 
 import ChartWidget from '../../widgets/skillnet/ChartWidget'
 
@@ -21,20 +22,131 @@ const CovidReport = () => {
     //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
     var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
     //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
-    console.log('PartnerID',PartnerID)
-    console.log('PartnerName',PartnerName)
-    console.log('PersonID',PersonID)
+    //console.log('PartnerID',PartnerID)
+    //console.log('PartnerName',PartnerName)
+    //console.log('PersonID',PersonID)
 
     const [totalassignments, setTotalassignments] = useState(0)
     const [totalauthorized, setTotalAuthorized] = useState(0)
     const [totalnotauthorized, setTotalnotauthorized] = useState(0)
     const [authorizedpercent, setAuthorizedpercent] = useState(0)
 
+    const [SafeReturnPrevisitCompletedAssignments, setSafeReturnPrevisitCompletedAssignments] = useState(0)
+    const [SafeReturnPrevisitStartedAssignments, setSafeReturnPrevisitStartedAssignments] = useState(0)
+    const [SafeReturnUnAuthorizedAssignments, setSafeReturnUnAuthorizedAssignments] = useState(0)
+    const [SafeReturnAuthorizedAssignments, setSafeReturnAuthorizedAssignments] = useState(0)
+    const [SafeReturnCompletedAssignments, setSafeReturnCompletedAssignments] = useState(0)
+    const [SafeReturnNonCompletedAssignments, setSafeReturnNonCompletedAssignments] = useState(0)
+    const [SafeReturnAssignments, setSafeReturnAssignments] = useState(0)
+
     useEffect(() => {
       console.log('useEffect CovidReport')
-      setTotalassignments(7892)
-      setTotalAuthorized(2340)
-      setTotalnotauthorized(5552)
+
+      //1
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnPrevisitCompletedAssignments/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnPrevisitCompletedAssignments',response.data.length)
+        setSafeReturnPrevisitCompletedAssignments(response.data.length)
+        setTotalassignments(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //2
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnPrevisitStartedAssignments/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnPrevisitStartedAssignments',response.data.length)
+        setSafeReturnPrevisitStartedAssignments(response.data.length)
+        //setTotalassignments(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //3
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnUnAuthorizedAssignments', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnUnAuthorizedAssignments',response.data.length)
+        setSafeReturnUnAuthorizedAssignments(response.data.length)
+        setTotalnotauthorized(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //4
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnAuthorizedAssignments', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnAuthorizedAssignments',response.data.length)
+        setSafeReturnAuthorizedAssignments(response.data.length)
+        setTotalAuthorized(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //5
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnCompletedAssignments/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnCompletedAssignments',response.data.length)
+        setSafeReturnCompletedAssignments(response.data.length)
+        //setTotalAuthorized(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //6
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnNonCompletedAssignments/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnNonCompletedAssignments',response.data.length)
+        setSafeReturnNonCompletedAssignments(response.data.length)
+        //setTotalAuthorized(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //7
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SafeReturnAssignments/', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('SafeReturnAssignments',response.data.length)
+        setSafeReturnAssignments(response.data.length)
+        //setTotalAuthorized(response.data.length)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
+
+
+
+ //     setTotalassignments(7892)
+ //     setTotalAuthorized(2340)
+//      setTotalnotauthorized(5552)
       setAuthorizedpercent(29.65)
 
     }, []);
@@ -46,6 +158,16 @@ const CovidReport = () => {
         <Vertical style={{flex:'1',background:'lightgray'}}>
           <div style={{display:'flex',padding:'10px 0 10px 20px',justifyContent:'space-between',flexDirection:'row',background:'rgb(94,100,179)',color:'white',textAlign:'center',fontSize:'24px'}}>
             CNA Covid Reporting
+          </div>
+
+          <div style={{display:'flex',flexDirection:'column'}}>
+            <div>SafeReturnPrevisitCompletedAssignments: {SafeReturnPrevisitCompletedAssignments}</div>
+            <div>SafeReturnPrevisitStartedAssignments: {SafeReturnPrevisitStartedAssignments}</div>
+            <div>SafeReturnUnAuthorizedAssignments: {SafeReturnUnAuthorizedAssignments}</div>
+            <div>SafeReturnAuthorizedAssignments: {SafeReturnAuthorizedAssignments}</div>
+            <div>SafeReturnCompletedAssignments: {SafeReturnCompletedAssignments}</div>
+            <div>SafeReturnNonCompletedAssignments: {SafeReturnNonCompletedAssignments}</div>
+            <div>SafeReturnAssignments: {SafeReturnAssignments}</div>
           </div>
 
           <div style={{display:'flex',flexDirection:'row'}}>
