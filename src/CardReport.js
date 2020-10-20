@@ -52,7 +52,7 @@ const CardReport = (props) => {
     case '434':
       PartnerID = 434
       PartnerName = 'General Mills';
-      PersonID = 275399;
+      PersonID = 277356;
       break;
     case '426':
       PartnerID = 426
