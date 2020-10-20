@@ -18,7 +18,7 @@ const ChartWidget = (props) => {
     axios
     .get(`./${name}.json`, {})
     .then((response) => {
-      console.log(response.data)
+      //console.log(response.data)
       setChartData(response.data)
       setChartType(`${name}`)
 

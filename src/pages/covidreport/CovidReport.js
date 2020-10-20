@@ -49,6 +49,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnPrevisitCompletedAssignments',response.data.length)
+        console.log('SafeReturnPrevisitCompletedAssignments',response.data)
         setSafeReturnPrevisitCompletedAssignments(response.data.length)
         setTotalassignments(response.data.length)
       })
@@ -63,6 +64,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnPrevisitStartedAssignments',response.data.length)
+        console.log('SafeReturnPrevisitStartedAssignments',response.data)
         setSafeReturnPrevisitStartedAssignments(response.data.length)
         //setTotalassignments(response.data.length)
       })
@@ -77,6 +79,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnUnAuthorizedAssignments',response.data.length)
+        console.log('SafeReturnUnAuthorizedAssignments',response.data)
         setSafeReturnUnAuthorizedAssignments(response.data.length)
         setTotalnotauthorized(response.data.length)
       })
@@ -91,6 +94,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnAuthorizedAssignments',response.data.length)
+        console.log('SafeReturnAuthorizedAssignments',response.data)
         setSafeReturnAuthorizedAssignments(response.data.length)
         setTotalAuthorized(response.data.length)
       })
@@ -105,6 +109,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnCompletedAssignments',response.data.length)
+        console.log('SafeReturnCompletedAssignments',response.data)
         setSafeReturnCompletedAssignments(response.data.length)
         //setTotalAuthorized(response.data.length)
       })
@@ -119,6 +124,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnNonCompletedAssignments',response.data.length)
+        console.log('SafeReturnNonCompletedAssignments',response.data)
         setSafeReturnNonCompletedAssignments(response.data.length)
         //setTotalAuthorized(response.data.length)
       })
@@ -133,6 +139,7 @@ const CovidReport = () => {
       })
       .then((response) => {
         console.log('SafeReturnAssignments',response.data.length)
+        console.log('SafeReturnAssignments',response.data)
         setSafeReturnAssignments(response.data.length)
         //setTotalAuthorized(response.data.length)
       })
