@@ -220,8 +220,19 @@ const CardWidgetProperties = (props) => {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
-      console.log('managers',response.data)
-      setManagers(response.data)
+      var arrayManagers = response.data.map(item => {
+        return {
+          ManagerID: item.ManagerID,
+          ManagerName: item.ManagerName + ' (' + item.ManagerID + ')'
+        }
+      })
+      console.log('managers',arrayManagers)
+      setManagers(arrayManagers)
+
+
+
+      // console.log('managers',response.data)
+      // setManagers(response.data)
     })
     .catch((error) => {
       console.log(error)
