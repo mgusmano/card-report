@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 import { toast } from 'react-toastify';
 import Select from "react-select";
+import "react-select/dist/react-select.css";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import UploadCSVStyle from "../../styles/uploadCSV";
@@ -194,6 +195,7 @@ class Dashboard extends Component {
 
 
   componentDidMount() {
+    console.log('here')
 
     this.setClearFilterObj();
     this.getAllUser();
@@ -1396,61 +1398,47 @@ class Dashboard extends Component {
     <div style={{border:'0px solid red',flex:1, display:'flex', flexDirection:'column', padding:'10px'}}>
 
       {/* output */}
-      <Grid container className={classes.filterTitleDiv}>
-        <Grid item sm={5} md={4} lg={3} className={classes.filterOptDiv}>
-            <Typography className={classes.filterBoxLabel}>
-              Output:
-            </Typography>
-
-            <Select
-              name="outputId"
-              width="300px"
-              style={{ width: '220px' }}
-              value={this.state.filterObj.outputId}
-              defaultValue=""
-              onChange={(e) => this.selectChangeHandler(e, "outputId")}
-              className="search-select"
-              optionalClassName="form-select-option"
-              searchable
-              options={[...outputOption]}
-              placeholder="Select Graph view..."
-              clearable={false}
-            />
-        </Grid>
-
-        <Grid item sm={5} md={4} lg={3} className={classes.filterOptDiv}>
-              <Typography className={classes.filterBoxLabel}>
-                Select Theme:
-                </Typography>
-              <Select
-                name="theme"
-                style={{ width: '220px' }}
-                value={this.state.theme}
-                defaultValue=""
-                onChange={this.themeHandler}
-                className="search-select"
-                optionalClassName="form-select-option"
-                searchable
-                options={[...themeOption]}
-                placeholder="Select theme..."
-                clearable={false}
-
-              />
-        </Grid>
-
-        <Grid item sm={2} md={4} lg={6} className={classes.ChartbtnDiv}>
-          <Button
-            size="medium"
-            className={classes.chartBtn}
-            variant="contained"
-            color="primary"
-            onClick={this.generateGraphData}
-          >
-            Create Chart
-          </Button>
-        </Grid>
-
-      </Grid>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems: 'center'}}>
+          Output:
+          <Select
+            name="outputId"
+            style={{ width: '200px',margin:'0 20px 0 10px' }}
+            value={this.state.filterObj.outputId}
+            defaultValue=""
+            onChange={(e) => this.selectChangeHandler(e, "outputId")}
+            xclassName="search-select"
+            xoptionalClassName="form-select-option"
+            searchable
+            options={[...outputOption]}
+            placeholder="Select Graph view..."
+            clearable={false}
+          />
+          Select Theme:
+          <Select
+            name="theme"
+            style={{ width: '200px',margin:'0 20px 0 10px' }}
+            value={this.state.theme}
+            defaultValue=""
+            onChange={this.themeHandler}
+            xclassName="search-select"
+            xoptionalClassName="form-select-option"
+            searchable
+            options={[...themeOption]}
+            placeholder="Select theme..."
+            clearable={false}
+          />
+        </div>
+        <Button
+          size="medium"
+          className={classes.chartBtn}
+          variant="contained"
+          color="primary"
+          onClick={this.generateGraphData}
+        >
+          Create Chart
+        </Button>
+      </div>
       {/* output */}
 
       {/* chart */}

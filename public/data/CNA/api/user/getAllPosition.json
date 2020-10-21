@@ -54,5 +54,13 @@
   {
     "position_id": 14,
     "position_name": "RC Trainee - EB"
+  },
+  {
+    "position_id": 15,
+    "position_name": "RC Senior Consultant - EB"
+  },
+  {
+    "position_id": 16,
+    "position_name": "RC Senior Consultant - PC"
   }
 ]
