@@ -15,24 +15,26 @@ const Card = (props) => {
       user.Avatar = 'a.png'
     }
 
-    var f = user.sme
-    switch (f) {
-      case 'Gold':
-        setColor('#FFD700')
-        setDisplay('block')
-        break;
-      case 'Silver':
-        setColor('#C0C0C0')
-        setDisplay('block')
-        break;
-      case 'Bronze':
-        setColor('#cd7f32')
-        setDisplay('block')
-        break;
-      default:
-        setColor('white')
-        setDisplay('block')
-        break;
+    if (PartnerName == 'CNA') {
+      var f = user.sme
+      switch (f) {
+        case 'Gold':
+          setColor('#FFD700')
+          setDisplay('block')
+          break;
+        case 'Silver':
+          setColor('#C0C0C0')
+          setDisplay('block')
+          break;
+        case 'Bronze':
+          setColor('#cd7f32')
+          setDisplay('block')
+          break;
+        default:
+          setColor('white')
+          setDisplay('block')
+          break;
+      }
     }
 
     //console.log(user.BFirstName.charAt(0))

@@ -308,12 +308,14 @@ const CardWidgetProperties = (props) => {
     ]
     setFitpercents(arrayFitpercents)
 
-    var arraySubjectmatterexperts = [
-      { Name:'Gold',   value: 'Gold' },
-      { Name:'Silver', value: 'Silver' },
-      { Name:'Bronze', value: 'Bronze' },
-    ]
-    setSubjectmatterexperts(arraySubjectmatterexperts)
+    if (PartnerName == 'CNA') {
+      var arraySubjectmatterexperts = [
+        { Name:'Gold',   value: 'Gold' },
+        { Name:'Silver', value: 'Silver' },
+        { Name:'Bronze', value: 'Bronze' },
+      ]
+      setSubjectmatterexperts(arraySubjectmatterexperts)
+    }
 
 
   }, [PartnerID, PersonID]);
