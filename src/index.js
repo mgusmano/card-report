@@ -21,11 +21,10 @@ import Separator from './layout/Separator'
 // import Toolbar from './main/Toolbar'
 import Menu from './main/Menu'
 
-console.log(window.location.search);
+//console.log(window.location.search);
 //=> '?foo=bar'
-
 const parsed = queryString.parse(window.location.search);
-console.log(parsed);
+console.log('parsed',parsed);
 //=> {foo: 'bar'}
 
 
@@ -33,9 +32,60 @@ console.log(parsed);
 //var type = 'cardreport'
 //var type = 'covidreport'
 //var type = 'allreport'
-var type = parsed.report
+
+
+var PartnerID; var PartnerName; var PersonID; var PartnerShort;
 var PartnerID = parsed.partnerid
-console.log(PartnerID)
+//console.log(PartnerID)
+// switch(PartnerID) {
+//   case '434':
+//     PartnerID = 434
+//     PartnerShort = 'GMIsb'
+//     PartnerName = 'General Mills';
+//     PersonID = 281326;
+//     break;
+//   case '426':
+//     PartnerID = 426
+//     PartnerShort = 'GMI'
+//     PartnerName = 'General Mills';
+//     PersonID = 277356;
+//     break;
+//   case '395':
+//     PartnerID = 395
+//     PartnerShort = 'CNA'
+//     PartnerName = 'CNA';
+//     PersonID = 275399;
+//     break;
+//   default:
+//     return (
+//       <div>No partnerid or incorrect partnerid specified</div>
+//     )
+// }
+
+PartnerID = 395
+PartnerShort = 'CNA'
+PartnerName = 'CNA';
+PersonID = 275399;
+var PartnerCNA = {
+  PartnerID: PartnerID,
+  PartnerShort: PartnerShort,
+  PartnerName: PartnerName,
+  PersonID: PersonID
+}
+
+PartnerID = 434
+PartnerShort = 'GMIsb'
+PartnerName = 'General Mills';
+PersonID = 277356;
+var PartnerGMIsb = {
+  PartnerID: PartnerID,
+  PartnerShort: PartnerShort,
+  PartnerName: PartnerName,
+  PersonID: PersonID
+}
+
+
+var type = parsed.report
 switch (type) {
   // case 'card':
   //   ReactDOM.render(<CardReport PartnerID={PartnerID}/>,document.getElementById('root'));
@@ -49,8 +99,31 @@ switch (type) {
   case 'cardgmi':
     ReactDOM.render(<CardReport PartnerID='434'/>,document.getElementById('root'));
       break;
+    case 'benchmarkcna':
+      PartnerID = 395
+      PartnerShort = 'CNA'
+      PartnerName = 'CNA';
+      PersonID = 275399;
+      var Partner = {
+        PartnerID: PartnerID,
+        PartnerShort: PartnerShort,
+        PartnerName: PartnerName,
+        PersonID: PersonID
+      }
+      ReactDOM.render(<Dashboard Partner={Partner}/>,document.getElementById('root'));
+      break;
   case 'benchmarkgmi':
-    ReactDOM.render(<Dashboard />,document.getElementById('root'));
+    PartnerID = 434
+    PartnerShort = 'GMIsb'
+    PartnerName = 'General Mills';
+    PersonID = 277356;
+    var Partner = {
+      PartnerID: PartnerID,
+      PartnerShort: PartnerShort,
+      PartnerName: PartnerName,
+      PersonID: PersonID
+    }
+    ReactDOM.render(<Dashboard Partner={Partner}/>,document.getElementById('root'));
     break;
   default:
     ReactDOM.render(
@@ -65,7 +138,8 @@ switch (type) {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/cardcna">Card CNA</Link></li>
               <li><Link to="/cardgmi">Card GMI</Link></li>
-              <li><Link to="/benchmarkgmi">Benchmark GMI</Link></li>
+              <li><Link to="/benchmarkcna">Benchmark CNA</Link></li>
+              <li><Link to="/benchmarkgmisb">Benchmark GMIsb</Link></li>
               <li><Link to="/covidcna">Covid CNA</Link></li>
             </ul>
             </span>
@@ -75,7 +149,8 @@ switch (type) {
               <Route path="/" component={() => <Home/>} exact />
               <Route path="/cardcna" component={() => <CardReport PartnerID='395'/>} />
               <Route path="/cardgmi" component={() => <CardReport PartnerID='434'/>} />
-              <Route path="/benchmarkgmi" component={() => <Dashboard PartnerID='434'/>}  />
+              <Route path="/benchmarkcna" component={() => <Dashboard Partner={PartnerCNA}/>}  />
+              <Route path="/benchmarkgmisb" component={() => <Dashboard Partner={PartnerGMIsb}/>}  />
               <Route path="/covidcna" component={() => <CovidReport/>} />
             </Switch>
             {/* center */}

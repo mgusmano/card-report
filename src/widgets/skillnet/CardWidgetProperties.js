@@ -15,13 +15,13 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const DropDown = (props) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
-  const { who, onChanged, options, name} = props
+  const { who, onChanged, options, name, multiple} = props
   return (
     <Autocomplete
       //ref={refSegments}
       onChange={onChanged}
       style={{width:'100%',marginTop:'20px'}}
-      multiple
+      multiple={multiple}
       disableCloseOnSelect={true}
       options={options}
       getOptionLabel={options => typeof options === 'string' ? options : options[name]}
@@ -48,6 +48,8 @@ const DropDown = (props) => {
     />
   )
 }
+
+
 
 const CardWidgetProperties = (props) => {
   //title:Card Report//title:
@@ -454,143 +456,28 @@ const CardWidgetProperties = (props) => {
         {buttonlabel}
       </Button>
 
-      {positions !== null &&
-        <Autocomplete
-          ref={refPositions}
-          onChange={positionsChanged}
-          style={{width:'100%',marginTop:'20px'}}
-          multiple
-          disableCloseOnSelect={true}
-          options={positions}
-          //getOptionLabel={(position) => position.JobName}
-          getOptionLabel={position => typeof position === 'string' ? position : position.JobName}
-          //defaultValue=''
-          renderOption={(position, { selected }) => (
-            <React.Fragment>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {position.JobName}
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Positions"
-              placeholder=""
-            />
-          )}
-        />
-      }
+{positions !== null &&
+<DropDown multiple={true} who="Positions" onChanged={positionsChanged} options={positions} name="JobName"/>
+}
 
-      {skills !== null &&
-        <Autocomplete
-          ref={refSkills}
-          onChange={skillsChanged}
-          style={{width:'100%',marginTop:'20px'}}
-          multiple
-          disableCloseOnSelect={true}
-          options={skills}
-          //getOptionLabel={(skill) => skill.SkillName}
-          getOptionLabel={skill => typeof skill === 'string' ? skill : skill.SkillName}
-          defaultValue={[]}
-          renderOption={(skills, { selected }) => (
-            <React.Fragment>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {skills.SkillName}
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Skills"
-              placeholder=""
-            />
-          )}
-        />
-      }
+{skills !== null &&
+<DropDown multiple={true} who="Skills" onChanged={skillsChanged} options={skills} name="SkillName"/>
+}
 
-      {locations !== null &&
-        <Autocomplete
-          ref={refLocations}
-          onChange={locationsChanged}
-          style={{width:'100%',marginTop:'20px'}}
-          multiple
-          disableCloseOnSelect={true}
-          options={locations}
-          //getOptionLabel={(location) => location.LocationName}
-          getOptionLabel={location => typeof location === 'string' ? location : location.LocationName}
-          //defaultValue={[]}
-          renderOption={(locations, { selected }) => (
-            <React.Fragment>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {locations.LocationName}
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Locations"
-              placeholder=""
-            />
-          )}
-        />
-      }
+{locations !== null &&
+<DropDown multiple={true} who="Locations" onChanged={locationsChanged} options={locations} name="LocationName"/>
+}
 
-      {managers !== null &&
-        <Autocomplete
-          ref={refManagers}
-          onChange={managersChanged}
-          style={{width:'100%',marginTop:'20px'}}
-          multiple
-          disableCloseOnSelect={true}
-          options={managers}
-          //getOptionLabel={(manager) => manager.ManagerName}
-          getOptionLabel={manager => typeof manager === 'string' ? manager : manager.ManagerName}
-          //defaultValue={[]}
-          renderOption={(managers, { selected }) => (
-            <React.Fragment>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {managers.ManagerName}
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Managers"
-              placeholder=""
-            />
-          )}
-        />
-      }
+{managers !== null &&
+<DropDown multiple={true} who="Managers" onChanged={managersChanged} options={managers} name="ManagerName"/>
+}
 
       {fitpercents !== null &&
         <Autocomplete
           ref={refFitpercents}
           onChange={fitpercentsChanged}
           style={{width:'100%',marginTop:'20px'}}
+          multiple={false}
           disableCloseOnSelect={true}
           options={fitpercents}
           getOptionLabel={fitpercents => typeof fitpercents === 'string' ? fitpercents : fitpercents.Name}
@@ -619,87 +506,19 @@ const CardWidgetProperties = (props) => {
 
 
 {subjectmatterexperts !== null &&
-<DropDown who="Subject Matter Experts" onChanged={subjectmatterexpertsChanged} options={subjectmatterexperts} name="Name"/>
+<DropDown multiple={true} who="Subject Matter Experts" onChanged={subjectmatterexpertsChanged} options={subjectmatterexperts} name="Name"/>
 }
-
-      {null !== null &&
-        <Autocomplete
-          ref={refSubjectmatterexperts}
-          onChange={subjectmatterexpertsChanged}
-          style={{width:'100%',marginTop:'20px'}}
-          multiple
-          disableCloseOnSelect={true}
-          options={subjectmatterexperts}
-          getOptionLabel={subjectmatterexperts => typeof subjectmatterexperts === 'string' ? subjectmatterexperts : subjectmatterexperts.Name}
-          //defaultValue={[]}
-          renderOption={(subjectmatterexperts, { selected }) => (
-            <React.Fragment>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {subjectmatterexperts.Name}
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Subject Matter Experts"
-              placeholder=""
-            />
-          )}
-        />
-      }
 
 {segments !== null &&
-<DropDown who="Segments" onChanged={segmentsChanged} options={segments} name="SegmentName"/>
+<DropDown multiple={true} who="Segments" onChanged={segmentsChanged} options={segments} name="SegmentName"/>
 }
-
-      {null !== null &&
-        <Autocomplete
-          ref={refSegments}
-          onChange={segmentsChanged}
-          style={{width:'100%',marginTop:'20px'}}
-          multiple
-          disableCloseOnSelect={true}
-          options={segments}
-          getOptionLabel={segments => typeof segments === 'string' ? segments : segments.SegmentName}
-          //defaultValue={[]}
-          renderOption={(segments, { selected }) => (
-            <React.Fragment>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {segments.SegmentName}
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Segments"
-              placeholder=""
-            />
-          )}
-        />
-      }
-
 
 {functions !== null &&
-<DropDown who="Functions" onChanged={functionsChanged} options={functions} name="FunctionName"/>
+<DropDown multiple={true} who="Functions" onChanged={functionsChanged} options={functions} name="FunctionName"/>
 }
 {subfunctions !== null &&
-<DropDown who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
+<DropDown multiple={true} who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
 }
-
-
-
 
     </div>
   )

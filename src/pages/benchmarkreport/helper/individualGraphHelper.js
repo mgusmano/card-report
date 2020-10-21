@@ -68,9 +68,11 @@ function evaluateTargetRatingDataSet(targetUsers, positionTargetData, positionDa
     let distinctPositions = [...new Set(targetUsers.map(user => user.position_id))];
     let postionObjArr = [];
     targetUsers.forEach(user => {
+      //debugger
         const isPosition = postionObjArr.filter(position => position.position_id === user.position_id).length;
         if (!isPosition) {
             const selectedPosition = positionData.filter(pos => pos.position_id === user.position_id)[0];
+            console.log(selectedPosition)
             const positionObj = {
                 position_name: selectedPosition.position_name,
                 position_id: selectedPosition.position_id,

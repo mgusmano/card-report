@@ -62,7 +62,7 @@ const DashboardProperties = (props) => {
     outputOption,
     themeOption
   } = options;
-console.log(sourceOption)
+//console.log(sourceOption)
 return (
 
 <React.Fragment>

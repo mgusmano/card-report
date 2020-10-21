@@ -43,7 +43,7 @@ const CardReport = (props) => {
 
   const [alignment, setAlignment] = React.useState('Card');
 
-  var PartnerID; var PartnerName; var PersonID;
+  var PartnerID; var PartnerName; var PersonID; var PartnerShort;
     //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
     //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399; //sandbox
     //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
@@ -52,24 +52,25 @@ const CardReport = (props) => {
     case '434':
       PartnerID = 434
       PartnerName = 'General Mills';
-      PersonID = 277356;
+      PartnerShort = 'GMIsb';
+      PersonID = 281326;
       break;
     case '426':
       PartnerID = 426
       PartnerName = 'General Mills';
+      PartnerShort = 'GMI';
       PersonID = 277356;
       break;
     case '395':
       PartnerID = 395
       PartnerName = 'CNA';
+      PartnerShort = 'CNA';
       PersonID = 275399;
       break;
     default:
       return (
         <div>No partnerid or incorrect partnerid specified</div>
       )
-
-      // code block
   }
 
 

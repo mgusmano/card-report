@@ -44,49 +44,25 @@ import Vertical from '../../layout/Vertical'
 import Splitter from '../../layout/Splitter'
 import Separator from '../../layout/Separator'
 
-  //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
-  var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
-  //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
-  console.log('PartnerID',PartnerID)
-  console.log('PartnerName',PartnerName)
-  console.log('PersonID',PersonID)
+  // //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
+  // var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
+  // //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
+  // console.log('PartnerID',PartnerID)
+  // console.log('PartnerName',PartnerName)
+  // console.log('PersonID',PersonID)
 
 class Dashboard extends Component {
-
-  onCloseClick = () => {
-    console.log('onCloseClick')
-    //this.state.propertieswidth = '0px'
-
-    const { options } = this.state;
-    //options.positionOption = this.customizePositionData(data);
-    var propertiesdisplay = ''
-    console.log(options.propertiesdisplay)
-    console.log(options)
-    if (options.propertiesdisplay == 'flex') {
-      propertiesdisplay = 'none'
-    }
-    else {
-      propertiesdisplay = 'flex'
-    }
-    options.propertiesdisplay = propertiesdisplay
-    console.log(propertiesdisplay)
-    this.setState({
-      options,
-      //propertiesdisplay: propertiesdisplay,
-
-    });
-    // if (filterdisplay === 'block') {
-    //   setFilterDisplay('none')
-    // }
-    // else {
-    //   setFilterDisplay('block')
-    // }
-  };
 
 
   constructor(props) {
     super(props);
     this.userSkillData = [];
+
+    console.log('props',props)
+    this.props = props
+    this.prefix = `data/${props.Partner.PartnerShort}/`
+
+
     this.state = {
 
       labelEBPC: 'EB/PC', //'EB/PC',
@@ -185,6 +161,38 @@ class Dashboard extends Component {
     };
   }
 
+
+  onCloseClick = () => {
+    console.log('onCloseClick')
+    //this.state.propertieswidth = '0px'
+
+    const { options } = this.state;
+    //options.positionOption = this.customizePositionData(data);
+    var propertiesdisplay = ''
+    console.log(options.propertiesdisplay)
+    console.log(options)
+    if (options.propertiesdisplay == 'flex') {
+      propertiesdisplay = 'none'
+    }
+    else {
+      propertiesdisplay = 'flex'
+    }
+    options.propertiesdisplay = propertiesdisplay
+    console.log(propertiesdisplay)
+    this.setState({
+      options,
+      //propertiesdisplay: propertiesdisplay,
+
+    });
+    // if (filterdisplay === 'block') {
+    //   setFilterDisplay('none')
+    // }
+    // else {
+    //   setFilterDisplay('block')
+    // }
+  };
+
+
   componentDidMount() {
 
     this.setClearFilterObj();
@@ -219,7 +227,7 @@ class Dashboard extends Component {
    */
   getAllUser = () => {
     const httpObj = {
-      url: "api/user/getAllUser",
+      url: `${this.prefix}api/user/getAllUser`,
       method: "GET",
     };
     httpHelper(httpObj, this.setUserData, this.requestFailure, false);
@@ -232,7 +240,7 @@ class Dashboard extends Component {
    */
   getAllSkill = () => {
     const httpObj = {
-      url: "api/user/getAllSkill",
+      url: `${this.prefix}api/user/getAllSkill`,
       method: "GET",
     };
     httpHelper(httpObj, this.setSkillData, this.requestFailure, false);
@@ -245,7 +253,7 @@ class Dashboard extends Component {
    */
   getAllPosition = () => {
     const httpObj = {
-      url: "api/user/getAllPosition",
+      url: `${this.prefix}api/user/getAllPosition`,
       method: "GET",
     };
     httpHelper(httpObj, this.setPositionData, this.requestFailure, false);
@@ -258,7 +266,7 @@ class Dashboard extends Component {
    */
   getPositionTarget = () => {
     const httpObj = {
-      url: "api/user/getPositionTarget",
+      url: `${this.prefix}api/user/getPositionTarget`,
       method: "GET",
     };
     httpHelper(httpObj, this.setPositionTargetData, this.requestFailure, false);
@@ -271,6 +279,7 @@ class Dashboard extends Component {
   setUserData = ({ data }) => {
     //console.log(JSON.stringify(data))
     //debugger
+    console.log('setUserData',data)
     const { options } = this.state;
     if (data && data.length > 0) {
       data.forEach((d) => {
@@ -1241,7 +1250,7 @@ class Dashboard extends Component {
 
   getAllUserSkill = () => {
     const httpObj = {
-      url: "api/user/getUserSkill",
+      url: `${this.prefix}api/user/getUserSkill`,
       method: "GET",
     };
     httpHelper(httpObj, this.setUserSkillData, this.requestFailure, false);
@@ -1354,12 +1363,12 @@ class Dashboard extends Component {
         <img src={logoImg} alt="SKILLNET" style={{width:'90px'}} />
         <span style={{xmarginLeft:'-2px'}}><i>Benchmark Report</i></span>
       </div>
-      {PartnerName === 'CNA' &&
+      {this.props.Partner.PartnerName === 'CNA' &&
       <div style={{padding:'5px 0 0 0',fontSize:'12px'}}>
         <img src={CNA} style={{marginTop:'10px'}} alt="CNA" style={{width:'90px'}} />
       </div>
       }
-      {PartnerName === 'General Mills' &&
+      {this.props.Partner.PartnerName === 'General Mills' &&
       <div style={{padding:'15px 0 0 0',fontSize:'12px'}}>
         <img src={GMI} style={{marginTop:'10px'}} alt="GMI" style={{width:'90px'}} />
       </div>
