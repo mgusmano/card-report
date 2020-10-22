@@ -461,7 +461,7 @@ return (
 
               </Grid>
 
-              <Grid className={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   {labelFunctionGroup}
                 </Typography>
@@ -481,7 +481,7 @@ return (
                 />
               </Grid>
 
-              <Grid className={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>{labelLine}</Typography>
                 <Select
                   name="line"
@@ -499,7 +499,7 @@ return (
                 />
                 <Grid item sm={12} md={12} lg={12} />
               </Grid>
-              <Grid className={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                 {labelCompetency}
                 </Typography>
