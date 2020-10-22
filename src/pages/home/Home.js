@@ -23,6 +23,8 @@ const Home = () => {
       <br/><br/>
       <a target="_blank" href="https://card-report.vercel.app/?report=covidcna">Covid Report for CNA without menu</a>
       <br/><br/>
+      <a target="_blank" href="https://card-report.vercel.app/?report=benchmarkcna">Benchmark Report for CNA without menu</a>
+      <br/><br/>
       <a target="_blank" href="https://card-report.vercel.app/?report=benchmarkgmi">Benchmark Report for GMI without menu</a>
 
 </div>

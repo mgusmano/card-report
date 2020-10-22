@@ -286,7 +286,7 @@ return (
                 />
               </Grid>
 
-              <Grid className={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   Manager
                 </Typography>
@@ -305,7 +305,7 @@ return (
                   disabled={filterObj.isUser === "user" ? true : false}
                 />
               </Grid>
-              <Grid className={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   {labelPosition}
                 </Typography>
