@@ -44,34 +44,39 @@ const CardReport = (props) => {
   const [alignment, setAlignment] = React.useState('Card');
 
   var PartnerID; var PartnerName; var PersonID; var PartnerShort;
+  PartnerID = props.Partner.PartnerID
+  PartnerName = props.Partner.PartnerName
+  PartnerShort = props.Partner.PartnerShort
+  PersonID = props.Partner.PersonID
     //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
     //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399; //sandbox
     //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
-    console.log(props)
-  switch(props.PartnerID) {
-    case '434':
-      PartnerID = 434
-      PartnerName = 'General Mills';
-      PartnerShort = 'GMIsb';
-      PersonID = 281326;
-      break;
-    case '426':
-      PartnerID = 426
-      PartnerName = 'General Mills';
-      PartnerShort = 'GMI';
-      PersonID = 277356;
-      break;
-    case '395':
-      PartnerID = 395
-      PartnerName = 'CNA';
-      PartnerShort = 'CNA';
-      PersonID = 275399;
-      break;
-    default:
-      return (
-        <div>No partnerid or incorrect partnerid specified</div>
-      )
-  }
+
+  //   console.log(props)
+  // switch(props.PartnerID) {
+  //   case '434':
+  //     PartnerID = 434
+  //     PartnerName = 'General Mills';
+  //     PartnerShort = 'GMIsb';
+  //     PersonID = 281326;
+  //     break;
+  //   case '426':
+  //     PartnerID = 426
+  //     PartnerName = 'General Mills';
+  //     PartnerShort = 'GMI';
+  //     PersonID = 277356;
+  //     break;
+  //   case '395':
+  //     PartnerID = 395
+  //     PartnerName = 'CNA';
+  //     PartnerShort = 'CNA';
+  //     PersonID = 275399;
+  //     break;
+  //   default:
+  //     return (
+  //       <div>No partnerid or incorrect partnerid specified</div>
+  //     )
+  // }
 
 
   console.log('PartnerID',PartnerID)
@@ -174,7 +179,7 @@ const CardReport = (props) => {
         </div>
 
         <Separator/>
-        <CardWidget flex={cardflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} />
+        <CardWidget flex={cardflex} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} />
         <Splitter/>
         <MapWidget flex={mapflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
         <Splitter/>
@@ -183,7 +188,7 @@ const CardReport = (props) => {
       <Splitter/>
       {/* column 2 */}
       <Vertical style={{display:filterdisplay,width:propertywidth}}>
-        <CardWidgetProperties propertywidth={propertywidth} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
+        <CardWidgetProperties propertywidth={propertywidth} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
       </Vertical>
     </Horizontal>
   )

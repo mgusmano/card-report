@@ -62,26 +62,26 @@ var PartnerID = parsed.partnerid
 //     )
 // }
 
-PartnerID = 395
-PartnerShort = 'CNA'
-PartnerName = 'CNA';
-PersonID = 275399;
+// PartnerID = 395
+// PartnerShort = 'CNA'
+// PartnerName = 'CNA';
+// PersonID = 275399;
 var PartnerCNA = {
-  PartnerID: PartnerID,
-  PartnerShort: PartnerShort,
-  PartnerName: PartnerName,
-  PersonID: PersonID
+  PartnerID: 395,
+  PartnerShort: 'CNA',
+  PartnerName: 'CNA',
+  PersonID: 275399
 }
 
-PartnerID = 434
-PartnerShort = 'GMIsb'
-PartnerName = 'General Mills';
-PersonID = 277356;
+// PartnerID = 434
+// PartnerShort = 'GMIsb'
+// PartnerName = 'General Mills';
+// PersonID = 277356;
 var PartnerGMIsb = {
-  PartnerID: PartnerID,
-  PartnerShort: PartnerShort,
-  PartnerName: PartnerName,
-  PersonID: PersonID
+  PartnerID: 434,
+  PartnerShort: 'GMIsb',
+  PartnerName: 'General Mills',
+  PersonID: 277356
 }
 
 
@@ -91,39 +91,39 @@ switch (type) {
   //   ReactDOM.render(<CardReport PartnerID={PartnerID}/>,document.getElementById('root'));
   //   break;
   case 'covidcna':
-    ReactDOM.render(<CovidReport />,document.getElementById('root'));
+    ReactDOM.render(<CovidReport Partner={PartnerCNA}/>,document.getElementById('root'));
     break;
   case 'cardcna':
-    ReactDOM.render(<CardReport PartnerID='395'/>,document.getElementById('root'));
+    ReactDOM.render(<CardReport Partner={PartnerCNA} PartnerID='395'/>,document.getElementById('root'));
       break;
   case 'cardgmi':
-    ReactDOM.render(<CardReport PartnerID='434'/>,document.getElementById('root'));
+    ReactDOM.render(<CardReport Partner={PartnerGMIsb} PartnerID='434'/>,document.getElementById('root'));
       break;
     case 'benchmarkcna':
-      PartnerID = 395
-      PartnerShort = 'CNA'
-      PartnerName = 'CNA';
-      PersonID = 275399;
-      var Partner = {
-        PartnerID: PartnerID,
-        PartnerShort: PartnerShort,
-        PartnerName: PartnerName,
-        PersonID: PersonID
-      }
-      ReactDOM.render(<Dashboard Partner={Partner}/>,document.getElementById('root'));
+      // PartnerID = 395
+      // PartnerShort = 'CNA'
+      // PartnerName = 'CNA';
+      // PersonID = 275399;
+      // var Partner = {
+      //   PartnerID: PartnerID,
+      //   PartnerShort: PartnerShort,
+      //   PartnerName: PartnerName,
+      //   PersonID: PersonID
+      // }
+      ReactDOM.render(<Dashboard Partner={PartnerCNA}/>,document.getElementById('root'));
       break;
   case 'benchmarkgmi':
-    PartnerID = 434
-    PartnerShort = 'GMIsb'
-    PartnerName = 'General Mills';
-    PersonID = 277356;
-    var Partner = {
-      PartnerID: PartnerID,
-      PartnerShort: PartnerShort,
-      PartnerName: PartnerName,
-      PersonID: PersonID
-    }
-    ReactDOM.render(<Dashboard Partner={Partner}/>,document.getElementById('root'));
+    // PartnerID = 434
+    // PartnerShort = 'GMIsb'
+    // PartnerName = 'General Mills';
+    // PersonID = 277356;
+    // var Partner = {
+    //   PartnerID: PartnerID,
+    //   PartnerShort: PartnerShort,
+    //   PartnerName: PartnerName,
+    //   PersonID: PersonID
+    // }
+    ReactDOM.render(<Dashboard Partner={PartnerGMIsb}/>,document.getElementById('root'));
     break;
   default:
     ReactDOM.render(
@@ -147,11 +147,11 @@ switch (type) {
             {/* <Center/> */}
             <Switch>
               <Route path="/" component={() => <Home/>} exact />
-              <Route path="/cardcna" component={() => <CardReport PartnerID='395'/>} />
-              <Route path="/cardgmi" component={() => <CardReport PartnerID='434'/>} />
+              <Route path="/cardcna" component={() => <CardReport Partner={PartnerCNA} PartnerID='395'/>} />
+              <Route path="/cardgmi" component={() => <CardReport Partner={PartnerGMIsb} PartnerID='434'/>} />
               <Route path="/benchmarkcna" component={() => <Dashboard Partner={PartnerCNA}/>}  />
               <Route path="/benchmarkgmisb" component={() => <Dashboard Partner={PartnerGMIsb}/>}  />
-              <Route path="/covidcna" component={() => <CovidReport/>} />
+              <Route path="/covidcna" component={() => <CovidReport Partner={PartnerCNA}/>} />
             </Switch>
             {/* center */}
             {/* <Splitter/>

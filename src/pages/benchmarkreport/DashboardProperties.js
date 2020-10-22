@@ -119,7 +119,7 @@ return (
 
 
 
-            <div>Assessment Source</div>
+            {/* <div>Assessment Source</div>
             <Select
                   name="rating"
                   value={0}
@@ -131,7 +131,7 @@ return (
                   options={sourceOption}
                   placeholder="Select Rating Source..."
                   clearable={false}
-                />
+                /> */}
 
             {/* <Grid container>
               <Grid item sm={12} md={12} lg={12}>

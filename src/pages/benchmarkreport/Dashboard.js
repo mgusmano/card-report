@@ -57,12 +57,25 @@ class Dashboard extends Component {
 
   constructor(props) {
     super(props);
+    const {PartnerName} = props.Partner
     this.userSkillData = [];
 
     console.log('props',props)
     this.props = props
     this.prefix = `data/${props.Partner.PartnerShort}/`
 
+    if (PartnerName == 'General Mills') {
+      var labelPosition = 'Job Band'
+      var labelFunctionGroup = 'Function Group' //'Segment',
+      var labelLine = 'Capabilities Group' //'Line',
+      var labelCompetency = 'Capability' //'Competency',
+    }
+    else {
+      var labelPosition = 'Position'
+      var labelFunctionGroup = 'Segment'
+      var labelLine = 'Line'
+      var labelCompetency = 'Competency'
+    }
 
     this.state = {
 
@@ -70,12 +83,15 @@ class Dashboard extends Component {
       labelFunction: 'Function',
       labelSubFunction: 'Sub Function',
       //labelSubFunction: 'SubFunction',
-      labelPosition: 'Job Band', //'Position',
+
+
+      labelPosition:  labelPosition,
+
       labelSegment: 'Segment',
 
-      labelFunctionGroup: 'Function Group', //'Segment',
-      labelLine: 'Capabilities Group', //'Line',
-      labelCompetency: 'Capability', //'Competency',
+      labelFunctionGroup: labelFunctionGroup,
+      labelLine: labelLine,
+      labelCompetency: labelCompetency,
 
       userData: [],
       clearAllFlag: false,

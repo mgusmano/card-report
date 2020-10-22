@@ -16,6 +16,7 @@ const DropDown = (props) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const { who, onChanged, options, name, multiple} = props
+
   return (
     <Autocomplete
       //ref={refSegments}
@@ -128,7 +129,7 @@ const CardWidgetProperties = (props) => {
   const refFitpercents = useRef(null);
   const refSubjectmatterexperts = useRef(null);
 
-  const { PartnerID, PartnerName, PersonID } = props;
+  const { PartnerID, PartnerName, PersonID } = props.Partner;
 
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
@@ -136,11 +137,7 @@ const CardWidgetProperties = (props) => {
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
 
-
-
     if (PartnerName == 'General Mills') {
-
-
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
         auth: {username: 'skillnet',password: 'demo'}
@@ -194,28 +191,7 @@ const CardWidgetProperties = (props) => {
       .catch((error) => {
         console.log(error)
       })
-
-
-
-      //http://skillnetusersapi.azurewebsites.net//api/functions/
-      //http://skillnetusersapi.azurewebsites.net//api/subfunctions/
-
-
-      // setSegments([
-      //   { SegmentID: 1, SegmentName: 'North American Retail'},
-      //   { SegmentID: 2, SegmentName: 'Asia & Latin America'}
-      // ])
-      // setFunctions([
-      //   { FunctionID: 1, FunctionName: 'Supply Chain'},
-      //   { FunctionID: 1, FunctionName: 'Finance'}
-      // ])
-      // setSubfunctions([
-      //   { SubfunctionID: 1, SubfunctionName: 'Logistics'},
-      //   { SubfunctionID: 1, SubfunctionName: 'Finance'}
-      // ])
     }
-
-
 
     axios
     .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
@@ -225,16 +201,11 @@ const CardWidgetProperties = (props) => {
       var arrayManagers = response.data.map(item => {
         return {
           ManagerID: item.ManagerID,
-          ManagerName: item.ManagerName + ' (' + item.ManagerID + ')'
+          ManagerName: item.ManagerName //+ ' (' + item.ManagerID + ')'
         }
       })
       console.log('managers',arrayManagers)
       setManagers(arrayManagers)
-
-
-
-      // console.log('managers',response.data)
-      // setManagers(response.data)
     })
     .catch((error) => {
       console.log(error)
@@ -293,18 +264,18 @@ const CardWidgetProperties = (props) => {
     })
 
     var arrayFitpercents = [
-      { Name:'40% and above', value: 40 },
-      { Name:'45% and above', value: 45 },
-      { Name:'50% and above', value: 50 },
-      { Name:'55% and above', value: 55 },
-      { Name:'60% and above', value: 60 },
-      { Name:'65% and above', value: 65 },
-      { Name:'70% and above', value: 70 },
-      { Name:'75% and above', value: 75 },
-      { Name:'80% and above', value: 80 },
-      { Name:'85% and above', value: 85 },
-      { Name:'90% and above', value: 90 },
-      { Name:'95% and above', value: 95 },
+      { FitpercentName:'40% and above', FitpercentValue: 40 },
+      { FitpercentName:'45% and above', FitpercentValue: 45 },
+      { FitpercentName:'50% and above', FitpercentValue: 50 },
+      { FitpercentName:'55% and above', FitpercentValue: 55 },
+      { FitpercentName:'60% and above', FitpercentValue: 60 },
+      { FitpercentName:'65% and above', FitpercentValue: 65 },
+      { FitpercentName:'70% and above', FitpercentValue: 70 },
+      { FitpercentName:'75% and above', FitpercentValue: 75 },
+      { FitpercentName:'80% and above', FitpercentValue: 80 },
+      { FitpercentName:'85% and above', FitpercentValue: 85 },
+      { FitpercentName:'90% and above', FitpercentValue: 90 },
+      { FitpercentName:'95% and above', FitpercentValue: 95 },
     ]
     setFitpercents(arrayFitpercents)
 
@@ -342,7 +313,13 @@ const CardWidgetProperties = (props) => {
       filters.DirectManagerID = DirectManagerID => filteredmanagers.includes(DirectManagerID)
     }
     if (filteredfitpercent !== '') {
-      filters.ManagerRating = ManagerRating => (ManagerRating >= filteredfitpercent) ? true : false
+      console.log(PartnerName)
+      if (PartnerName == 'General Mills') {
+        filters.SelfRating = SelfRating => (SelfRating >= filteredfitpercent) ? true : false
+      }
+      else {
+        filters.ManagerRating = ManagerRating => (ManagerRating >= filteredfitpercent) ? true : false
+      }
     }
     if (filteredsubjectmatterexperts.length > 0) {
       filters.sme = sme => filteredsubjectmatterexperts.includes(sme)
@@ -428,13 +405,17 @@ const CardWidgetProperties = (props) => {
   };
 
   const fitpercentsChanged = (event, value, reason) => {
+    var fitpercents = value.map(fitpercent => {
+      return fitpercent.FitpercentValue
+    })
+    console.log(value)
     if (value == null) {
       setFilteredfitpercent('')
     }
     else {
-      setFilteredfitpercent(value.value)
+      setFilteredfitpercent(fitpercents[0])
     }
-    console.log('fitpercentsChanged',value.value)
+    console.log('fitpercentsChanged',fitpercents[0])
     setButtonLabel('Apply All Filters')
   };
 
@@ -474,7 +455,11 @@ const CardWidgetProperties = (props) => {
 <DropDown multiple={true} who="Managers" onChanged={managersChanged} options={managers} name="ManagerName"/>
 }
 
-      {fitpercents !== null &&
+{fitpercents !== null &&
+<DropDown multiple={true} who="Fit Percent" onChanged={fitpercentsChanged} options={fitpercents} name="FitpercentName"/>
+}
+
+      {/* {fitpercents !== null &&
         <Autocomplete
           ref={refFitpercents}
           onChange={fitpercentsChanged}
@@ -504,7 +489,7 @@ const CardWidgetProperties = (props) => {
             />
           )}
         />
-      }
+      } */}
 
 
 {subjectmatterexperts !== null &&

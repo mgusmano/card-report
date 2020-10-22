@@ -14,13 +14,7 @@ const CardWidget = (props) => {
   //width:1000//width:
   //height:700//height:
 
-  const { PartnerID, PartnerName } = props;
-
-
-  //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
-  //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
-  //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
-
+  const { PartnerID, PartnerName } = props.Partner;
 
   const cardRef = useRef(null);
   //const [originalusers, setOriginalUsers] = useState(null)
@@ -35,9 +29,9 @@ const CardWidget = (props) => {
     var type = e.detail.type
     var payload = e.detail.payload
     switch (type) {
-      case 'fromcard':
-        onChange(payload.filters)
-        break;
+      // case 'fromcard':
+      //   onChange(payload.filters)
+      //   break;
 
       case 'fromcard2':
         onChange2(payload.filters)

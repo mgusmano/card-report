@@ -8,12 +8,30 @@ const Card = (props) => {
   const [color, setColor] = useState('gold')
   const [display, setDisplay] = useState('none')
 
-  useEffect(() => {
-    //console.log('useEffect Card')
+  if (user.Avatar === "https://azureportal.skillnet.net/") {
+    user.Avatar = 'a.png'
+  }
+  if (PartnerName == 'General Mills') {
+    user.Rating = user.SelfRating
+  }
+  else {
+    user.Rating = user.ManagerRating
+  }
 
-    if (user.Avatar === "https://azureportal.skillnet.net/") {
-      user.Avatar = 'a.png'
-    }
+  useEffect(() => {
+    console.log('useEffect Card')
+
+    // if (user.Avatar === "https://azureportal.skillnet.net/") {
+    //   user.Avatar = 'a.png'
+    // }
+
+    // if (PartnerName == 'General Mills') {
+    //   user.Rating = user.SelfRating
+    //   console.log(user.Rating)
+    // }
+    // else {
+    //   user.Rating = user.ManagerRating
+    // }
 
     if (PartnerName == 'CNA') {
       var f = user.sme
@@ -41,9 +59,9 @@ const Card = (props) => {
 
 
 
-  }, [user.Avatar, user.BFirstName]);
+  }, []);
 
-
+//  }, [user.Avatar, user.BFirstName]);
   return (
     <div key={user.PersonID} style={{display:'flex',flexDirection:'column',margin:'10px 10px 10px 10px',padding:'10px',width:'300px',xheight:'150px',border:'1px solid lightgray',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}}>
 
@@ -79,7 +97,7 @@ const Card = (props) => {
 
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
     <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>ID: {user.PersonID} - ManagerID: {user.DirectManagerID}</div>
-  <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile ({user.ManagerRating})</div>
+    <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile ({user.Rating})</div>
     </div>
 
   </div>
