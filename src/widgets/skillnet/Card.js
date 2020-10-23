@@ -11,7 +11,7 @@ const Card = (props) => {
   if (user.Avatar === "https://azureportal.skillnet.net/") {
     user.Avatar = 'a.png'
   }
-  if (PartnerName == 'General Mills') {
+  if (PartnerName === 'General Mills') {
     user.Rating = user.SelfRating
   }
   else {
@@ -33,7 +33,7 @@ const Card = (props) => {
     //   user.Rating = user.ManagerRating
     // }
 
-    if (PartnerName == 'CNA') {
+    if (PartnerName === 'CNA') {
       var f = user.sme
       switch (f) {
         case 'Gold':

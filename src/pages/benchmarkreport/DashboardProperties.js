@@ -1,13 +1,19 @@
 import React from 'react';
 //import axios from "axios";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+// import Accordion from "@material-ui/core/Accordion";
+// import AccordionSummary from "@material-ui/core/AccordionSummary";
+// import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 import Tooltip from '@material-ui/core/Tooltip';
 import Info from '@material-ui/icons/InfoOutlined';
 import Zoom from '@material-ui/core/Zoom';
@@ -15,7 +21,7 @@ import Select from "react-select";
 
 import { Grid, Typography } from "@material-ui/core";
 
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -70,8 +76,8 @@ return (
 
   <div style={{height:'55px',background:'lightgray',display:'flex',justifyContent:'center',alignItems:'center',fontSize:'24px'}}>FILTERS</div>
 
-  <ExpansionPanel defaultExpanded={false} square classes={{ root: classes.filterPanel, expanded: classes.filterPanelFirstExpanded }}>
-          <ExpansionPanelSummary
+  <Accordion defaultExpanded={false} square classes={{ root: classes.filterPanel, expanded: classes.filterPanelFirstExpanded }}>
+          <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
 
             aria-controls="panel1a-content"
@@ -81,8 +87,8 @@ return (
             <Tooltip placement="top" TransitionComponent={Zoom} title="This selection allows you to chose between assessments completed by a manager vs self assessments">
               <Info className={classes.toolTipIcon} />
             </Tooltip>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.filterPanelContent} style={{display:'flex',flexDirection:'column'}}>
+          </AccordionSummary>
+          <AccordionDetails className={classes.filterPanelContent} style={{display:'flex',flexDirection:'column'}}>
 
           {sourceOption !== null &&
             <Autocomplete
@@ -159,18 +165,18 @@ return (
             </Grid> */}
 
 
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel defaultExpanded={false} square classes={{ root: classes.filterPanel, expanded: classes.filterPanelExpanded }}>
-          <ExpansionPanelSummary
+          </AccordionDetails>
+        </Accordion>
+        <Accordion defaultExpanded={false} square classes={{ root: classes.filterPanel, expanded: classes.filterPanelExpanded }}>
+          <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
             <Typography color="primary" className={classes.Panelheading}>User Filter</Typography>
-          </ExpansionPanelSummary>
+          </AccordionSummary>
 
-          <ExpansionPanelDetails className={classes.filterPanelContent}>
+          <AccordionDetails className={classes.filterPanelContent}>
             <Grid container >
               <Grid className={classes.radioGroup} item sm={12} md={12} lg={12}>
                 <FormControl component="fieldset">
@@ -297,7 +303,7 @@ return (
 
     }
 
-              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   Manager
                 </Typography>
@@ -316,7 +322,7 @@ return (
                   disabled={filterObj.isUser === "user" ? true : false}
                 />
               </Grid>
-              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   {labelPosition}
                 </Typography>
@@ -336,7 +342,7 @@ return (
                 />
               </Grid>
 
-              <Grid xclassName={classes.filterDiv} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   Location
                 </Typography>
@@ -357,7 +363,7 @@ return (
               </Grid>
 
 
-              <Grid xclassName={classes.filterDiv} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   Filtered Users
                 </Typography>
@@ -375,7 +381,7 @@ return (
                 />
               </Grid>
 
-              <Grid xclassName={classes.filterDiv} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>User</Typography>
                 <Select
                   multi={true}
@@ -393,17 +399,17 @@ return (
                 />
               </Grid>
             </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel defaultExpanded={false} square classes={{ root: classes.filterPanel, expanded: classes.filterPanelExpanded }}>
-          <ExpansionPanelSummary
+          </AccordionDetails>
+        </Accordion>
+        <Accordion defaultExpanded={false} square classes={{ root: classes.filterPanel, expanded: classes.filterPanelExpanded }}>
+          <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
             <Typography color="primary" className={classes.Panelheading}>Skill Filter</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.filterPanelContent}>
+          </AccordionSummary>
+          <AccordionDetails className={classes.filterPanelContent}>
             <Grid container>
 
               <Grid className={classes.radioGroup} item sm={12} md={12} lg={12}>
@@ -473,7 +479,7 @@ return (
 
               </Grid>
 
-              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   {labelFunctionGroup}
                 </Typography>
@@ -493,7 +499,7 @@ return (
                 />
               </Grid>
 
-              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>{labelLine}</Typography>
                 <Select
                   name="line"
@@ -511,7 +517,7 @@ return (
                 />
                 <Grid item sm={12} md={12} lg={12} />
               </Grid>
-              <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
+              <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                 {labelCompetency}
                 </Typography>
@@ -567,8 +573,8 @@ return (
                 />
               </Grid>
             </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
 
         </React.Fragment>
 

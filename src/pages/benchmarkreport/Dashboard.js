@@ -9,7 +9,7 @@ import Menu from '@material-ui/icons/Menu';
 import DashboardProperties from './DashboardProperties'
 
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { toast } from 'react-toastify';
 import Select from "react-select";
 import "react-select/dist/react-select.css";
@@ -18,17 +18,17 @@ import PropTypes from "prop-types";
 import UploadCSVStyle from "../../styles/uploadCSV";
 
 
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Tooltip from '@material-ui/core/Tooltip';
-import Info from '@material-ui/icons/InfoOutlined';
-import Zoom from '@material-ui/core/Zoom';
+// import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+// import Radio from "@material-ui/core/Radio";
+// import RadioGroup from "@material-ui/core/RadioGroup";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import FormControl from "@material-ui/core/FormControl";
+// import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+// import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import Tooltip from '@material-ui/core/Tooltip';
+// import Info from '@material-ui/icons/InfoOutlined';
+// import Zoom from '@material-ui/core/Zoom';
 
 //import "react-select/dist/react-select.css";
 import httpHelper from "./helper/httpHelper";
@@ -43,7 +43,7 @@ import evaluateIndividualGraph from './helper/individualGraphHelper';
 import Horizontal from '../../layout/Horizontal'
 import Vertical from '../../layout/Vertical'
 import Splitter from '../../layout/Splitter'
-import Separator from '../../layout/Separator'
+//import Separator from '../../layout/Separator'
 
   // //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   // var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399;
@@ -64,17 +64,21 @@ class Dashboard extends Component {
     this.props = props
     this.prefix = `data/${props.Partner.PartnerShort}/`
 
-    if (PartnerName == 'General Mills') {
-      var labelPosition = 'Job Band'
-      var labelFunctionGroup = 'Function Group' //'Segment',
-      var labelLine = 'Capabilities Group' //'Line',
-      var labelCompetency = 'Capability' //'Competency',
+    var labelPosition = ''
+    var labelFunctionGroup = ''
+    var labelLine = ''
+    var labelCompetency = ''
+    if (PartnerName === 'General Mills') {
+      labelPosition = 'Job Band'
+      labelFunctionGroup = 'Function Group' //'Segment',
+      labelLine = 'Capabilities Group' //'Line',
+      labelCompetency = 'Capability' //'Competency',
     }
     else {
-      var labelPosition = 'Position'
-      var labelFunctionGroup = 'Segment'
-      var labelLine = 'Line'
-      var labelCompetency = 'Competency'
+      labelPosition = 'Position'
+      labelFunctionGroup = 'Segment'
+      labelLine = 'Line'
+      labelCompetency = 'Competency'
     }
 
     this.state = {
@@ -184,7 +188,7 @@ class Dashboard extends Component {
     var propertiesdisplay = ''
     console.log(options.propertiesdisplay)
     console.log(options)
-    if (options.propertiesdisplay == 'flex') {
+    if (options.propertiesdisplay === 'flex') {
       propertiesdisplay = 'none'
     }
     else {
@@ -1152,7 +1156,9 @@ class Dashboard extends Component {
   };
 
   handleRadioChange = (event) => {
-    let { filterObj, options, userData, userDataClone, skillData, skillDataClone, coreOptionData, ebOptionData } = this.state;
+    let { filterObj, options, userData, userDataClone, skillData,
+      skillDataClone,
+      coreOptionData, ebOptionData } = this.state;
     let name = event.target.name;
     console.log(name)
     filterObj[name] = event.target.value;
@@ -1308,7 +1314,10 @@ class Dashboard extends Component {
 
   //Clear all filter
   clearAllFilter = () => {
-    let { filterObj, options, userData, userDataClone, skillData, skillDataClone, coreOptionData, ebOptionData, filterObjClearAll, clearAllFlag } = this.state;
+    let { filterObj, options, userData, userDataClone, skillData, skillDataClone, coreOptionData, ebOptionData,
+      filterObjClearAll,
+      //clearAllFlag
+    } = this.state;
     filterObj = JSON.parse(filterObjClearAll)
     userDataClone = [...userData]
     options.ebOption = [...ebOptionData]
@@ -1330,27 +1339,38 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
-    const { filterObj, options, labelEBPC, labelFunction, labelSegment, labelSubFunction, labelPosition, labelFunctionGroup, labelLine, labelCompetency } = this.state;
+    const {
+      options,
+      // filterObj,
+      // labelEBPC,
+      // labelFunction,
+      // labelSegment,
+      // labelSubFunction,
+      // labelPosition,
+      // labelFunctionGroup,
+      // labelLine,
+      // labelCompetency
+    } = this.state;
     let {
 
-      jobBandOption,
-      segmentOption,
-      subFunctionOption,
-      functionOption,
+      // jobBandOption,
+      // segmentOption,
+      // subFunctionOption,
+      // functionOption,
 
 
-      managerOption,
-      locationOption,
-      positionOption,
-      segementOption,
-      lineOption,
-      competencyOption,
+      // managerOption,
+      // locationOption,
+      // positionOption,
+      // segementOption,
+      // lineOption,
+      // competencyOption,
       userOption,
-      skillOption,
-      sourceOption,
-      coreOption,
-      ebOption,
-      filterSkillOptions,
+      // skillOption,
+      // sourceOption,
+      // coreOption,
+      // ebOption,
+      // filterSkillOptions,
       filterUserOptions,
       outputOption,
       themeOption
@@ -1359,10 +1379,10 @@ class Dashboard extends Component {
     //subFunctionOption = subFunctionOption.sort(dynamicsort("label"));
 
     filterUserOptions = filterUserOptions.sort(dynamicsort("label"));
-    managerOption = managerOption.sort(dynamicsort("label"));
-    locationOption = locationOption.sort(dynamicsort("label"));
+    //managerOption = managerOption.sort(dynamicsort("label"));
+    //locationOption = locationOption.sort(dynamicsort("label"));
     userOption = userOption.sort(dynamicsort("label"));
-    positionOption = positionOption.sort(dynamicsort("value"));
+    //positionOption = positionOption.sort(dynamicsort("value"));
 
 
     //console.log(JSON.stringify(this.state.dataSource))
@@ -1380,12 +1400,12 @@ class Dashboard extends Component {
       </div>
       {this.props.Partner.PartnerName === 'CNA' &&
       <div style={{padding:'5px 0 0 0',fontSize:'12px'}}>
-        <img src={CNA} style={{marginTop:'10px'}} alt="CNA" style={{width:'90px'}} />
+        <img src={CNA} style={{marginTop:'10px',width:'90px'}} alt="CNA" />
       </div>
       }
       {this.props.Partner.PartnerName === 'General Mills' &&
       <div style={{padding:'15px 0 0 0',fontSize:'12px'}}>
-        <img src={GMI} style={{marginTop:'10px'}} alt="GMI" style={{width:'90px'}} />
+        <img src={GMI} style={{marginTop:'10px',width:'90px'}} alt="GMI" />
       </div>
       }
 

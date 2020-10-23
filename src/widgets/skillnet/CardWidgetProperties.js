@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './CardWidget.css'
 
@@ -9,8 +9,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+//const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+//const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const DropDown = (props) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -82,7 +82,7 @@ const CardWidgetProperties = (props) => {
 
   const [segments, setSegments] = useState(null)
   const [filteredsegments, setFilteredSegments] = useState([])
-  const refSegments = useRef(null);
+  //const refSegments = useRef(null);
   const segmentsChanged = (event, value, reason) => {
     var filtersSegments = value.map(segment => {
       return segment.SegmentName
@@ -121,13 +121,13 @@ const CardWidgetProperties = (props) => {
 
 
   const {propertywidth} = props
-  const refApplyButton = useRef(null);
-  const refPositions = useRef(null);
-  const refLocations = useRef(null);
-  const refManagers = useRef(null);
-  const refSkills = useRef(null);
-  const refFitpercents = useRef(null);
-  const refSubjectmatterexperts = useRef(null);
+  // const refApplyButton = useRef(null);
+  // const refPositions = useRef(null);
+  // const refLocations = useRef(null);
+  // const refManagers = useRef(null);
+  // const refSkills = useRef(null);
+  // const refFitpercents = useRef(null);
+  // const refSubjectmatterexperts = useRef(null);
 
   const { PartnerID, PartnerName, PersonID } = props.Partner;
 
@@ -137,7 +137,7 @@ const CardWidgetProperties = (props) => {
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
 
-    if (PartnerName == 'General Mills') {
+    if (PartnerName === 'General Mills') {
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
         auth: {username: 'skillnet',password: 'demo'}
@@ -279,7 +279,7 @@ const CardWidgetProperties = (props) => {
     ]
     setFitpercents(arrayFitpercents)
 
-    if (PartnerName == 'CNA') {
+    if (PartnerName === 'CNA') {
       var arraySubjectmatterexperts = [
         { Name:'Gold',   value: 'Gold' },
         { Name:'Silver', value: 'Silver' },
@@ -289,7 +289,7 @@ const CardWidgetProperties = (props) => {
     }
 
 
-  }, [PartnerID, PersonID]);
+  }, [PartnerID, PartnerName]);
 
 
   const SendIt = (type, payload) => {
@@ -313,8 +313,7 @@ const CardWidgetProperties = (props) => {
       filters.DirectManagerID = DirectManagerID => filteredmanagers.includes(DirectManagerID)
     }
     if (filteredfitpercent !== '') {
-      console.log(PartnerName)
-      if (PartnerName == 'General Mills') {
+      if (PartnerName === 'General Mills') {
         filters.SelfRating = SelfRating => (SelfRating >= filteredfitpercent) ? true : false
       }
       else {
@@ -431,7 +430,7 @@ const CardWidgetProperties = (props) => {
   return (
     <div style={{width:propertywidth,padding:'10px'}}>
       <Button
-        ref={refApplyButton}
+        // ref={refApplyButton}
         style={{width:'100%'}}
         variant="contained"
         onClick={onApplyClick}

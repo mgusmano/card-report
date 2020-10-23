@@ -8,7 +8,7 @@ import React from 'react'
 // import CarbonTheme from 'fusioncharts/themes/fusioncharts.theme.carbon';
 // import FusionCharts from 'fusioncharts';
 
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import FusionCharts from 'fusioncharts';
 import Charts from 'fusioncharts/fusioncharts.charts';
 import ReactFC from 'react-fusioncharts';

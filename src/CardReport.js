@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Pie from './charts/pie/Pie'
+//import Pie from './charts/pie/Pie'
 
 import GMI from './images/GMI.png';
 import CNA from './images/CNA.png';
@@ -43,11 +43,12 @@ const CardReport = (props) => {
 
   const [alignment, setAlignment] = React.useState('Card');
 
-  var PartnerID; var PartnerName; var PersonID; var PartnerShort;
-  PartnerID = props.Partner.PartnerID
-  PartnerName = props.Partner.PartnerName
-  PartnerShort = props.Partner.PartnerShort
-  PersonID = props.Partner.PersonID
+  const { PartnerID, PartnerName, PersonID } = props.Partner
+  // var PartnerID; var PartnerName; var PersonID;
+  // PartnerID = props.Partner.PartnerID
+  // PartnerName = props.Partner.PartnerName
+  // //PartnerShort = props.Partner.PartnerShort
+  // PersonID = props.Partner.PersonID
     //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
     //var PartnerID = 434;  var PartnerName = 'General Mills'; var PersonID = 275399; //sandbox
     //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
@@ -130,13 +131,13 @@ const CardReport = (props) => {
 
           {PartnerName === 'CNA' &&
           <div style={{padding:'5px 0 0 0',fontSize:'12px'}}>
-            <img src={CNA} style={{marginTop:'10px'}} alt="CNA" style={{width:'90px'}} />
+            <img src={CNA} style={{marginTop:'10px',width:'90px'}} alt="CNA" />
           </div>
           }
 
           {PartnerName === 'General Mills' &&
           <div style={{padding:'15px 0 0 0',fontSize:'12px'}}>
-            <img src={GMI} style={{marginTop:'10px'}} alt="GMI" style={{width:'90px'}} />
+            <img src={GMI} style={{marginTop:'10px',width:'90px'}} alt="GMI" />
           </div>
           }
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Horizontal from '../../layout/Horizontal'
+//import Horizontal from '../../layout/Horizontal'
 import Vertical from '../../layout/Vertical'
-import Splitter from '../../layout/Splitter'
-import Separator from '../../layout/Separator'
+//import Splitter from '../../layout/Splitter'
+//import Separator from '../../layout/Separator'
 import axios from "axios";
 
 import ChartWidget from '../../widgets/skillnet/ChartWidget'

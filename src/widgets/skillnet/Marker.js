@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 // InfoWindow component
 const InfoWindow = (props) => {
-  const { place, text, users } = props;
+  const {
+    //place,
+    text, users } = props;
 
 
   const infoWindowStyle = {

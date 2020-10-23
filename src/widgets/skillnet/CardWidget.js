@@ -69,39 +69,39 @@ const CardWidget = (props) => {
   }
 
 
-  const onChange = (filterdata) => {
-    //https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72
-    // const filters = {}
-    // if (filterdata.filteredpositions.length > 0) {
-    //   filters.JobName = JobName => filterdata.filteredpositions.includes(JobName)
-    // }
-    // if (filterdata.filteredlocations.length > 0) {
-    //   filters.Location = Location => filterdata.filteredlocations.includes(Location)
-    // }
-    // if (filterdata.filteredmanagers.length > 0) {
-    //   filters.DirectManagerID = DirectManagerID => filterdata.filteredmanagers.includes(DirectManagerID)
-    // }
-    // if (filterdata.filteredfitpercent !== '') {
-    //   filters.ManagerRating = ManagerRating => (ManagerRating >= filterdata.filteredfitpercent) ? true : false
-    // }
-    // if (filterdata.filteredsubjectmatterexperts.length > 0) {
-    //   filters.sme = sme => filterdata.filteredsubjectmatterexperts.includes(sme)
-    // }
-    // const filtered = filterArray(cardRef.current.originalusers, filters);
-    //setUsers(filtered)
+  // const onChange = (filterdata) => {
+  //   //https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72
+  //   // const filters = {}
+  //   // if (filterdata.filteredpositions.length > 0) {
+  //   //   filters.JobName = JobName => filterdata.filteredpositions.includes(JobName)
+  //   // }
+  //   // if (filterdata.filteredlocations.length > 0) {
+  //   //   filters.Location = Location => filterdata.filteredlocations.includes(Location)
+  //   // }
+  //   // if (filterdata.filteredmanagers.length > 0) {
+  //   //   filters.DirectManagerID = DirectManagerID => filterdata.filteredmanagers.includes(DirectManagerID)
+  //   // }
+  //   // if (filterdata.filteredfitpercent !== '') {
+  //   //   filters.ManagerRating = ManagerRating => (ManagerRating >= filterdata.filteredfitpercent) ? true : false
+  //   // }
+  //   // if (filterdata.filteredsubjectmatterexperts.length > 0) {
+  //   //   filters.sme = sme => filterdata.filteredsubjectmatterexperts.includes(sme)
+  //   // }
+  //   // const filtered = filterArray(cardRef.current.originalusers, filters);
+  //   //setUsers(filtered)
 
-    setUsers(filterdata.filteredusers)
+  //   setUsers(filterdata.filteredusers)
 
-    // SendIt('fromcardwidget', {
-    //   filteredusers: filtered,
-    //   filteredskills: filterdata.filteredskills,
-    //   filteredpositions: filterdata.filteredpositions,
-    //   filteredlocations: filterdata.filteredlocations,
-    //   filteredmanagers: filterdata.filteredmanagers,
-    //   filteredfitpercent: filterdata.filteredfitpercent,
-    //   filteredsubjectmatterexperts: filterdata.filteredsubjectmatterexperts,
-    // })
-  }
+  //   // SendIt('fromcardwidget', {
+  //   //   filteredusers: filtered,
+  //   //   filteredskills: filterdata.filteredskills,
+  //   //   filteredpositions: filterdata.filteredpositions,
+  //   //   filteredlocations: filterdata.filteredlocations,
+  //   //   filteredmanagers: filterdata.filteredmanagers,
+  //   //   filteredfitpercent: filterdata.filteredfitpercent,
+  //   //   filteredsubjectmatterexperts: filterdata.filteredsubjectmatterexperts,
+  //   // })
+  // }
 
 
 

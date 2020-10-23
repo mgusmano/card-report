@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch, Link, useLocation, useHistory } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import queryString from 'query-string'
@@ -19,7 +19,7 @@ import Splitter from './layout/Splitter'
 import Separator from './layout/Separator'
 
 // import Toolbar from './main/Toolbar'
-import Menu from './main/Menu'
+//import Menu from './main/Menu'
 
 //console.log(window.location.search);
 //=> '?foo=bar'
@@ -34,8 +34,8 @@ console.log('parsed',parsed);
 //var type = 'allreport'
 
 
-var PartnerID; var PartnerName; var PersonID; var PartnerShort;
-var PartnerID = parsed.partnerid
+//var PartnerID; var PartnerName; var PersonID; var PartnerShort;
+//var PartnerID = parsed.partnerid
 //console.log(PartnerID)
 // switch(PartnerID) {
 //   case '434':
