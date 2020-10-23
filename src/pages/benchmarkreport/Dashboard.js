@@ -79,16 +79,12 @@ class Dashboard extends Component {
 
     this.state = {
 
-      labelEBPC: 'EB/PC', //'EB/PC',
+      labelEBPC: 'EB/PC',
       labelFunction: 'Function',
       labelSubFunction: 'Sub Function',
       //labelSubFunction: 'SubFunction',
-
-
       labelPosition:  labelPosition,
-
       labelSegment: 'Segment',
-
       labelFunctionGroup: labelFunctionGroup,
       labelLine: labelLine,
       labelCompetency: labelCompetency,
@@ -536,8 +532,9 @@ class Dashboard extends Component {
   };
 
   setUniqueOptions = () => {
+    console.log('setUniqueData')
     const { options, positionData, userDataClone, clearAllFlag } = this.state;
-    //console.log(userDataClone)
+    console.log(userDataClone)
     if (userDataClone.length > 0) {
       let optionsClone = JSON.parse(JSON.stringify(options));
       optionsClone.locationOption = this.getUniqueData(userDataClone, "geo_location", "user_id");
@@ -1474,6 +1471,7 @@ class Dashboard extends Component {
 
   <Vertical style={{display:this.state.options.propertiesdisplay,width:this.state.options.propertieswidth}}>
     <DashboardProperties
+      Partner={this.props.Partner}
       classes={classes}
       state={this.state}
       selectChangeHandler={this.selectChangeHandler}

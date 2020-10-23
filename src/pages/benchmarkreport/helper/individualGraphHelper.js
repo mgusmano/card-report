@@ -72,8 +72,8 @@ function evaluateTargetRatingDataSet(targetUsers, positionTargetData, positionDa
         const isPosition = postionObjArr.filter(position => position.position_id === user.position_id).length;
         if (!isPosition) {
             const selectedPosition = positionData.filter(pos => pos.position_id === user.position_id)[0];
-            console.log(user)
-            console.log(selectedPosition)
+            //console.log(user)
+            //console.log(selectedPosition)
             const positionObj = {
                 position_name: selectedPosition.position_name,
                 position_id: selectedPosition.position_id,

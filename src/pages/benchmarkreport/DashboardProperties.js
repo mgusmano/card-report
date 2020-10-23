@@ -27,6 +27,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
 const DashboardProperties = (props) => {
+  const { PartnerName } = props.Partner
   const { classes, state, selectChangeHandler, userSelectChangeHandler, handleRadioChange, userMultiSelectChangeHandler, skillMultiSelectChangeHandler} = props;
   const {
     filterObj,
@@ -231,7 +232,9 @@ return (
       subFunctionOption,
       functionOption, */}
 
+      {PartnerName === 'General Mills' &&
 
+<>
               <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>{labelFunction}</Typography>
                 <Select
@@ -249,6 +252,9 @@ return (
                   disabled={filterObj.isUser === "user" ? true : false}
                 />
               </Grid>
+
+
+
 
               <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>{labelSubFunction}</Typography>
@@ -268,6 +274,8 @@ return (
                 />
               </Grid>
 
+
+
               <Grid item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>Segment</Typography>
                 <Select
@@ -285,6 +293,9 @@ return (
                   disabled={filterObj.isUser === "user" ? true : false}
                 />
               </Grid>
+              </>
+
+    }
 
               <Grid xclassName={classes.selectBoxContainer} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
@@ -325,7 +336,7 @@ return (
                 />
               </Grid>
 
-              <Grid className={classes.filterDiv} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.filterDiv} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   Location
                 </Typography>
@@ -346,7 +357,7 @@ return (
               </Grid>
 
 
-              <Grid className={classes.filterDiv} item sm={12} md={12} lg={12}>
+              <Grid xclassName={classes.filterDiv} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>
                   Filtered Users
                 </Typography>
@@ -363,7 +374,8 @@ return (
                   disabled={filterObj.isUser === "user" ? true : false}
                 />
               </Grid>
-              <Grid className={classes.filterDiv} item sm={12} md={12} lg={12}>
+
+              <Grid xclassName={classes.filterDiv} item sm={12} md={12} lg={12}>
                 <Typography className={classes.slctBoxLabel}>User</Typography>
                 <Select
                   multi={true}

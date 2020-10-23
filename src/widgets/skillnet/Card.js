@@ -19,7 +19,7 @@ const Card = (props) => {
   }
 
   useEffect(() => {
-    console.log('useEffect Card')
+    //console.log('useEffect Card')
 
     // if (user.Avatar === "https://azureportal.skillnet.net/") {
     //   user.Avatar = 'a.png'
@@ -54,13 +54,16 @@ const Card = (props) => {
           break;
       }
     }
-
     //console.log(user.BFirstName.charAt(0))
-
-
-
   }, []);
 
+  let show = false;
+  let idshow;
+  if (show) {
+    idshow = <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>ID: {user.PersonID} - ManagerID: {user.DirectManagerID}</div>
+  } else {
+    idshow = <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>&nbsp;</div>
+  }
 //  }, [user.Avatar, user.BFirstName]);
   return (
     <div key={user.PersonID} style={{display:'flex',flexDirection:'column',margin:'10px 10px 10px 10px',padding:'10px',width:'300px',xheight:'150px',border:'1px solid lightgray',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}}>
@@ -96,7 +99,7 @@ const Card = (props) => {
     </div>
 
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-    <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>ID: {user.PersonID} - ManagerID: {user.DirectManagerID}</div>
+    {idshow}
     <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile ({user.Rating})</div>
     </div>
 

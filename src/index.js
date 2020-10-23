@@ -81,7 +81,8 @@ var PartnerGMIsb = {
   PartnerID: 434,
   PartnerShort: 'GMIsb',
   PartnerName: 'General Mills',
-  PersonID: 277356
+  //PersonID: 277356
+  PersonID: 281326
 }
 
 
