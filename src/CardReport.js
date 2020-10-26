@@ -36,7 +36,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = (props) => {
   const [filterdisplay, setFilterDisplay] = useState('block')
-  const [propertywidth] = useState('350px')
+  const [propertywidth] = useState('375px')
 
   const [cardflex, setCardflex] = useState(1)
   const [mapflex, setMapflex] = useState(0)

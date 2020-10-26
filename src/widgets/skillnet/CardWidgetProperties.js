@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './CardWidget.css'
 
+import CheckboxWidget from './CheckboxWidget'
+
 import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -300,6 +302,8 @@ const CardWidgetProperties = (props) => {
             children: tree
           }
 
+
+          console.log(JSON.stringify(data))
           setTreeData(data)
 
     // const acct = results[0];
@@ -664,6 +668,7 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={true} who="Fit Percent" onChanged={fitpercentsChanged} options={fitpercents} name="FitpercentName"/>
 }
 
+
       {/* {fitpercents !== null &&
         <Autocomplete
           ref={refFitpercents}
@@ -712,8 +717,15 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={true} who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
 }
 
+<div style={{marginTop:'20px',padding:'10px',border:'1px solid gray'}}>
 
-{treedata !== null &&
+<div style={{padding:'10px'}}>Skills</div>
+
+<CheckboxWidget/>
+
+</div>
+
+{null !== null &&
 <TreeView
   multiSelect
   style={{marginTop:'15px'}}
