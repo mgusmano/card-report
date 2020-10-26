@@ -5,9 +5,16 @@ import './CardWidget.css'
 import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+import TreeItem from '@material-ui/lab/TreeItem';
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
 
 //const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 //const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -52,6 +59,7 @@ const DropDown = (props) => {
 
 
 
+
 const CardWidgetProperties = (props) => {
   //title:Card Report//title:
   //x:30//x:
@@ -59,18 +67,21 @@ const CardWidgetProperties = (props) => {
   //width:1000//width:
   //height:700//height:
 
+  const [treedata, setTreeData] = useState(null)
+
   const [positions, setPositions] = useState([])
   const [filteredpositions, setFilteredPositions] = useState([])
   const [locations, setLocations] = useState([])
   const [filteredlocations, setFilteredLocations] = useState([])
   const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
 
-  const [managers, setManagers] = useState([])
-  const [filteredmanagers, setFilteredManagers] = useState([])
+  const [competencygroups, setCompetencyGroups] = useState([])
+  const [competencies, setCompetencies] = useState([])
   const [skills, setSkills] = useState([])
   const [filteredskills, setFilteredSkills] = useState([])
 
-
+  const [managers, setManagers] = useState([])
+  const [filteredmanagers, setFilteredManagers] = useState([])
   const [fitpercents, setFitpercents] = useState(null)
   const [filteredfitpercent, setFilteredfitpercent] = useState('')
 
@@ -193,6 +204,173 @@ const CardWidgetProperties = (props) => {
       })
     }
 
+
+    //CompetencyGroups
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/competencygroup?partnerid=' + PartnerID, {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log('CompetencyGroups-raw',response.data)
+      var arrayCompetencyGroups = response.data.map(item => {
+        return {
+          CompetencyGroupID: item.CompetencyGroupID,
+          CompetencyGroupName: item.CompetencyGroupName,
+          CompetencyGroupIcon: item.CompetencyGroupIcon,
+          CompetencyGroupDisplayOrder: item.CompetencyGroupDisplayOrder
+        }
+      })
+
+
+      function compare(a, b) {
+        // Use toUpperCase() to ignore character casing
+        const bandA = a.CompetencyGroupDisplayOrder;
+        const bandB = b.CompetencyGroupDisplayOrder;
+
+        let comparison = 0;
+        if (bandA > bandB) {
+          comparison = 1;
+        } else if (bandA < bandB) {
+          comparison = -1;
+        }
+        return comparison;
+      }
+
+      arrayCompetencyGroups.sort(compare);
+
+      console.log('CompetencyGroups',arrayCompetencyGroups)
+      setCompetencyGroups(arrayCompetencyGroups)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+    //Competencies and Skills
+    var arrayCompetencies = []
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=' + PersonID, {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log('competencies-raw',response.data)
+      arrayCompetencies = response.data.map(item => {
+        return {
+          CompetencyID: item.SkillID,
+          CompetencyName: item.SkillName,
+          CompetencyGroupID: item.GroupID,
+        }
+      })
+      console.log('competencies',arrayCompetencies)
+      setCompetencies(arrayCompetencies)
+
+      var f= 'https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&parentskillid='
+      var arrayAxios = []
+      arrayCompetencies.forEach(competency => {
+        arrayAxios.push( axios.get(f+competency.CompetencyID,{auth: {username: 'skillnet',password: 'demo'}}))
+      })
+      Promise.all(arrayAxios)
+        .then(function (results) {
+
+          var tree = []
+          arrayCompetencies.forEach((competency, index) => {
+
+            //console.log(results)
+
+            var children = []
+            results[index].data.forEach(result => {
+              var c = {
+                id: result.SkillID.toString(),
+                name: result.SkillName
+              }
+              children.push(c)
+            })
+
+            var o = {
+              id: competency.CompetencyID.toString(),
+              name: competency.CompetencyName,
+              children: children
+            }
+            tree.push(o)
+          })
+          console.log(tree)
+
+          var data = {
+            id: 'root',
+            name: 'Skills',
+            children: tree
+          }
+
+          setTreeData(data)
+
+    // const acct = results[0];
+    // console.log(acct)
+    // const perm = results[1];
+    // console.log(perm)
+        });
+
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+    //    .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&personid=' + PersonID, {
+    //  .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&parentskillid=39806', {
+    //Skills
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&parentskillid=39851', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log('skills-raw',response.data)
+      var arraySkills = response.data.map(item => {
+        return {
+          SkillID: item.SkillID,
+          SkillName: item.SkillName,
+          ParentSkillID: item.ParentSkillID,
+        }
+      })
+      console.log('skills',arraySkills)
+      setSkills(arraySkills)
+
+
+
+
+    //   axios.get('http://apple.com'))
+    //   axios.all([
+    //     axios.get('http://google.com'),
+    //     axios.get('http://apple.com')
+    // ]).then(axios.spread((googleRes, appleRes) => {
+    //     // do something with both responses
+    // });
+
+
+
+
+    })
+    .catch((error) => {
+      console.log('skills=error')
+      console.log(error)
+    })
+
+
+    // axios
+    // .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=' + PersonID, {
+    //   auth: {username: 'skillnet',password: 'demo'}
+    // })
+    // .then((response) => {
+    //   console.log('skills2',response.data)
+    //   setSkills(response.data)
+    // })
+    // .catch((error) => {
+    //   console.log(error)
+    // })
+
+
+
+
+
+    http://skillnetusersapi.azurewebsites.net//api/skills?groupid=33931
+
     axios
     .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
       auth: {username: 'skillnet',password: 'demo'}
@@ -211,20 +389,9 @@ const CardWidgetProperties = (props) => {
       console.log(error)
     })
 
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=' + PersonID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      console.log('skills',response.data)
-      setSkills(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 
     axios
-    .get('https://skillnetpartnerpositionsapi.azurewebsites.net//api/PartnerPositions?partnerid=' + PartnerID, {
+    .get('https://skillnetpartnerpositionsapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
@@ -427,6 +594,45 @@ const CardWidgetProperties = (props) => {
     setButtonLabel('Apply All Filters')
   };
 
+
+  const labelIt = (node) => {
+    console.log(node)
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Checkbox
+
+id={`checkbox-${node.id}`}
+//checked={isChecked}
+onChange={(e, checked) => console.log('you checked it!', checked)}
+onClick={e => (e.stopPropagation())}
+
+
+        color="primary"
+      />
+      <Typography variant="caption">{node.name}</Typography>
+    </div>
+    )
+  };
+
+  const label = (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Checkbox
+
+
+
+
+        color="primary"
+      />
+      <Typography variant="caption"></Typography>
+    </div>
+  );
+
+  const renderTree = (nodes) => (
+    <TreeItem key={nodes.id} nodeId={nodes.id} label={labelIt(nodes)}>
+      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+    </TreeItem>
+  );
+
   return (
     <div style={{width:propertywidth,padding:'10px'}}>
       <Button
@@ -442,7 +648,7 @@ const CardWidgetProperties = (props) => {
 <DropDown multiple={true} who="Positions" onChanged={positionsChanged} options={positions} name="JobName"/>
 }
 
-{skills !== null &&
+{null !== null &&
 <DropDown multiple={true} who="Skills" onChanged={skillsChanged} options={skills} name="SkillName"/>
 }
 
@@ -505,6 +711,20 @@ const CardWidgetProperties = (props) => {
 {subfunctions !== null &&
 <DropDown multiple={true} who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
 }
+
+
+{treedata !== null &&
+<TreeView
+  multiSelect
+  style={{marginTop:'15px'}}
+  defaultCollapseIcon={<ExpandMoreIcon />}
+  defaultExpanded={['root']}
+  defaultExpandIcon={<ChevronRightIcon />}
+>
+  {renderTree(treedata)}
+</TreeView>
+}
+
 
     </div>
   )
