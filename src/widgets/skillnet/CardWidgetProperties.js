@@ -69,6 +69,8 @@ const CardWidgetProperties = (props) => {
   //width:1000//width:
   //height:700//height:
 
+
+  const [checkboxdisplay, setCheckboxdisplay] = useState('none')
   const [treedata, setTreeData] = useState(null)
 
   const [positions, setPositions] = useState([])
@@ -635,6 +637,15 @@ onClick={e => (e.stopPropagation())}
     </TreeItem>
   );
 
+  const changeIt = () => {
+    if (checkboxdisplay == 'none') {
+      setCheckboxdisplay('block')
+    }
+    else {
+      setCheckboxdisplay('none')
+    }
+  };
+
   return (
     <div style={{width:propertywidth,padding:'10px'}}>
       <Button
@@ -717,9 +728,38 @@ onClick={e => (e.stopPropagation())}
 
 <div style={{marginTop:'20px',padding:'0',border:'0px solid gray'}}>
 
-<div style={{padding:'0'}}>Skills</div>
 
+
+<div style={{width:'100%',marginTop:'20px'}} className="MuiInputBase-root MuiInput-root MuiInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd">
+  <input aria-invalid="false" placeholder="" type="text" style={{fontWeight:'400',color:'rgba(0, 0, 0, 0.87)'}} className="MuiInputBase-input MuiInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd" aria-autocomplete="list" defaultValue="Skills" id="mui-44339"></input>
+  <div className="MuiAutocomplete-endAdornment">
+
+  <button className="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator" tabIndex="-1" type="button" aria-label="Clear" title="Clear">
+  <span className="MuiIconButton-label">
+    <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+    </svg>
+    </span>
+    <span className="MuiTouchRipple-root"></span>
+    </button>
+
+    <button className="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-popupIndicator" tabIndex="-1" type="button" aria-label="Open" title="Open" onClick={changeIt}>
+      <span className="MuiIconButton-label">
+        <svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 10l5 5 5-5z">
+          </path>
+          <path d="M7 10l5 5 5-5z"></path>
+        </svg>
+      </span>
+      <span className="MuiTouchRipple-root"></span>
+    </button>
+
+    </div>
+</div>
+
+<div style={{display:checkboxdisplay}}>
 <CheckboxWidget onCheck={skillsChanged}/>
+</div>
 
 </div>
 
