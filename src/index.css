@@ -22,7 +22,17 @@
   margin-top: 10px !important;
 }
 
-<style>
+.MuiFormLabel-root {
+  color: rgba(0, 0, 0, 1) !important;
+  padding: 0;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.00938em;
+}
+
+
 .MuiInput-underline:before {
     left: 0;
     right: 0;

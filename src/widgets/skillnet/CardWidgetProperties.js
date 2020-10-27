@@ -71,6 +71,11 @@ const CardWidgetProperties = (props) => {
 
 
   const [checkboxdisplay, setCheckboxdisplay] = useState('none')
+  const [arrowclass, setArrowclass] = useState('')
+
+
+
+
   const [treedata, setTreeData] = useState(null)
 
   const [positions, setPositions] = useState([])
@@ -640,9 +645,11 @@ onClick={e => (e.stopPropagation())}
   const changeIt = () => {
     if (checkboxdisplay == 'none') {
       setCheckboxdisplay('block')
+      setArrowclass('MuiAutocomplete-popupIndicatorOpen')
     }
     else {
       setCheckboxdisplay('none')
+      setArrowclass('')
     }
   };
 
@@ -743,12 +750,11 @@ onClick={e => (e.stopPropagation())}
     <span className="MuiTouchRipple-root"></span>
     </button>
 
-    <button className="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-popupIndicator" tabIndex="-1" type="button" aria-label="Open" title="Open" onClick={changeIt}>
+    <button className={`MuiButtonBase-root MuiIconButton-root MuiAutocomplete-popupIndicator ${arrowclass}`} tabIndex="-1" type="button" aria-label="Open" title="Open" onClick={changeIt}>
       <span className="MuiIconButton-label">
         <svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M7 10l5 5 5-5z">
           </path>
-          <path d="M7 10l5 5 5-5z"></path>
         </svg>
       </span>
       <span className="MuiTouchRipple-root"></span>
