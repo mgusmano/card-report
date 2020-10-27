@@ -2,6 +2,7 @@ import React from 'react';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import 'font-awesome/css/font-awesome.css';
+import { PeopleAlt } from '@material-ui/icons';
 
 const nodes3 = [{
     value: 'mars',
@@ -36,6 +37,10 @@ export default class CheckboxWidget extends React.Component {
                 checked={this.state.checked}
                 expanded={this.state.expanded}
                 onCheck={checked => {
+                  this.props.onCheck(checked)
+                  this.setState({ checked })
+                }}
+                onCheck2={checked => {
                   console.log(checked)
                   this.setState({ checked })
                 }}

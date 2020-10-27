@@ -81,6 +81,21 @@ const CardWidgetProperties = (props) => {
   const [competencies, setCompetencies] = useState([])
   const [skills, setSkills] = useState([])
   const [filteredskills, setFilteredSkills] = useState([])
+  const skillsChanged = (checked) => {
+    console.log('skillsChanged',checked)
+    setFilteredSkills(checked)
+    setButtonLabel('Apply All Filters')
+  };
+
+  // const skillsChanged = (event, value, reason) => {
+  //   var filtersSkills = value.map(skill => {
+  //     return skill.SkillName
+  //   })
+  //   console.log('skillsChanged',filtersSkills)
+  //   setFilteredSkills(filtersSkills)
+  //   setButtonLabel('Apply All Filters')
+  // };
+
 
   const [managers, setManagers] = useState([])
   const [filteredmanagers, setFilteredManagers] = useState([])
@@ -142,7 +157,7 @@ const CardWidgetProperties = (props) => {
   // const refFitpercents = useRef(null);
   // const refSubjectmatterexperts = useRef(null);
 
-  const { PartnerID, PartnerName, PersonID } = props.Partner;
+  const { PartnerID, PartnerName, PersonID, GroupID } = props.Partner;
 
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
@@ -223,7 +238,6 @@ const CardWidgetProperties = (props) => {
         }
       })
 
-
       function compare(a, b) {
         // Use toUpperCase() to ignore character casing
         const bandA = a.CompetencyGroupDisplayOrder;
@@ -265,7 +279,8 @@ const CardWidgetProperties = (props) => {
       console.log('competencies',arrayCompetencies)
       setCompetencies(arrayCompetencies)
 
-      var f= 'https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&parentskillid='
+      //http://skillnetusersapi.azurewebsites.net/api/skills?groupid=33582&parentskillid=34635
+      var f= 'https://skillnetusersapi.azurewebsites.net/api/skills?groupid=' + GroupID + '&parentskillid='
       var arrayAxios = []
       arrayCompetencies.forEach(competency => {
         arrayAxios.push( axios.get(f+competency.CompetencyID,{auth: {username: 'skillnet',password: 'demo'}}))
@@ -317,44 +332,31 @@ const CardWidgetProperties = (props) => {
       console.log(error)
     })
 
+
+
     //    .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&personid=' + PersonID, {
     //  .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&parentskillid=39806', {
     //Skills
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=33931&parentskillid=39851', {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      console.log('skills-raw',response.data)
-      var arraySkills = response.data.map(item => {
-        return {
-          SkillID: item.SkillID,
-          SkillName: item.SkillName,
-          ParentSkillID: item.ParentSkillID,
-        }
-      })
-      console.log('skills',arraySkills)
-      setSkills(arraySkills)
-
-
-
-
-    //   axios.get('http://apple.com'))
-    //   axios.all([
-    //     axios.get('http://google.com'),
-    //     axios.get('http://apple.com')
-    // ]).then(axios.spread((googleRes, appleRes) => {
-    //     // do something with both responses
-    // });
-
-
-
-
-    })
-    .catch((error) => {
-      console.log('skills=error')
-      console.log(error)
-    })
+    // axios
+    // .get('https://skillnetusersapi.azurewebsites.net/api/skills?groupid=' + GroupID + '&parentskillid=39851', {
+    //   auth: {username: 'skillnet',password: 'demo'}
+    // })
+    // .then((response) => {
+    //   console.log('skills-raw',response.data)
+    //   var arraySkills = response.data.map(item => {
+    //     return {
+    //       SkillID: item.SkillID,
+    //       SkillName: item.SkillName,
+    //       ParentSkillID: item.ParentSkillID,
+    //     }
+    //   })
+    //   console.log('skills',arraySkills)
+    //   setSkills(arraySkills)
+    // })
+    // .catch((error) => {
+    //   console.log('skills=error')
+    //   console.log(error)
+    // })
 
 
     // axios
@@ -373,7 +375,7 @@ const CardWidgetProperties = (props) => {
 
 
 
-    http://skillnetusersapi.azurewebsites.net//api/skills?groupid=33931
+//    http://skillnetusersapi.azurewebsites.net//api/skills?groupid=33931
 
     axios
     .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
@@ -504,6 +506,10 @@ const CardWidgetProperties = (props) => {
       filters.SubFunction = SubFunction => filteredsubfunctions.includes(SubFunction)
     }
 
+    if (filteredskills.length > 0) {
+      filters.Skills = filteredskills
+      //filters.Skills = skill => filteredskills.includes(skill)
+    }
 
 
     console.log('filters',filters)
@@ -547,14 +553,6 @@ const CardWidgetProperties = (props) => {
     setButtonLabel('Apply All Filters')
   };
 
-  const skillsChanged = (event, value, reason) => {
-    var filtersSkills = value.map(skill => {
-      return skill.SkillName
-    })
-    console.log('skillsChanged',filtersSkills)
-    setFilteredSkills(filtersSkills)
-    setButtonLabel('Apply All Filters')
-  };
 
   const locationsChanged = (event, value, reason) => {
     var filtersLocations = value.map(location => {
@@ -632,7 +630,7 @@ onClick={e => (e.stopPropagation())}
   );
 
   const renderTree = (nodes) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={labelIt(nodes)}>
+    <TreeItem className="smallfont" style={{marginTop:'15px',fontSize:'11px'}} key={nodes.id} nodeId={nodes.id} label={labelIt(nodes)}>
       {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
     </TreeItem>
   );
@@ -717,18 +715,18 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={true} who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
 }
 
-<div style={{marginTop:'20px',padding:'10px',border:'1px solid gray'}}>
+<div style={{marginTop:'20px',padding:'0',border:'0px solid gray'}}>
 
-<div style={{padding:'10px'}}>Skills</div>
+<div style={{padding:'0'}}>Skills</div>
 
-<CheckboxWidget/>
+<CheckboxWidget onCheck={skillsChanged}/>
 
 </div>
 
 {null !== null &&
 <TreeView
   multiSelect
-  style={{marginTop:'15px'}}
+  style={{marginTop:'15px',fontSize:'11px'}}
   defaultCollapseIcon={<ExpandMoreIcon />}
   defaultExpanded={['root']}
   defaultExpandIcon={<ChevronRightIcon />}
@@ -738,8 +736,89 @@ onClick={e => (e.stopPropagation())}
 }
 
 
+ {/* <Autocomplete
+      id="virtualize-demo"
+      style={{ width: 300 }}
+      disableListWrap
+      //classes={classes}
+      ListboxComponent={ListboxComponent}
+      //renderGroup={renderGroup}
+      options={OPTIONS}
+      //groupBy={(option) => option[0].toUpperCase()}
+      renderInput={(params) => <TextField {...params} variant="outlined" label="10,000 options" />}
+      renderOption={(option) => <Typography noWrap>{option}</Typography>}
+    /> */}
+
+
+
+
     </div>
   )
 }
+
+// function random(length) {
+//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   let result = '';
+
+//   for (let i = 0; i < length; i += 1) {
+//     result += characters.charAt(Math.floor(Math.random() * characters.length));
+//   }
+
+//   return result;
+// }
+
+// const OPTIONS = Array.from(new Array(10))
+//   .map(() => random(10 + Math.ceil(Math.random() * 20)))
+//   .sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
+
+
+
+// const ListboxComponent = (props) => {
+
+//   const labelIt = (node) => {
+//     console.log(node)
+//     return (
+//       <div style={{ display: 'flex', alignItems: 'center' }}>
+//       <Checkbox
+
+// id={`checkbox-${node.id}`}
+// //checked={isChecked}
+// onChange={(e, checked) => console.log('you checked it!', checked)}
+// onClick={e => (e.stopPropagation())}
+
+
+//         color="primary"
+//       />
+//       <Typography variant="caption">{node.name}</Typography>
+//     </div>
+//     )
+//   };
+
+//   const renderTree = (nodes) => (
+//     <TreeItem className="smallfont" style={{marginTop:'15px',fontSize:'11px'}} key={nodes.id} nodeId={nodes.id} label={labelIt(nodes)}>
+//       {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+//     </TreeItem>
+//   );
+
+// var treedata = {"id":"root","name":"Skills","children":[{"id":"34635","name":"CNA Insurance ","children":[]},{"id":"34641","name":"RC Process","children":[]},{"id":"34645","name":"Professional RC Skills ","children":[]},{"id":"34652","name":"Cyber Basics  ","children":[]},{"id":"34658","name":"E&O Basics ","children":[]},{"id":"34662","name":"Construction","children":[]},{"id":"34666","name":"Occupany","children":[]},{"id":"34670","name":"Protection ","children":[]},{"id":"34680","name":"Exposures","children":[]},{"id":"34684","name":"Reporting Requirements","children":[]},{"id":"34689","name":"Codes & Regulations - Property","children":[]},{"id":"34692","name":"Equipment & Machinery","children":[]},{"id":"34698","name":"Injury Mgmt - RTW","children":[]},{"id":"34703","name":"Employee Health & Safety","children":[]},{"id":"34713","name":"Workflow Efficiency","children":[]},{"id":"34715","name":"Codes & Regulations - WC","children":[]},{"id":"34718","name":"Driver Selection","children":[]},{"id":"34721","name":"Codes & Regulations - Auto","children":[]},{"id":"34725","name":"Fleet/Vehicle","children":[]},{"id":"34730","name":"Company, Policies & Practices","children":[]},{"id":"34735","name":"Public Protection on Insured's Premise","children":[]},{"id":"34740","name":"Off Premise","children":[]},{"id":"34743","name":"Contracts","children":[]},{"id":"34748","name":"PIAI (Personal Injury Advertising Injury)","children":[]},{"id":"34753","name":"Design of Products","children":[]},{"id":"34758","name":"Manufacturing of Products","children":[]},{"id":"34763","name":"Product in Marketplace","children":[]},{"id":"34766","name":"Product End Life","children":[]},{"id":"34769","name":"Codes & Regulations -PL","children":[]},{"id":"34773","name":"Property - Construction","children":[]},{"id":"34776","name":"Auto - Construction","children":[]},{"id":"34780","name":"GL - Construction","children":[]},{"id":"34783","name":"PL - Construction","children":[]},{"id":"34785","name":"Property - Durable Goods","children":[]},{"id":"34788","name":"Auto - Durable Goods","children":[]},{"id":"34792","name":"Property - Cultural Institutions","children":[]},{"id":"34794","name":"Property - Manufacturing","children":[]},{"id":"34796","name":"Property - Manufacturing (Metals Automotive Component Parts)","children":[]},{"id":"34798","name":"Property - Manufacturing (Furniture, Apparel, Commercial Paper & Printing, Wood)","children":[]},{"id":"34801","name":"WC - Manufacturing (Metals Automotive Component Parts)","children":[]},{"id":"34806","name":"WC - Manufacturing (Furniture, Apparel, Commercial Paper & Printing, Wood)","children":[]},{"id":"34812","name":"Auto - Manufacturing","children":[]},{"id":"34816","name":"GL - Manufacturing","children":[]},{"id":"34818","name":"PL - Manufacturing (Furniture, Apparel, Commercial Paper &  Printing, Wood)","children":[]},{"id":"34820","name":"Property - Real Estate","children":[]},{"id":"34823","name":"GL - Real Estate","children":[]},{"id":"34825","name":"GL - Professional Services (Architects, Engineers, & Design Consultants)","children":[]},{"id":"34865","name":"Claims Investigation","children":[]},{"id":"34867","name":"Management Skills","children":[]},{"id":"34870","name":"Business Skills","children":[]},{"id":"34873","name":"Cyber Monoline","children":[]},{"id":"34880","name":"CNA Insurance - Construction","children":[]},{"id":"34883","name":"WC - Construction (Utility Contractors)","children":[]},{"id":"34887","name":"WC - Construction (Roofers)","children":[]},{"id":"34890","name":"WC - Construction (Street & Road)","children":[]},{"id":"34895","name":"WC - Construction (Tunnels, Bridge Erection)","children":[]},{"id":"34900","name":"GL - Construction (Pools/Spas)","children":[]},{"id":"34903","name":"CNA Insurance - Manufacturing","children":[]},{"id":"34905","name":"E&O - Manufacturing","children":[]},{"id":"34909","name":"Property - Manufacturing (Industrial Machinery, Commercial Electrical Equipment/Appliances, Transporation Equipment)","children":[]},{"id":"34911","name":"Property - Manufacturing (Plastics)","children":[]},{"id":"34913","name":"WC - Manufacturing (Electronic Component & Hardware Manufacturing)","children":[]},{"id":"34915","name":"WC - Manufacturing (Industrial Machinery, Commercial Electrical, Equipment/Appliances, Transportation Equipment","children":[]},{"id":"34921","name":"WC - Manufacturing (Plastics)","children":[]},{"id":"34925","name":"WC - Manufacturing (Pre Cast)","children":[]},{"id":"34931","name":"PL - Manufacturing (Electronic Component & Hardware Manufacturing)","children":[]},{"id":"34933","name":"E&O - Technology","children":[]},{"id":"34937","name":"Property - Technology (Electronic Component & Hardware Manufcaturing w/Semi Conductor Fabless)","children":[]},{"id":"34939","name":"Property - Technology (Electronic Component & Hardware Manufcaturing w/Semi Conductor Fabrication)","children":[]},{"id":"34950","name":"Property - Technology (Software & IT Services/Data Center)","children":[]},{"id":"34956","name":"E&O - Healthcare","children":[]},{"id":"34960","name":"Property - Healthcare","children":[]},{"id":"34968","name":"WC - Healthcare (Hospital)","children":[]},{"id":"34973","name":"Auto - Healthcare","children":[]},{"id":"34976","name":"GL - Healthcare","children":[]},{"id":"34978","name":"Property - Life Science","children":[]},{"id":"34987","name":"WC - Life Science","children":[]},{"id":"34992","name":"WC - Life Science (Pharmaceutical Companies)","children":[]},{"id":"34997","name":"Auto - Life Science","children":[]},{"id":"34999","name":"GL - Life Science","children":[]},{"id":"35001","name":"PL - Life Science","children":[]},{"id":"35004","name":"PL - Life Science (Academic Institutions/Healthcare Org)","children":[]},{"id":"35006","name":"PL - Life Science (Contractors, Manufacturing Org (CMO), Research Org (CRO), Service Org (CSO))","children":[]},{"id":"35008","name":"PL - Life Science (Medical Device Manufacturers)","children":[]},{"id":"35010","name":"WC - Federal Gov Contractors","children":[]},{"id":"35012","name":"GL - Federal Gov Contractors","children":[]},{"id":"35014","name":"Facility Equipment & Systems","children":[]},{"id":"35024","name":"Codes & Regulations - EB","children":[]},{"id":"35030","name":"Business Interruption of Machinery","children":[]},{"id":"35034","name":"Jurisdictional Inspections","children":[]},{"id":"35037","name":"Equipment Maintenance & Testing","children":[]},{"id":"35041","name":"Spoilage and Contamination","children":[]},{"id":"36663","name":"EB - Manufacturing","children":[]},{"id":"36667","name":"EB - Healthcare (Hospital)","children":[]},{"id":"36670","name":"EB - Manufacturing (Food)","children":[]},{"id":"36674","name":"EB - Technology (IT Software)","children":[]},{"id":"36675","name":"EB - Technology (Electronic Component & Hardware Manufacturing)","children":[]},{"id":"36676","name":"EB - Life Science","children":[]}]}
+
+
+//   return (
+//     <div>
+// <TreeView
+//   multiSelect
+
+//   style={{marginTop:'15px',height:'100px',overflow:'auto'}}
+//   defaultCollapseIcon={<ExpandMoreIcon />}
+//   defaultExpanded={['root']}
+//   defaultExpandIcon={<ChevronRightIcon />}
+// >
+//   {renderTree(treedata)}
+// </TreeView>
+
+
+//     </div>
+//   )
+// }
 
 export default CardWidgetProperties

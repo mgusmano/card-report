@@ -66,23 +66,22 @@ console.log('parsed',parsed);
 // PartnerShort = 'CNA'
 // PartnerName = 'CNA';
 // PersonID = 275399;
+
 var PartnerCNA = {
   PartnerID: 395,
   PartnerShort: 'CNA',
   PartnerName: 'CNA',
-  PersonID: 275399
+  PersonID: 275399,
+  GroupID: 33582
 }
 
-// PartnerID = 434
-// PartnerShort = 'GMIsb'
-// PartnerName = 'General Mills';
-// PersonID = 277356;
+
 var PartnerGMIsb = {
   PartnerID: 434,
   PartnerShort: 'GMIsb',
   PartnerName: 'General Mills',
-  //PersonID: 277356
-  PersonID: 281326
+  PersonID: 281326,
+  GroupID: 33931
 }
 
 

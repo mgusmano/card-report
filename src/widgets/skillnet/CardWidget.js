@@ -46,6 +46,7 @@ const CardWidget = (props) => {
     return array.filter(item => {
       // validates all filter criteria
       return filterKeys.every(key => {
+        console.log(key)
         // ignores non-function predicates
         if (typeof filters[key] !== 'function') return true;
         return filters[key](item[key]);
@@ -60,6 +61,7 @@ const CardWidget = (props) => {
 
   const onChange2 = (filters) => {
     console.log(filters)
+    console.log(filters.Skills)
     const filteredusers = filterArray(cardRef.current.originalusers, filters);
     setUsers(filteredusers)
 
