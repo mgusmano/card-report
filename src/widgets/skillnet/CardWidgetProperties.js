@@ -545,14 +545,8 @@ const CardWidgetProperties = (props) => {
     console.log('filters',filters)
     SendIt('fromcard2', {filters: filters})
 
-
-
     // //const filtered = filterArray(cardRef.current.originalusers, filters);
     // //setUsers(filtered)
-
-
-
-
 
     // SendIt('fromcard', {filters: {
     //   filteredusers: filtered,
@@ -565,10 +559,6 @@ const CardWidgetProperties = (props) => {
     // }})
 
     setButtonLabel('Filters Are Applied')
-
-
-
-
   };
 
   const positionsChanged = (event, value, reason) => {
