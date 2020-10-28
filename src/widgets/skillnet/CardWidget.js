@@ -40,6 +40,7 @@ const CardWidget = (props) => {
         break;
 
       case 'fromcardwaiting':
+        console.log('here')
         setWaiting(true)
         setUsers([])
         break;

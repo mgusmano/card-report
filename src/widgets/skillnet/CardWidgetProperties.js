@@ -88,9 +88,19 @@ const CardWidgetProperties = (props) => {
   const [competencies, setCompetencies] = useState([])
   const [skills, setSkills] = useState([])
   const [filteredskills, setFilteredSkills] = useState([])
+
+  const [filteredskillsstring, setFilteredSkillsString] = useState('')
   const skillsChanged = (checked) => {
     console.log('skillsChanged',checked)
+
+    var checkedString = ''
+    checked.forEach(check => {
+      checkedString = checkedString + check + ':0,'
+    })
+
+
     setFilteredSkills(checked)
+    setFilteredSkillsString(checkedString)
     setButtonLabel('Apply All Filters')
   };
 
@@ -173,19 +183,6 @@ const CardWidgetProperties = (props) => {
     console.log('useEffect CardWidgetProperties')
 
     if (PartnerName === 'General Mills') {
-
-
-      axios
-      .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=39817:0,39818:0,39819:0,39820:0&jobids=', {
-        auth: {username: 'skillnet',password: 'demo'}
-      })
-      .then((response) => {
-        console.log('filtered users', response)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
 
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
@@ -498,9 +495,14 @@ const CardWidgetProperties = (props) => {
     SendIt('fromcardwaiting', {})
 
 
+    //39817:0,39818:0,39819:0,39820:0,
+    //.get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
+    //  .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + '39817:0,39818:0,39819:0,39820:0,' + '&jobids=', {
+
+    console.log(filteredskillsstring)
 
     axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=39817:0,39818:0,39819:0,39820:0&jobids=', {
+    .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
