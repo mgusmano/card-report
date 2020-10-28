@@ -492,21 +492,21 @@ const CardWidgetProperties = (props) => {
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
 
-    // SendIt('fromcardwaiting', {})
-    // //39817:0,39818:0,39819:0,39820:0,
-    // axios
-    // .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
-    //   auth: {username: 'skillnet',password: 'demo'}
-    // })
-    // .then((response) => {
-    //   console.log('filtered users', response)
+    SendIt('fromcardwaiting', {})
+    //39817:0,39818:0,39819:0,39820:0,
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log('filtered users', response)
 
-    //   SendIt('fromcardfilteredusers', {users: response.data})
-    // })
-    // .catch((error) => {
-    //   console.log(error)
-    // })
-    // return
+      SendIt('fromcardfilteredusers', {users: response.data})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    return
 
     const filters = {}
     if (filteredpositions.length > 0) {
