@@ -492,34 +492,22 @@ const CardWidgetProperties = (props) => {
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
 
-    SendIt('fromcardwaiting', {})
+    // SendIt('fromcardwaiting', {})
+    // //39817:0,39818:0,39819:0,39820:0,
+    // axios
+    // .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
+    //   auth: {username: 'skillnet',password: 'demo'}
+    // })
+    // .then((response) => {
+    //   console.log('filtered users', response)
 
+    //   SendIt('fromcardfilteredusers', {users: response.data})
+    // })
+    // .catch((error) => {
+    //   console.log(error)
+    // })
+    // return
 
-    //39817:0,39818:0,39819:0,39820:0,
-    //.get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
-    //  .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + '39817:0,39818:0,39819:0,39820:0,' + '&jobids=', {
-
-    console.log(filteredskillsstring)
-
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      console.log('filtered users', response)
-
-      SendIt('fromcardfilteredusers', {users: response.data})
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-
-    return
-
-
-
-
-    console.log('a')
     const filters = {}
     if (filteredpositions.length > 0) {
       filters.JobName = JobName => filteredpositions.includes(JobName)
@@ -550,18 +538,12 @@ const CardWidgetProperties = (props) => {
     if (filteredsubfunctions.length > 0) {
       filters.SubFunction = SubFunction => filteredsubfunctions.includes(SubFunction)
     }
-
     if (filteredskills.length > 0) {
       filters.Skills = filteredskills
       //filters.Skills = skill => filteredskills.includes(skill)
     }
-
-
     console.log('filters',filters)
-
     SendIt('fromcard2', {filters: filters})
-
-
 
 
 
