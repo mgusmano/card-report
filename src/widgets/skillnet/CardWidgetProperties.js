@@ -173,6 +173,20 @@ const CardWidgetProperties = (props) => {
     console.log('useEffect CardWidgetProperties')
 
     if (PartnerName === 'General Mills') {
+
+
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=39817:0,39818:0,39819:0,39820:0&jobids=', {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('filtered users', response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
         auth: {username: 'skillnet',password: 'demo'}
@@ -480,6 +494,28 @@ const CardWidgetProperties = (props) => {
 
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
+
+    SendIt('fromcardwaiting', {})
+
+
+
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=39817:0,39818:0,39819:0,39820:0&jobids=', {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      console.log('filtered users', response)
+
+      SendIt('fromcardfilteredusers', {users: response.data})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+    return
+
+
+
 
     console.log('a')
     const filters = {}

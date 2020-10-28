@@ -23,6 +23,8 @@ const CardWidget = (props) => {
   //const [filteredlocations, setFilteredlocations] = useState([])
   //var originalusers
 
+  const [waiting, setWaiting] = useState(false)
+
 
   const onMessage = useCallback((e) => {
     if (!e.detail) {return}
@@ -36,6 +38,19 @@ const CardWidget = (props) => {
       case 'fromcard2':
         onChange2(payload.filters)
         break;
+
+      case 'fromcardwaiting':
+        setWaiting(true)
+        setUsers([])
+        break;
+
+      case 'fromcardfilteredusers':
+        console.log(payload.users)
+        setUsers(payload.users)
+        setWaiting(false)
+        break;
+
+
       default:
         break;
     }
@@ -232,6 +247,13 @@ const CardWidget = (props) => {
 
   return (
         <div ref={cardRef} style={{display:'flex',flex:props.flex,flexWrap:'wrap',flexDirection:'row',overflow:'auto',alignContent:'flex-start'}} xstyle={{flex:'auto',flexWrap:'wrap',flexDirection:'row',justifyContent:'space-between',display:'flex',overflow:'auto'}}>
+
+          {waiting === true &&
+
+                <div style={{padding:'30px',fontSize:'48px'}}>waiting</div>
+
+          }
+
           {users !== null &&
             users.map((user, index) => {
               return (
