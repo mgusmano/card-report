@@ -14,7 +14,7 @@ const CardWidget = (props) => {
   //width:1000//width:
   //height:700//height:
 
-  const { PartnerID, PartnerName } = props.Partner;
+  const { PartnerID, PartnerName, PersonID, GroupID} = props.Partner;
 
   const cardRef = useRef(null);
   //const [originalusers, setOriginalUsers] = useState(null)
@@ -137,42 +137,67 @@ const CardWidget = (props) => {
     //   PartnerName = partnername
     // }
 
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/users?partnerid=' + PartnerID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      //console.log('users with Test',response.data)
-      var Users = response.data.filter(user => {
-        if (user.BLastName !== 'Test') {
-          return user
-        }
-      })
-      var Users2 = Users.map(function (user) {
-        var f = user.BFirstName.charAt(0)
-        switch (f) {
-          case 'A':
-            user.sme = 'Gold'
-            break;
-          case 'B':
-            user.sme = 'Silver'
-            break;
-          case 'C':
-            user.sme = 'Bronze'
-            break;
-          default:
-            user.sme = ''
-            break;
-        }
-        return user
-      });
-      console.log('users',Users2)
-      setUsers(Users2)
-      card.originalusers = Users2
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+    //var url = 'https://skillnetusersapi.azurewebsites.net/api/users?partnerid=' + PartnerID
+
+
+    // //SendIt('fromcardwaiting', {})
+    // setWaiting(true)
+    // setUsers([])
+    // var ratingsourcesstring = ''
+    // var jobidsstring = ''
+    // var locationidsstring = ''
+    // var manageridsstring = ''
+    // var percentidsstring = ''
+    // var skillidsstring = ''
+    // var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
+    // 'personid=' + PersonID + '&' +
+    // 'groupid=' + GroupID + '&' +
+    // 'ratingsources=' + ratingsourcesstring + '&' +
+    // 'jobids=' + jobidsstring  + '&' +
+    // 'partnerlocationids=' + locationidsstring + '&' +
+    // 'managerids=' + manageridsstring + '&' +
+    // 'percentages=' + percentidsstring + '&' +
+    // 'skillids=' + skillidsstring
+
+    // //Users
+    // axios
+    // .get(url, {
+    //   auth: {username: 'skillnet',password: 'demo'}
+    // })
+    // .then((response) => {
+    //   //console.log('users with Test',response.data)
+    //   var Users = response.data.filter(user => {
+    //     if (user.BLastName !== 'Test') {
+    //       return user
+    //     }
+    //   })
+    //   var Users2 = Users.map(function (user) {
+    //     var f = user.BFirstName.charAt(0)
+    //     switch (f) {
+    //       case 'A':
+    //         user.sme = 'Gold'
+    //         break;
+    //       case 'B':
+    //         user.sme = 'Silver'
+    //         break;
+    //       case 'C':
+    //         user.sme = 'Bronze'
+    //         break;
+    //       default:
+    //         user.sme = ''
+    //         break;
+    //     }
+    //     return user
+    //   });
+    //   console.log('users',Users2)
+    //   setUsers(Users2)
+    //   card.originalusers = Users2
+    //   console.log(card.originalusers.length)
+    //   setWaiting(false)
+    // })
+    // .catch((error) => {
+    //   console.log(error)
+    // })
 
 
     // card.addEventListener('mjg', onMessage)
@@ -251,14 +276,14 @@ const CardWidget = (props) => {
 
           {waiting === true &&
 
-                <div style={{padding:'30px',fontSize:'48px'}}>waiting</div>
+                <div style={{padding:'30px',fontSize:'48px'}}>Loading...</div>
 
           }
 
           {users !== null &&
             users.map((user, index) => {
               return (
-                <Card key={index} user={user} PartnerName={PartnerName}/>
+                <Card key={index} user={user} Partner={props.Partner} />
               )
             })
           }

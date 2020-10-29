@@ -72,7 +72,8 @@ var PartnerCNA = {
   PartnerShort: 'CNA',
   PartnerName: 'CNA',
   PersonID: 275399,
-  GroupID: 33582
+  GroupID: 33582,
+  ratingsources: '4' //ManagerRating
 }
 
 
@@ -81,7 +82,8 @@ var PartnerGMIsb = {
   PartnerShort: 'GMIsb',
   PartnerName: 'General Mills',
   PersonID: 281326,
-  GroupID: 33931
+  GroupID: 33931,
+  ratingsources: '1000' //SelfRating
 }
 
 

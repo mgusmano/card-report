@@ -4,21 +4,36 @@ import Star from '@material-ui/icons/Star';
 
 
 const Card = (props) => {
-  const {user, PartnerName} = props
+  const {user, Partner} = props
+  const {PartnerName,ratingsources} = Partner
   const [color, setColor] = useState('gold')
   const [display, setDisplay] = useState('none')
+  const [ratinglabel, setRatinglabel] = useState('')
 
   if (user.Avatar === "https://azureportal.skillnet.net/") {
     user.Avatar = 'a.png'
   }
-  if (PartnerName === 'General Mills') {
-    user.Rating = user.SelfRating
-  }
-  else {
-    user.Rating = user.ManagerRating
-  }
+
+
+
+  // if (PartnerName === 'General Mills') {
+  //   user.Rating = user.SelfRating
+  // }
+  // else {
+  //   user.Rating = user.ManagerRating
+  // }
 
   useEffect(() => {
+
+    if (ratingsources === '1000') {
+      user.Rating = user.SelfRating
+      setRatinglabel('Self Rating')
+    }
+    else {
+      user.Rating = user.ManagerRating
+      setRatinglabel('Manager Rating')
+    }
+
     //console.log('useEffect Card')
 
     // if (user.Avatar === "https://azureportal.skillnet.net/") {
@@ -99,8 +114,9 @@ const Card = (props) => {
     </div>
 
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-    {idshow}
-    <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Profile ({user.Rating})</div>
+      <div style={{fontSize:'11px',marginTop:'1px',textAlign:'left'}}>Profile</div>
+      {idshow}
+      <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{ratinglabel}: {user.Rating}</div>
     </div>
 
   </div>

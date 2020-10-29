@@ -63,18 +63,18 @@ const DropDown = (props) => {
 
 
 const CardWidgetProperties = (props) => {
+  const { PartnerID, PartnerName, PersonID, GroupID } = props.Partner;
   //title:Card Report//title:
   //x:30//x:
   //y:30//y:
   //width:1000//width:
   //height:700//height:
 
+  const [numberofusersdisplayed, setNumberofusersdisplayed] = useState(null)
+
 
   const [checkboxdisplay, setCheckboxdisplay] = useState('none')
   const [arrowclass, setArrowclass] = useState('')
-
-
-
 
   const [treedata, setTreeData] = useState(null)
 
@@ -82,27 +82,110 @@ const CardWidgetProperties = (props) => {
   const [filteredpositions, setFilteredPositions] = useState([])
   const [locations, setLocations] = useState([])
   const [filteredlocations, setFilteredLocations] = useState([])
-  const [buttonlabel, setButtonLabel] = useState('No Filters Selected')
+  const [buttonlabel, setButtonLabel] = useState('Loading...')
 
   const [competencygroups, setCompetencyGroups] = useState([])
   const [competencies, setCompetencies] = useState([])
   const [skills, setSkills] = useState([])
   const [filteredskills, setFilteredSkills] = useState([])
 
-  const [filteredskillsstring, setFilteredSkillsString] = useState('')
-  const skillsChanged = (checked) => {
-    console.log('skillsChanged',checked)
+  //const [filteredskillsstring, setFilteredSkillsString] = useState('')
 
+  const [jobidsstring, setJobidsString] = useState('')
+  const [locationidsstring, setLocationidsString] = useState('')
+  const [manageridsstring, setManageridsString] = useState('')
+  const [percentidsstring, setPercentidsString] = useState('')
+
+  const [ratingsourcesstring, setRatingsourcesString] = useState('')
+
+
+  const [skillidsstring, setSkillidsString] = useState('')
+
+  const jobsChanged = (checked) => {
+    console.log('jobsChanged',checked)
     var checkedString = ''
     checked.forEach(check => {
       checkedString = checkedString + check + ':0,'
     })
-
-
-    setFilteredSkills(checked)
-    setFilteredSkillsString(checkedString)
+    //setFilteredSkills(checked)
+    console.log(checkedString)
+    setJobidsString(checkedString)
     setButtonLabel('Apply All Filters')
   };
+
+
+
+  const filterChanged = (checked, who) => {
+    console.log(checked,who)
+
+    var suffix = ''
+    var idVal = ''
+    switch(who) {
+      case 'positions':
+        suffix = ':0'
+        idVal = 'JobID'
+        break;
+      case 'locations':
+        suffix = ''
+        idVal = 'LocationID'
+        break;
+      case 'managers':
+        suffix = ''
+        idVal = 'ManagerID'
+        break;
+      case 'percents':
+        suffix = ''
+        idVal = 'PercentID'
+        break;
+
+      default:
+        suffix = ''
+    }
+
+    var checkedString = ''
+
+    checked.forEach(check => {
+      checkedString = checkedString + check[idVal] + suffix + ','
+    })
+    console.log(checkedString)
+    var finalString = checkedString.slice(0, -1)
+
+    switch(who) {
+      case 'positions':
+        setJobidsString(finalString)
+        break;
+      case 'locations':
+        setLocationidsString(finalString)
+        break;
+      case 'managers':
+        setManageridsString(finalString)
+        break;
+      case 'percents':
+        setPercentidsString(finalString)
+        break;
+
+
+
+      default:
+
+    }
+
+    setButtonLabel('Click to Apply All Filters')
+    //setButtonLabel('Apply All Filters')
+  };
+
+
+  const skillsChanged = (checked) => {
+    console.log('skillsChanged',checked)
+    var checkedString = ''
+    checked.forEach(check => {
+      checkedString = checkedString + check + ':0,'
+    })
+    //setFilteredSkills(checked)
+    setSkillidsString(checkedString)
+    setButtonLabel('Apply All Filters')
+  };
+
 
   // const skillsChanged = (event, value, reason) => {
   //   var filtersSkills = value.map(skill => {
@@ -116,7 +199,7 @@ const CardWidgetProperties = (props) => {
 
   const [managers, setManagers] = useState([])
   const [filteredmanagers, setFilteredManagers] = useState([])
-  const [fitpercents, setFitpercents] = useState(null)
+  const [percents, setPercents] = useState(null)
   const [filteredfitpercent, setFilteredfitpercent] = useState('')
 
   const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
@@ -174,13 +257,114 @@ const CardWidgetProperties = (props) => {
   // const refFitpercents = useRef(null);
   // const refSubjectmatterexperts = useRef(null);
 
-  const { PartnerID, PartnerName, PersonID, GroupID } = props.Partner;
+
 
   //var PartnerID = 395;  var PartnerName = 'CNA'; var PersonID = 275399;
   //var PartnerID = 426;  var PartnerName = 'General Mills'; var PersonID = 277356;
 
   useEffect(() => {
     console.log('useEffect CardWidgetProperties')
+
+    setRatingsourcesString(props.Partner.ratingsources)
+    onApplyClick()
+
+
+
+    //Positions
+    axios
+    .get('https://skillnetpartnerpositionsapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      var arrayPositions = response.data.map(item => {
+        return {
+          JobID: item.JobID,
+          JobName: item.JobName
+        }
+      })
+      console.log('positions',arrayPositions)
+      setPositions(arrayPositions)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+    //Locations
+    axios
+    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      var arrayLocations = response.data.map(item => {
+        var n = item.LocationName.indexOf(',');
+        //var city = item.LocationName.substring(0,n)
+        //console.log(city)
+        return {
+          LocationID: item.PartnerLocationID,
+          LocationName: item.LocationName,
+          //City: city
+        }
+      })
+      console.log('locations',arrayLocations)
+      setLocations(arrayLocations)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+    //Managers
+    axios
+    .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
+      auth: {username: 'skillnet',password: 'demo'}
+    })
+    .then((response) => {
+      var arrayManagers = response.data.map(item => {
+        return {
+          ManagerID: item.ManagerID,
+          ManagerName: item.ManagerName //+ ' (' + item.ManagerID + ')'
+        }
+      })
+      console.log('managers',arrayManagers)
+      setManagers(arrayManagers)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+    //FitPercents
+    var arrayPercents = [
+      { PercentName:'40% and above', PercentID: 40 },
+      { PercentName:'45% and above', PercentID: 45 },
+      { PercentName:'50% and above', PercentID: 50 },
+      { PercentName:'55% and above', PercentID: 55 },
+      { PercentName:'60% and above', PercentID: 60 },
+      { PercentName:'65% and above', PercentID: 65 },
+      { PercentName:'70% and above', PercentID: 70 },
+      { PercentName:'75% and above', PercentID: 75 },
+      { PercentName:'80% and above', PercentID: 80 },
+      { PercentName:'85% and above', PercentID: 85 },
+      { PercentName:'90% and above', PercentID: 90 },
+      { PercentName:'95% and above', PercentID: 95 },
+    ]
+    setPercents(arrayPercents)
+
+
+
+
+
+    if (PartnerName === 'CNA') {
+      var arraySubjectmatterexperts = [
+        { Name:'Gold',   value: 'Gold' },
+        { Name:'Silver', value: 'Silver' },
+        { Name:'Bronze', value: 'Bronze' },
+      ]
+      setSubjectmatterexperts(arraySubjectmatterexperts)
+    }
+
+
+
+
+
 
     if (PartnerName === 'General Mills') {
 
@@ -327,16 +511,11 @@ const CardWidgetProperties = (props) => {
             }
             tree.push(o)
           })
-          console.log(tree)
-
           var data = {
             id: 'root',
             name: 'Skills',
             children: tree
           }
-
-
-          console.log(JSON.stringify(data))
           setTreeData(data)
 
     // const acct = results[0];
@@ -395,89 +574,10 @@ const CardWidgetProperties = (props) => {
 
 //    http://skillnetusersapi.azurewebsites.net//api/skills?groupid=33931
 
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayManagers = response.data.map(item => {
-        return {
-          ManagerID: item.ManagerID,
-          ManagerName: item.ManagerName //+ ' (' + item.ManagerID + ')'
-        }
-      })
-      console.log('managers',arrayManagers)
-      setManagers(arrayManagers)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 
 
-    axios
-    .get('https://skillnetpartnerpositionsapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayPositions = response.data.map(item => {
-        return {
-          JobID: item.JobID,
-          JobName: item.JobName
-        }
-      })
-      console.log('positions',arrayPositions)
-      setPositions(arrayPositions)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 
-    axios
-    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayLocations = response.data.map(item => {
-        var n = item.LocationName.indexOf(',');
-        var city = item.LocationName.substring(0,n)
-        //console.log(city)
-        return {
-          PartnerLocationID: item.PartnerLocationID,
-          LocationName: item.LocationName,
-          City: city
-        }
-      })
-      console.log('locations',arrayLocations)
-      setLocations(arrayLocations)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 
-    var arrayFitpercents = [
-      { FitpercentName:'40% and above', FitpercentValue: 40 },
-      { FitpercentName:'45% and above', FitpercentValue: 45 },
-      { FitpercentName:'50% and above', FitpercentValue: 50 },
-      { FitpercentName:'55% and above', FitpercentValue: 55 },
-      { FitpercentName:'60% and above', FitpercentValue: 60 },
-      { FitpercentName:'65% and above', FitpercentValue: 65 },
-      { FitpercentName:'70% and above', FitpercentValue: 70 },
-      { FitpercentName:'75% and above', FitpercentValue: 75 },
-      { FitpercentName:'80% and above', FitpercentValue: 80 },
-      { FitpercentName:'85% and above', FitpercentValue: 85 },
-      { FitpercentName:'90% and above', FitpercentValue: 90 },
-      { FitpercentName:'95% and above', FitpercentValue: 95 },
-    ]
-    setFitpercents(arrayFitpercents)
-
-    if (PartnerName === 'CNA') {
-      var arraySubjectmatterexperts = [
-        { Name:'Gold',   value: 'Gold' },
-        { Name:'Silver', value: 'Silver' },
-        { Name:'Bronze', value: 'Bronze' },
-      ]
-      setSubjectmatterexperts(arraySubjectmatterexperts)
-    }
 
 
   }, [PartnerID, PartnerName]);
@@ -492,16 +592,35 @@ const CardWidgetProperties = (props) => {
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
 
+
+
+
     SendIt('fromcardwaiting', {})
+
+    // 'personid=' + '281326' + '&' +
+    // 'groupid=' + '33931' + '&' +
+
+    var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
+    'personid=' + PersonID + '&' +
+    'groupid=' + GroupID + '&' +
+    'ratingsources=' + ratingsourcesstring + '&' +
+    'jobids=' + jobidsstring  + '&' +
+    'partnerlocationids=' + locationidsstring + '&' +
+    'managerids=' + manageridsstring + '&' +
+    'percentages=' + percentidsstring + '&' +
+    'skillids=' + skillidsstring
+    console.log(url)
     //39817:0,39818:0,39819:0,39820:0,
     axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/cardreportusers?personid=281326&groupid=33931&percentages=&ratingsources=&managerids=&partnerlocationids=&skillids=' + filteredskillsstring + '&jobids=', {
+    .get(url, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
       console.log('filtered users', response)
+      setNumberofusersdisplayed(response.data.length)
 
       SendIt('fromcardfilteredusers', {users: response.data})
+      setButtonLabel('Apply All Filters')
     })
     .catch((error) => {
       console.log(error)
@@ -591,7 +710,7 @@ const CardWidgetProperties = (props) => {
 
   const fitpercentsChanged = (event, value, reason) => {
     var fitpercents = value.map(fitpercent => {
-      return fitpercent.FitpercentValue
+      return fitpercent.PercentID
     })
     console.log(value)
     if (value == null) {
@@ -674,25 +793,37 @@ onClick={e => (e.stopPropagation())}
         {buttonlabel}
       </Button>
 
-{positions !== null &&
-<DropDown multiple={true} who="Positions" onChanged={positionsChanged} options={positions} name="JobName"/>
+
+{numberofusersdisplayed !== null &&
+<div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
 }
+
+{positions !== null &&
+<DropDown multiple={true} who="Positions" onChanged={(event,checked) => filterChanged(checked,'positions')} options={positions} name="JobName"/>
+}
+{locations !== null &&
+<DropDown multiple={true} who="Locations" onChanged={(event,checked) => filterChanged(checked,'locations')} options={locations} name="LocationName"/>
+}
+{managers !== null &&
+<DropDown multiple={true} who="Managers" onChanged={(event,checked) => filterChanged(checked,'managers')} options={managers} name="ManagerName"/>
+}
+{percents !== null &&
+<DropDown multiple={true} who="Fit Percent" onChanged={(event,checked) => filterChanged(checked,'percents')} options={percents} name="PercentName"/>
+}
+
+
+
+
+
 
 {null !== null &&
 <DropDown multiple={true} who="Skills" onChanged={skillsChanged} options={skills} name="SkillName"/>
 }
 
-{locations !== null &&
-<DropDown multiple={true} who="Locations" onChanged={locationsChanged} options={locations} name="LocationName"/>
-}
 
-{managers !== null &&
-<DropDown multiple={true} who="Managers" onChanged={managersChanged} options={managers} name="ManagerName"/>
-}
 
-{fitpercents !== null &&
-<DropDown multiple={true} who="Fit Percent" onChanged={fitpercentsChanged} options={fitpercents} name="FitpercentName"/>
-}
+
+
 
 
       {/* {fitpercents !== null &&
