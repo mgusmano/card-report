@@ -782,8 +782,9 @@ onClick={e => (e.stopPropagation())}
     }
   };
 
+  //    <div style={{width:propertywidth,padding:'10px'}}>
   return (
-    <div style={{width:propertywidth,padding:'10px'}}>
+    <div style={{width:'100%',padding:'10px'}}>
       <Button
         // ref={refApplyButton}
         style={{width:'100%'}}
