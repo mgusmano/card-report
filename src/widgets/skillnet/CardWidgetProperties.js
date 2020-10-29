@@ -555,7 +555,7 @@ const CardWidgetProperties = (props) => {
     'personid=' + PersonID + '&' +
     'groupid=' + GroupID + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
-    'segmentidss=' + segmentidsstring  + '&' +
+    'segmentids=' + segmentidsstring  + '&' +
     'jobids=' + jobidsstring  + '&' +
     'partnerlocationids=' + locationidsstring + '&' +
     'managerids=' + manageridsstring + '&' +
