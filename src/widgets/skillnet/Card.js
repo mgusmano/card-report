@@ -85,9 +85,12 @@ const Card = (props) => {
 
     <div style={{display:'flex',flexDirection:'row',alignContent:'flex-start',justifyContent:'space-between'}}>
     <div style={{display:'flex',alignItems:'flex-start',}}>
-    <Star style={{color:color,display:display}}/>
-      <div className="imgAll imgBig" style={{height:'70px',width:'70px',backgroundImage: `url(${user.Avatar})`}}></div>
+      <Star style={{color:color,display:display}}/>
+      <div>
+        <div className="imgAll imgBig" style={{height:'70px',width:'70px',backgroundImage: `url(${user.Avatar})`}}></div>
+        <div style={{width:'100%',fontSize:'11px',marginTop:'1px',textAlign:'left'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</div>
       </div>
+    </div>
       <div style={{display:'flex',flexDirection:'column',alignContent:'flex-end'}}>
         <div style={{fontSize:'11px',fontWeight:'bold',marginTop:'1px',textAlign:'right'}}>{user.BFirstName} {user.BLastName}</div>
         <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>&nbsp;{user.JobName}</div>
@@ -110,11 +113,11 @@ const Card = (props) => {
     </div>
 
     <div style={{marginTop:'10px',display:'flex',flexDirection:'row',justifyContent:'flex-start'}}>
-      <div style={{fontSize:'11px'}}>{user.Email}</div>
+      <div style={{fontSize:'11px',marginTop:'1px',textAlign:'left'}}></div>
     </div>
 
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-      <div style={{fontSize:'11px',marginTop:'1px',textAlign:'left'}}>Profile</div>
+      <div style={{fontSize:'11px'}}>{user.Email}</div>
       {idshow}
       <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{ratinglabel}: {user.Rating}</div>
     </div>
