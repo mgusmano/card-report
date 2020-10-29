@@ -10,12 +10,12 @@ import logoImg from './images/logo.png';
 import CardWidget from './widgets/skillnet/CardWidget'
 import MapWidget from './widgets/skillnet/MapWidget'
 //import ChartWidget from './widgets/skillnet/ChartWidget'
-import CardReportFooter from './CardReportFooter'
+//import CardReportFooter from './CardReportFooter'
 
 import Horizontal from './layout/Horizontal'
 import Vertical from './layout/Vertical'
 import Splitter from './layout/Splitter'
-import Separator from './layout/Separator'
+//import Separator from './layout/Separator'
 
 import CardWidgetProperties from'./widgets/skillnet/CardWidgetProperties'
 //import IconButton from '@material-ui/core/IconButton';

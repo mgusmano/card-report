@@ -3,7 +3,6 @@ import axios from "axios";
 import './CardWidget.css'
 
 import CheckboxWidget from './CheckboxWidget'
-
 import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -11,11 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+//import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
 import TreeItem from '@material-ui/lab/TreeItem';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+//import TreeView from '@material-ui/lab/TreeView';
+//import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+//import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 
 //const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -59,11 +58,9 @@ const DropDown = (props) => {
   )
 }
 
-
-
-
 const CardWidgetProperties = (props) => {
   const { PartnerID, PartnerName, PersonID, GroupID } = props.Partner;
+  const {propertywidth} = props
   //title:Card Report//title:
   //x:30//x:
   //y:30//y:
@@ -71,53 +68,34 @@ const CardWidgetProperties = (props) => {
   //height:700//height:
 
   const [numberofusersdisplayed, setNumberofusersdisplayed] = useState(null)
-
-
+  const [buttonlabel, setButtonLabel] = useState('Loading...')
   const [checkboxdisplay, setCheckboxdisplay] = useState('none')
   const [arrowclass, setArrowclass] = useState('')
-
   const [treedata, setTreeData] = useState(null)
 
   const [positions, setPositions] = useState([])
-  const [filteredpositions, setFilteredPositions] = useState([])
   const [locations, setLocations] = useState([])
-  const [filteredlocations, setFilteredLocations] = useState([])
-  const [buttonlabel, setButtonLabel] = useState('Loading...')
-
+  const [managers, setManagers] = useState([])
+  const [percents, setPercents] = useState(null)
   const [competencygroups, setCompetencyGroups] = useState([])
-  const [competencies, setCompetencies] = useState([])
-  const [skills, setSkills] = useState([])
-  const [filteredskills, setFilteredSkills] = useState([])
+  const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
+  const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState([])
+  const [segments, setSegments] = useState(null)
+  const [functions, setFunctions] = useState(null)
+  const [subfunctions, setSubfunctions] = useState(null)
 
-  //const [filteredskillsstring, setFilteredSkillsString] = useState('')
-
+  const [ratingsourcesstring, setRatingsourcesString] = useState('')
   const [jobidsstring, setJobidsString] = useState('')
   const [locationidsstring, setLocationidsString] = useState('')
   const [manageridsstring, setManageridsString] = useState('')
   const [percentidsstring, setPercentidsString] = useState('')
-
-  const [ratingsourcesstring, setRatingsourcesString] = useState('')
-
-
+  const [segmentidsstring, setSegmentidsString] = useState('')
+  const [functionidsstring, setFunctionidsString] = useState('')
+  const [subfunctionidsstring, setSubfunctionidsString] = useState('')
   const [skillidsstring, setSkillidsString] = useState('')
-
-  const jobsChanged = (checked) => {
-    console.log('jobsChanged',checked)
-    var checkedString = ''
-    checked.forEach(check => {
-      checkedString = checkedString + check + ':0,'
-    })
-    //setFilteredSkills(checked)
-    console.log(checkedString)
-    setJobidsString(checkedString)
-    setButtonLabel('Apply All Filters')
-  };
-
-
 
   const filterChanged = (checked, who) => {
     console.log(checked,who)
-
     var suffix = ''
     var idVal = ''
     switch(who) {
@@ -137,19 +115,31 @@ const CardWidgetProperties = (props) => {
         suffix = ''
         idVal = 'PercentID'
         break;
-
+      case 'segments':
+        suffix = ''
+        idVal = 'SegmentID'
+        break;
+      case 'functions':
+        suffix = ''
+        idVal = 'FunctionID'
+        break;
+      case 'subfunctions':
+        suffix = ''
+        idVal = 'SubfunctionID'
+        break;
+      case 'skills':
+        suffix = ':0'
+        idVal = 'SkillID'
+        break;
       default:
         suffix = ''
     }
-
     var checkedString = ''
-
     checked.forEach(check => {
       checkedString = checkedString + check[idVal] + suffix + ','
     })
     console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
-
     switch(who) {
       case 'positions':
         setJobidsString(finalString)
@@ -163,28 +153,33 @@ const CardWidgetProperties = (props) => {
       case 'percents':
         setPercentidsString(finalString)
         break;
-
-
-
+      case 'segments':
+        setSegmentidsString(finalString)
+        break;
+      case 'functions':
+        setFunctionidsString(finalString)
+        break;
+      case 'subfunctions':
+        setSubfunctionidsString(finalString)
+        break;
+      case 'skills':
+        setSkillidsString(finalString)
+        break;
       default:
-
     }
-
     setButtonLabel('Click to Apply All Filters')
-    //setButtonLabel('Apply All Filters')
   };
 
-
-  const skillsChanged = (checked) => {
-    console.log('skillsChanged',checked)
-    var checkedString = ''
-    checked.forEach(check => {
-      checkedString = checkedString + check + ':0,'
-    })
-    //setFilteredSkills(checked)
-    setSkillidsString(checkedString)
-    setButtonLabel('Apply All Filters')
-  };
+  // const skillsChanged = (checked) => {
+  //   console.log('skillsChanged',checked)
+  //   var checkedString = ''
+  //   checked.forEach(check => {
+  //     checkedString = checkedString + check + ':0,'
+  //   })
+  //   //setFilteredSkills(checked)
+  //   setSkillidsString(checkedString)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
 
   // const skillsChanged = (event, value, reason) => {
@@ -197,58 +192,48 @@ const CardWidgetProperties = (props) => {
   // };
 
 
-  const [managers, setManagers] = useState([])
-  const [filteredmanagers, setFilteredManagers] = useState([])
-  const [percents, setPercents] = useState(null)
-  const [filteredfitpercent, setFilteredfitpercent] = useState('')
-
-  const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
-  const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState([])
-  //const [subjectmatterexpert, setSubjectmatterexpert] = useState('')
 
 
-
-  const [segments, setSegments] = useState(null)
-  const [filteredsegments, setFilteredSegments] = useState([])
+  //const [filteredsegments, setFilteredSegments] = useState([])
   //const refSegments = useRef(null);
-  const segmentsChanged = (event, value, reason) => {
-    var filtersSegments = value.map(segment => {
-      return segment.SegmentName
-    })
-    console.log('segmentsChanged',filtersSegments)
-    setFilteredSegments(filtersSegments)
-    setButtonLabel('Apply All Filters')
-  };
+  // const segmentsChanged = (event, value, reason) => {
+  //   var filtersSegments = value.map(segment => {
+  //     return segment.SegmentName
+  //   })
+  //   console.log('segmentsChanged',filtersSegments)
+  //   setFilteredSegments(filtersSegments)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
-  const [functions, setFunctions] = useState(null)
-  const [filteredfunctions, setFilteredFunctions] = useState([])
+
+  //const [filteredfunctions, setFilteredFunctions] = useState([])
   //const refSegments = useRef(null);
-  const functionsChanged = (event, value, reason) => {
-    var filtersFunctions = value.map(funct => {
-      return funct.FunctionName
-    })
-    console.log('functionsChanged',filtersFunctions)
-    setFilteredFunctions(filtersFunctions)
-    setButtonLabel('Apply All Filters')
-  };
-
-  const [subfunctions, setSubfunctions] = useState(null)
-  const [filteredsubfunctions, setFilteredSubfunctions] = useState([])
-  //const refSegments = useRef(null);
-  const subfunctionsChanged = (event, value, reason) => {
-    var filtersSubfunctions = value.map(subfunct => {
-      return subfunct.SubfunctionName
-    })
-    console.log('subfunctionsChanged',filtersSubfunctions)
-    setFilteredSubfunctions(filtersSubfunctions)
-    setButtonLabel('Apply All Filters')
-  };
+  // const functionsChanged = (event, value, reason) => {
+  //   var filtersFunctions = value.map(funct => {
+  //     return funct.FunctionName
+  //   })
+  //   console.log('functionsChanged',filtersFunctions)
+  //   setFilteredFunctions(filtersFunctions)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
 
 
+  // const [filteredsubfunctions, setFilteredSubfunctions] = useState([])
+  // //const refSegments = useRef(null);
+  // const subfunctionsChanged = (event, value, reason) => {
+  //   var filtersSubfunctions = value.map(subfunct => {
+  //     return subfunct.SubfunctionName
+  //   })
+  //   console.log('subfunctionsChanged',filtersSubfunctions)
+  //   setFilteredSubfunctions(filtersSubfunctions)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
 
-  const {propertywidth} = props
+
+
+
   // const refApplyButton = useRef(null);
   // const refPositions = useRef(null);
   // const refLocations = useRef(null);
@@ -267,8 +252,6 @@ const CardWidgetProperties = (props) => {
 
     setRatingsourcesString(props.Partner.ratingsources)
     onApplyClick()
-
-
 
     //Positions
     axios
@@ -296,13 +279,9 @@ const CardWidgetProperties = (props) => {
     })
     .then((response) => {
       var arrayLocations = response.data.map(item => {
-        var n = item.LocationName.indexOf(',');
-        //var city = item.LocationName.substring(0,n)
-        //console.log(city)
         return {
           LocationID: item.PartnerLocationID,
-          LocationName: item.LocationName,
-          //City: city
+          LocationName: item.LocationName
         }
       })
       console.log('locations',arrayLocations)
@@ -348,10 +327,6 @@ const CardWidgetProperties = (props) => {
     ]
     setPercents(arrayPercents)
 
-
-
-
-
     if (PartnerName === 'CNA') {
       var arraySubjectmatterexperts = [
         { Name:'Gold',   value: 'Gold' },
@@ -361,13 +336,9 @@ const CardWidgetProperties = (props) => {
       setSubjectmatterexperts(arraySubjectmatterexperts)
     }
 
-
-
-
-
-
     if (PartnerName === 'General Mills') {
 
+      //Segments
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
         auth: {username: 'skillnet',password: 'demo'}
@@ -386,6 +357,7 @@ const CardWidgetProperties = (props) => {
         console.log(error)
       })
 
+      //Functions
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/functions/', {
         auth: {username: 'skillnet',password: 'demo'}
@@ -404,6 +376,7 @@ const CardWidgetProperties = (props) => {
         console.log(error)
       })
 
+      //Subfunctions
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/subfunctions/', {
         auth: {username: 'skillnet',password: 'demo'}
@@ -441,10 +414,8 @@ const CardWidgetProperties = (props) => {
       })
 
       function compare(a, b) {
-        // Use toUpperCase() to ignore character casing
         const bandA = a.CompetencyGroupDisplayOrder;
         const bandB = b.CompetencyGroupDisplayOrder;
-
         let comparison = 0;
         if (bandA > bandB) {
           comparison = 1;
@@ -455,7 +426,6 @@ const CardWidgetProperties = (props) => {
       }
 
       arrayCompetencyGroups.sort(compare);
-
       console.log('CompetencyGroups',arrayCompetencyGroups)
       setCompetencyGroups(arrayCompetencyGroups)
     })
@@ -479,9 +449,8 @@ const CardWidgetProperties = (props) => {
         }
       })
       console.log('competencies',arrayCompetencies)
-      setCompetencies(arrayCompetencies)
+      //setCompetencies(arrayCompetencies)
 
-      //http://skillnetusersapi.azurewebsites.net/api/skills?groupid=33582&parentskillid=34635
       var f= 'https://skillnetusersapi.azurewebsites.net/api/skills?groupid=' + GroupID + '&parentskillid='
       var arrayAxios = []
       arrayCompetencies.forEach(competency => {
@@ -492,9 +461,6 @@ const CardWidgetProperties = (props) => {
 
           var tree = []
           arrayCompetencies.forEach((competency, index) => {
-
-            //console.log(results)
-
             var children = []
             results[index].data.forEach(result => {
               var c = {
@@ -517,13 +483,7 @@ const CardWidgetProperties = (props) => {
             children: tree
           }
           setTreeData(data)
-
-    // const acct = results[0];
-    // console.log(acct)
-    // const perm = results[1];
-    // console.log(perm)
         });
-
     })
     .catch((error) => {
       console.log(error)
@@ -582,35 +542,27 @@ const CardWidgetProperties = (props) => {
 
   }, [PartnerID, PartnerName]);
 
-
   const SendIt = (type, payload) => {
     window.dispatchEvent(new CustomEvent('mjg',{detail:{type:type,payload:payload}}));
   }
 
-
-
   const onApplyClick = (event) => {
     if (buttonlabel === 'No Filters Selected') {return}
 
-
-
-
     SendIt('fromcardwaiting', {})
-
-    // 'personid=' + '281326' + '&' +
-    // 'groupid=' + '33931' + '&' +
 
     var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
     'personid=' + PersonID + '&' +
     'groupid=' + GroupID + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
+    'segmentidss=' + segmentidsstring  + '&' +
     'jobids=' + jobidsstring  + '&' +
     'partnerlocationids=' + locationidsstring + '&' +
     'managerids=' + manageridsstring + '&' +
     'percentages=' + percentidsstring + '&' +
     'skillids=' + skillidsstring
     console.log(url)
-    //39817:0,39818:0,39819:0,39820:0,
+
     axios
     .get(url, {
       auth: {username: 'skillnet',password: 'demo'}
@@ -627,101 +579,88 @@ const CardWidgetProperties = (props) => {
     })
     return
 
-    const filters = {}
-    if (filteredpositions.length > 0) {
-      filters.JobName = JobName => filteredpositions.includes(JobName)
-    }
-    if (filteredlocations.length > 0) {
-      filters.Location = Location => filteredlocations.includes(Location)
-    }
-    if (filteredmanagers.length > 0) {
-      filters.DirectManagerID = DirectManagerID => filteredmanagers.includes(DirectManagerID)
-    }
-    if (filteredfitpercent !== '') {
-      if (PartnerName === 'General Mills') {
-        filters.SelfRating = SelfRating => (SelfRating >= filteredfitpercent) ? true : false
-      }
-      else {
-        filters.ManagerRating = ManagerRating => (ManagerRating >= filteredfitpercent) ? true : false
-      }
-    }
-    if (filteredsubjectmatterexperts.length > 0) {
-      filters.sme = sme => filteredsubjectmatterexperts.includes(sme)
-    }
-    if (filteredsegments.length > 0) {
-      filters.Segment = Segment => filteredsegments.includes(Segment)
-    }
-    if (filteredfunctions.length > 0) {
-      filters.Function = Function => filteredfunctions.includes(Function)
-    }
-    if (filteredsubfunctions.length > 0) {
-      filters.SubFunction = SubFunction => filteredsubfunctions.includes(SubFunction)
-    }
-    if (filteredskills.length > 0) {
-      filters.Skills = filteredskills
-      //filters.Skills = skill => filteredskills.includes(skill)
-    }
-    console.log('filters',filters)
-    SendIt('fromcard2', {filters: filters})
+    // const filters = {}
+    // if (filteredpositions.length > 0) {
+    //   filters.JobName = JobName => filteredpositions.includes(JobName)
+    // }
+    // if (filteredlocations.length > 0) {
+    //   filters.Location = Location => filteredlocations.includes(Location)
+    // }
+    // if (filteredmanagers.length > 0) {
+    //   filters.DirectManagerID = DirectManagerID => filteredmanagers.includes(DirectManagerID)
+    // }
+    // if (filteredfitpercent !== '') {
+    //   if (PartnerName === 'General Mills') {
+    //     filters.SelfRating = SelfRating => (SelfRating >= filteredfitpercent) ? true : false
+    //   }
+    //   else {
+    //     filters.ManagerRating = ManagerRating => (ManagerRating >= filteredfitpercent) ? true : false
+    //   }
+    // }
+    // if (filteredsubjectmatterexperts.length > 0) {
+    //   filters.sme = sme => filteredsubjectmatterexperts.includes(sme)
+    // }
+    // if (filteredsegments.length > 0) {
+    //   filters.Segment = Segment => filteredsegments.includes(Segment)
+    // }
+    // if (filteredfunctions.length > 0) {
+    //   filters.Function = Function => filteredfunctions.includes(Function)
+    // }
+    // if (filteredsubfunctions.length > 0) {
+    //   filters.SubFunction = SubFunction => filteredsubfunctions.includes(SubFunction)
+    // }
+    // if (filteredskills.length > 0) {
+    //   filters.Skills = filteredskills
+    //   //filters.Skills = skill => filteredskills.includes(skill)
+    // }
+    // console.log('filters',filters)
+    // SendIt('fromcard2', {filters: filters})
 
-    // //const filtered = filterArray(cardRef.current.originalusers, filters);
-    // //setUsers(filtered)
-
-    // SendIt('fromcard', {filters: {
-    //   filteredusers: filtered,
-    //   filteredpositions: filteredpositions,
-    //   filteredskills: filteredskills,
-    //   filteredlocations: filteredlocations,
-    //   filteredmanagers: filteredmanagers,
-    //   filteredfitpercent: filteredfitpercent,
-    //   filteredsubjectmatterexperts: filteredsubjectmatterexperts
-    // }})
-
-    setButtonLabel('Filters Are Applied')
+    // setButtonLabel('Filters Are Applied')
   };
 
-  const positionsChanged = (event, value, reason) => {
-    var filtersJobs = value.map(position => {
-      return position.JobName
-    })
-    console.log('positionsChanged',filtersJobs.toString())
-    setFilteredPositions(filtersJobs)
-    setButtonLabel('Apply All Filters')
-  };
+  // const positionsChanged = (event, value, reason) => {
+  //   var filtersJobs = value.map(position => {
+  //     return position.JobName
+  //   })
+  //   console.log('positionsChanged',filtersJobs.toString())
+  //   setFilteredPositions(filtersJobs)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
 
-  const locationsChanged = (event, value, reason) => {
-    var filtersLocations = value.map(location => {
-      return location.LocationName
-    })
-    console.log('locationsChanged',filtersLocations)
-    setFilteredLocations(filtersLocations)
-    setButtonLabel('Apply All Filters')
-  };
+  // const locationsChanged = (event, value, reason) => {
+  //   var filtersLocations = value.map(location => {
+  //     return location.LocationName
+  //   })
+  //   console.log('locationsChanged',filtersLocations)
+  //   setFilteredLocations(filtersLocations)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
-  const managersChanged = (event, value, reason) => {
-    var filtersManager = value.map(manager => {
-      return manager.ManagerID
-    })
-    console.log('managersChanged',filtersManager)
-    setFilteredManagers(filtersManager)
-    setButtonLabel('Apply All Filters')
-  };
+  // const managersChanged = (event, value, reason) => {
+  //   var filtersManager = value.map(manager => {
+  //     return manager.ManagerID
+  //   })
+  //   console.log('managersChanged',filtersManager)
+  //   setFilteredManagers(filtersManager)
+  //   setButtonLabel('Apply All Filters')
+  // };
 
-  const fitpercentsChanged = (event, value, reason) => {
-    var fitpercents = value.map(fitpercent => {
-      return fitpercent.PercentID
-    })
-    console.log(value)
-    if (value == null) {
-      setFilteredfitpercent('')
-    }
-    else {
-      setFilteredfitpercent(fitpercents[0])
-    }
-    console.log('fitpercentsChanged',fitpercents[0])
-    setButtonLabel('Apply All Filters')
-  };
+  // const fitpercentsChanged = (event, value, reason) => {
+  //   var fitpercents = value.map(fitpercent => {
+  //     return fitpercent.PercentID
+  //   })
+  //   console.log(value)
+  //   if (value == null) {
+  //     setFilteredfitpercent('')
+  //   }
+  //   else {
+  //     setFilteredfitpercent(fitpercents[0])
+  //   }
+  //   console.log('fitpercentsChanged',fitpercents[0])
+  //   setButtonLabel('Apply All Filters')
+  // };
 
   const subjectmatterexpertsChanged = (event, value, reason) => {
     var filtersSubjectmatterexperts = value.map(subjectmatterexpert => {
@@ -817,9 +756,9 @@ onClick={e => (e.stopPropagation())}
 
 
 
-{null !== null &&
+{/* {null !== null &&
 <DropDown multiple={true} who="Skills" onChanged={skillsChanged} options={skills} name="SkillName"/>
-}
+} */}
 
 
 
@@ -865,53 +804,47 @@ onClick={e => (e.stopPropagation())}
 }
 
 {segments !== null &&
-<DropDown multiple={true} who="Segments" onChanged={segmentsChanged} options={segments} name="SegmentName"/>
+<DropDown multiple={true} who="Segments" onChanged={(event,checked) => filterChanged(checked,'segments')} options={segments} name="SegmentName"/>
 }
 
 {functions !== null &&
-<DropDown multiple={true} who="Functions" onChanged={functionsChanged} options={functions} name="FunctionName"/>
+<DropDown multiple={true} who="Functions" onChanged={(event,checked) => filterChanged(checked,'functions')} options={functions} name="FunctionName"/>
 }
 {subfunctions !== null &&
-<DropDown multiple={true} who="Sub Functions" onChanged={subfunctionsChanged} options={subfunctions} name="SubfunctionName"/>
+<DropDown multiple={true} who="Sub Functions" onChanged={(event,checked) => filterChanged(checked,'subfunctions')} options={subfunctions} name="SubfunctionName"/>
 }
 
 <div style={{marginTop:'20px',padding:'0',border:'0px solid gray'}}>
-
-
-
-<div style={{width:'100%',marginTop:'20px'}} className="MuiInputBase-root MuiInput-root MuiInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd">
-  <input aria-invalid="false" placeholder="" type="text" style={{fontWeight:'400',color:'rgba(0, 0, 0, 0.87)'}} className="MuiInputBase-input MuiInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd" aria-autocomplete="list" defaultValue="Skills" id="mui-44339"></input>
-  <div className="MuiAutocomplete-endAdornment">
-
-  <button className="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator" tabIndex="-1" type="button" aria-label="Clear" title="Clear">
-  <span className="MuiIconButton-label">
-    <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-    </svg>
-    </span>
-    <span className="MuiTouchRipple-root"></span>
-    </button>
-
-    <button className={`MuiButtonBase-root MuiIconButton-root MuiAutocomplete-popupIndicator ${arrowclass}`} tabIndex="-1" type="button" aria-label="Open" title="Open" onClick={changeIt}>
-      <span className="MuiIconButton-label">
-        <svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 10l5 5 5-5z">
-          </path>
-        </svg>
-      </span>
-      <span className="MuiTouchRipple-root"></span>
-    </button>
-
+  <div style={{width:'100%',marginTop:'20px'}} className="MuiInputBase-root MuiInput-root MuiInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd">
+    <input aria-invalid="false" placeholder="" type="text" style={{fontWeight:'400',color:'rgba(0, 0, 0, 0.87)'}} className="MuiInputBase-input MuiInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd" aria-autocomplete="list" defaultValue="Skills" id="mui-44339"></input>
+    <div className="MuiAutocomplete-endAdornment">
+      <button className="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator" tabIndex="-1" type="button" aria-label="Clear" title="Clear">
+          <span className="MuiIconButton-label">
+            <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+            </svg>
+          </span>
+        <span className="MuiTouchRipple-root"></span>
+      </button>
+      <button className={`MuiButtonBase-root MuiIconButton-root MuiAutocomplete-popupIndicator ${arrowclass}`} tabIndex="-1" type="button" aria-label="Open" title="Open" onClick={changeIt}>
+        <span className="MuiIconButton-label">
+          <svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10l5 5 5-5z">
+            </path>
+          </svg>
+        </span>
+        <span className="MuiTouchRipple-root"></span>
+      </button>
     </div>
 </div>
 
 <div style={{display:checkboxdisplay}}>
-<CheckboxWidget onCheck={skillsChanged}/>
+  <CheckboxWidget onChanged={(event,checked) => filterChanged(checked,'skills')}/>
 </div>
 
 </div>
 
-{null !== null &&
+{/* {null !== null &&
 <TreeView
   multiSelect
   style={{marginTop:'15px',fontSize:'11px'}}
@@ -921,10 +854,10 @@ onClick={e => (e.stopPropagation())}
 >
   {renderTree(treedata)}
 </TreeView>
-}
+} */}
 
 
- {/* <Autocomplete
+{/* <Autocomplete
       id="virtualize-demo"
       style={{ width: 300 }}
       disableListWrap
