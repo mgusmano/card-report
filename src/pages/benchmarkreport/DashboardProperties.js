@@ -34,7 +34,16 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const DashboardProperties = (props) => {
   const { PartnerName } = props.Partner
-  const { classes, state, selectChangeHandler, userSelectChangeHandler, handleRadioChange, userMultiSelectChangeHandler, skillMultiSelectChangeHandler} = props;
+  const {
+    classes,
+    state,
+    skillSelectChangeHandler,
+    selectChangeHandler,
+    userSelectChangeHandler,
+    handleRadioChange,
+    userMultiSelectChangeHandler,
+    skillMultiSelectChangeHandler
+  } = props;
   const {
     filterObj,
     labelEBPC,
@@ -70,6 +79,10 @@ const DashboardProperties = (props) => {
     themeOption
   } = options;
 //console.log(sourceOption)
+
+
+
+
 return (
 
 <React.Fragment>
@@ -487,7 +500,7 @@ return (
                   name="segement"
                   multi={true}
                   value={filterObj.segement}
-                  onChange={(e) => this.skillSelectChangeHandler(e, "segement")}
+                  onChange={(e) => skillSelectChangeHandler(e, "segement")}
                   className="search-select"
                   optionalClassName="form-select-option"
                   searchable
@@ -505,7 +518,7 @@ return (
                   name="line"
                   multi={true}
                   value={filterObj.line}
-                  onChange={(e) => this.skillSelectChangeHandler(e, "line")}
+                  onChange={(e) => skillSelectChangeHandler(e, "line")}
                   className="search-select"
                   optionalClassName="form-select-option"
                   searchable
@@ -525,7 +538,7 @@ return (
                   name="competency"
                   multi={true}
                   value={filterObj.competency}
-                  onChange={(e) => this.skillSelectChangeHandler(e, "competency")}
+                  onChange={(e) => skillSelectChangeHandler(e, "competency")}
                   className="search-select"
                   optionalClassName="form-select-option"
                   searchable

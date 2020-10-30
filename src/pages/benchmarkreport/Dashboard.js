@@ -1494,6 +1494,7 @@ class Dashboard extends Component {
       Partner={this.props.Partner}
       classes={classes}
       state={this.state}
+      skillSelectChangeHandler={this.skillSelectChangeHandler}
       selectChangeHandler={this.selectChangeHandler}
       userSelectChangeHandler = {this.userSelectChangeHandler}
       handleRadioChange = {this.handleRadioChange}
