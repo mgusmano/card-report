@@ -54,10 +54,10 @@ const ProfileDialog = (props) => {
       PaperComponent={PaperComponent}
 
     >
-      <DialogTitle style={{width:'700px',cursor: 'move'}} id="draggable-dialog-title">Add Widget</DialogTitle>
+      <DialogTitle style={{width:'700px',cursor: 'move'}} id="draggable-dialog-title">Profile Dialog</DialogTitle>
         <DialogContent style={{width:'700px'}} dividers>
           <div className="add-widgets-dialog" style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
-            <span>Widgets</span>
+            <span>User profile information will be here...</span>
             {widgetArray.map((widget, index) => {
               return (
                 <div key={index} className="add-widgets-cell" onClick={(event) => handleClick(widget)}>

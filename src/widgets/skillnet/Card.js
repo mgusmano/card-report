@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
 import Star from '@material-ui/icons/Star';
+import ProfileDialog from './ProfileDialog'
+import Button from '@material-ui/core/Button';
 
 
 const Card = (props) => {
   const {user, Partner} = props
   const {PartnerName,ratingsources} = Partner
+  const [addWidgetOpen, setAddWidgetOpen] = useState(false);
   const [color, setColor] = useState('gold')
   const [display, setDisplay] = useState('none')
   const [ratinglabel, setRatinglabel] = useState('')
@@ -22,6 +25,10 @@ const Card = (props) => {
   // else {
   //   user.Rating = user.ManagerRating
   // }
+
+  const handleAddWidgetClose = (values) => {
+    setAddWidgetOpen(false);
+  };
 
   useEffect(() => {
 
@@ -88,7 +95,9 @@ const Card = (props) => {
       <Star style={{color:color,display:display}}/>
       <div>
         <div className="imgAll imgBig" style={{height:'70px',width:'70px',backgroundImage: `url(${user.Avatar})`}}></div>
-        <div style={{width:'100%',fontSize:'11px',marginTop:'1px',textAlign:'left'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</div>
+        <div style={{width:'100%',fontSize:'11px',marginTop:'1px',marginLeft:'-10px',textAlign:'left'}}><Button variant="outlined" onClick={() => setAddWidgetOpen(true)}>Profile</Button></div>
+
+        <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} />
       </div>
     </div>
       <div style={{display:'flex',flexDirection:'column',alignContent:'flex-end'}}>

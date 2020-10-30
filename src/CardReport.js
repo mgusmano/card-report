@@ -113,7 +113,7 @@ const CardReport = (props) => {
           <div>
 
 
-            <ToggleButtonGroup
+            {/* <ToggleButtonGroup
               style={{padding:'5px',marginRight:'20px'}}
               size="small"
               value={alignment}
@@ -124,7 +124,7 @@ const CardReport = (props) => {
                 <Menu />&nbsp;Dialog
               </ToggleButton>
             </ToggleButtonGroup>
-            <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} />
+            <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} /> */}
 
 
 
