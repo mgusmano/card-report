@@ -25,6 +25,21 @@ const DropDown = (props) => {
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const { who, onChanged, options, name, multiple} = props
 
+
+  // {multiple === true &&
+  //   renderOption={(options, { selected }) => (
+  //     <React.Fragment>
+  //       <Checkbox
+  //         icon={icon}
+  //         checkedIcon={checkedIcon}
+  //         style={{ marginRight: 8 }}
+  //         checked={selected}
+  //       />
+  //       {options[name]}
+  //     </React.Fragment>
+  //   }
+  //   )}
+
   return (
     <Autocomplete
       //ref={refSegments}
@@ -35,17 +50,26 @@ const DropDown = (props) => {
       options={options}
       getOptionLabel={options => typeof options === 'string' ? options : options[name]}
       //defaultValue={[]}
-      renderOption={(options, { selected }) => (
-        <React.Fragment>
-          <Checkbox
-            icon={icon}
-            checkedIcon={checkedIcon}
-            style={{ marginRight: 8 }}
-            checked={selected}
-          />
-          {options[name]}
-        </React.Fragment>
-      )}
+      renderOption={multiple === true ?
+        (options, { selected }) => (
+          <React.Fragment>
+            <Checkbox
+              icon={icon}
+              checkedIcon={checkedIcon}
+              style={{ marginRight: 8 }}
+              checked={selected}
+            />
+            {options[name]}
+          </React.Fragment>
+        ) : undefined}
+
+
+
+
+
+
+
+
       renderInput={(params) => (
         <TextField
           {...params}
@@ -149,7 +173,12 @@ const CardWidgetProperties = (props) => {
       })
     }
     else {
-      checkedString = checked[idVal] + suffix + ','
+      if (checked !== null) {
+        checkedString = checked[idVal] + suffix + ','
+      }
+      else {
+        checkedString = ''
+      }
     }
     console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
