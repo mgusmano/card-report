@@ -129,14 +129,20 @@ const CardWidgetProperties = (props) => {
         break;
       case 'skills':
         suffix = ':0'
-        idVal = 'SkillID'
+        idVal = ''
         break;
       default:
         suffix = ''
     }
     var checkedString = ''
     checked.forEach(check => {
-      checkedString = checkedString + check[idVal] + suffix + ','
+      console.log(check)
+      if (idVal == '') {
+        checkedString = checkedString + check + suffix + ','
+      }
+      else {
+        checkedString = checkedString + check[idVal] + suffix + ','
+      }
     })
     console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
@@ -842,7 +848,7 @@ onClick={e => (e.stopPropagation())}
 </div>
 
 <div style={{display:checkboxdisplay}}>
-  <CheckboxWidget onChanged={(event,checked) => filterChanged(checked,'skills')}/>
+  <CheckboxWidget onCheck={(checked) => filterChanged(checked,'skills')}/>
 </div>
 
 </div>

@@ -91,7 +91,7 @@ const CardReport = (props) => {
       {/* column 1 */}
       <Vertical style={{flex:'1'}}>
 
-        <div style={{height:'75px',display:'flex',justifyContent:'space-between',flexDirection:'row',background:'lightgray',color:'black',textAlign:'center',fontSize:'24px'}}>
+        <div style={{overflow:'hidden',height:'75px',display:'flex',justifyContent:'space-between',flexDirection:'row',background:'lightgray',color:'black',textAlign:'center',fontSize:'24px'}}>
 
           <div style={{padding:'5px 0 0 20px',fontSize:'12px'}}>
               <img src={logoImg} alt="SKILLNET" style={{width:'90px'}} />

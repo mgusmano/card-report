@@ -95,8 +95,9 @@ const Card = (props) => {
       <Star style={{color:color,display:display}}/>
       <div>
         <div className="imgAll imgBig" style={{height:'70px',width:'70px',backgroundImage: `url(${user.Avatar})`}}></div>
-        <div style={{width:'100%',fontSize:'11px',marginTop:'1px',marginLeft:'-10px',textAlign:'left'}}><Button variant="outlined" onClick={() => setAddWidgetOpen(true)}>Profile</Button></div>
-
+        <div style={{display:'flex',alignContent:'center',justifyContent:'center',width:'100%',fontSize:'11px'}}>
+          <div style={{borderBottom:'1px solid gray',marginTop:'10px',cursor:'pointer'}} onClick={() => setAddWidgetOpen(true)}>Profile</div>
+        </div>
         <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} />
       </div>
     </div>
