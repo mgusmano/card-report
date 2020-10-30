@@ -31,7 +31,7 @@ export default class CheckboxWidget extends React.Component {
     render() {
         return (
             <CheckboxTree
-            onlyLeafCheckboxes={true}
+            onlyLeafCheckboxes={false}
             showNodeIcon={false}
                 nodes={nodes}
                 checked={this.state.checked}
