@@ -1,69 +1,78 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from "@material-ui/core";
+import Paper from '@material-ui/core/Paper'
+import Draggable from 'react-draggable'
+import './ProfileDialog.css'
+//import * as Widgets from '../widgets'
+//import WidgetUtil from '../Util/WidgetUtil'
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-const useStyles = makeStyles({
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600],
-  },
-});
+var widgetArray = []
+// for (const [key, value] of Object.entries(Widgets)) {
+//   var functionToText = '' + value;
+//   //https://www.w3schools.com/icons/google_icons_intro.asp
+//   var icon = WidgetUtil.getVar('icon', key, 'settings', functionToText)
+//   var title = WidgetUtil.getVar('title', key, key, functionToText)
+//   var x = parseInt(WidgetUtil.getVar('x', key, 0, functionToText))
+//   var y = parseInt(WidgetUtil.getVar('y', key, 0, functionToText))
+//   var width = parseInt(WidgetUtil.getVar('width', key, 400, functionToText))
+//   var height = parseInt(WidgetUtil.getVar('height', key, 400, functionToText))
+//   widgetArray.push({properties: {position: {x:  x, y:  y}, size:{width: width, height:height}}, defaultTitle: title, type: key, icon: icon})
+// }
+//console.log(widgetArray)
 
-function ProfileDialog(props) {
-  const classes = useStyles();
-  const { onClose, selectedValue, open } = props;
+const ProfileDialog = (props) => {
+  const { onClose, open } = props;
 
   const handleClose = () => {
-    onClose(selectedValue);
+    onClose();
   };
 
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
+  const handleClick = (widgets) => {
+    if (widgets == undefined) {
+      onClose(null)
+    }
+    else {
+      onClose([widgets])
+    }
+    //console.log(width,height)
+    //dispatch({type: 'ADD_WIDGET', payload: {x: left, y: top, w: width, h: height, title: title, mode: 'chart', type: type}});
+  }
 
+  const PaperComponent = (props) => {
+    return (
+      <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+        <Paper {...props} />
+      </Draggable>
+    );
+  }
+//{console.log(widget)}
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-      <List>
-        {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <PersonIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={email} />
-          </ListItem>
-        ))}
+    <Dialog style={{zIndex:'3000'}}
+      open={open}
 
-        <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-          <ListItemAvatar>
-            <Avatar>
-              <AddIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Add account" />
-        </ListItem>
-      </List>
+      onClose={handleClose}
+      PaperComponent={PaperComponent}
+
+    >
+      <DialogTitle style={{width:'700px',cursor: 'move'}} id="draggable-dialog-title">Add Widget</DialogTitle>
+        <DialogContent style={{width:'700px'}} dividers>
+          <div className="add-widgets-dialog" style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+            <span>Widgets</span>
+            {widgetArray.map((widget, index) => {
+              return (
+                <div key={index} className="add-widgets-cell" onClick={(event) => handleClick(widget)}>
+                  <span className="widget-type-name"><i className="material-icons">{widget.icon}</i>{widget.defaultTitle}</span>
+                </div>
+              )
+            })
+          }
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={(event) => handleClick()}>Close</Button>
+        </DialogActions>
     </Dialog>
-  );
+  )
 }
 
-ProfileDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-};
+export default ProfileDialog

@@ -344,9 +344,10 @@ const CardWidgetProperties = (props) => {
         auth: {username: 'skillnet',password: 'demo'}
       })
       .then((response) => {
+        console.log(response.data)
         var arraySegments = response.data.map(item => {
           return {
-            SegmentID: item.CustomAttributeID,
+            SegmentID: item.CustomAttributeValueID,
             SegmentName: item.CustomAttributeValue
           }
         })
@@ -365,7 +366,7 @@ const CardWidgetProperties = (props) => {
       .then((response) => {
         var arrayFunctions = response.data.map(item => {
           return {
-            FunctionID: item.CustomAttributeID,
+            FunctionID: item.CustomAttributeValueID,
             FunctionName: item.CustomAttributeValue
           }
         })
@@ -384,7 +385,7 @@ const CardWidgetProperties = (props) => {
       .then((response) => {
         var arraySubfunctions = response.data.map(item => {
           return {
-            SubfunctionID: item.CustomAttributeID,
+            SubfunctionID: item.CustomAttributeValueID,
             SubfunctionName: item.CustomAttributeValue
           }
         })
@@ -556,6 +557,8 @@ const CardWidgetProperties = (props) => {
     'groupid=' + GroupID + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
     'segmentids=' + segmentidsstring  + '&' +
+    'functionids=' + functionidsstring  + '&' +
+    'subfunctionids=' + subfunctionidsstring  + '&' +
     'jobids=' + jobidsstring  + '&' +
     'partnerlocationids=' + locationidsstring + '&' +
     'managerids=' + manageridsstring + '&' +

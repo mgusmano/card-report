@@ -6,6 +6,7 @@ import GMI from './images/GMI.png';
 import CNA from './images/CNA.png';
 import logoImg from './images/logo.png';
 
+import ProfileDialog from './widgets/skillnet/ProfileDialog'
 
 import CardWidget from './widgets/skillnet/CardWidget'
 import MapWidget from './widgets/skillnet/MapWidget'
@@ -35,6 +36,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = (props) => {
+  const [addWidgetOpen, setAddWidgetOpen] = useState(false);
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('375px')
 
@@ -48,6 +50,10 @@ const CardReport = (props) => {
   // console.log('PartnerID',PartnerID)
   // console.log('PartnerName',PartnerName)
   // console.log('PersonID',PersonID)
+
+  const handleAddWidgetClose = (values) => {
+    setAddWidgetOpen(false);
+  };
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -105,6 +111,23 @@ const CardReport = (props) => {
           }
 
           <div>
+
+
+            <ToggleButtonGroup
+              style={{padding:'5px',marginRight:'20px'}}
+              size="small"
+              value={alignment}
+              exclusive
+              onChange={() => setAddWidgetOpen(true)}
+            >
+              <ToggleButton value="Close" cxolor="primary" style={{width:'100px'}} >
+                <Menu />&nbsp;Dialog
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} />
+
+
+
             <ToggleButtonGroup
               style={{padding:'15px 0 0 0',border:'none',marginRight:'20px'}}
               size="small"
