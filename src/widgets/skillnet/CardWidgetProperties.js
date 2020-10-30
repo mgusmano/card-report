@@ -135,15 +135,22 @@ const CardWidgetProperties = (props) => {
         suffix = ''
     }
     var checkedString = ''
-    checked.forEach(check => {
-      console.log(check)
-      if (idVal == '') {
-        checkedString = checkedString + check + suffix + ','
-      }
-      else {
-        checkedString = checkedString + check[idVal] + suffix + ','
-      }
-    })
+    console.log(Array.isArray(checked))
+
+    if (Array.isArray(checked)) {
+      checked.forEach(check => {
+        console.log(check)
+        if (idVal == '') {
+          checkedString = checkedString + check + suffix + ','
+        }
+        else {
+          checkedString = checkedString + check[idVal] + suffix + ','
+        }
+      })
+    }
+    else {
+      checkedString = checked[idVal] + suffix + ','
+    }
     console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
     switch(who) {
@@ -757,7 +764,7 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={true} who="Managers" onChanged={(event,checked) => filterChanged(checked,'managers')} options={managers} name="ManagerName"/>
 }
 {percents !== null &&
-<DropDown multiple={true} who="Fit Percent" onChanged={(event,checked) => filterChanged(checked,'percents')} options={percents} name="PercentName"/>
+<DropDown multiple={false} who="Fit Percent" onChanged={(event,checked) => filterChanged(checked,'percents')} options={percents} name="PercentName"/>
 }
 
 
