@@ -24,6 +24,15 @@ const MapWidget = (props) => {
         onChange2(payload)
         break;
 
+        case 'fromcardfilteredusers':
+          console.log('in map')
+          console.log(payload.users)
+          onChange2(payload.users)
+          //setUsers(payload.users)
+          //setWaiting(false)
+          break;
+
+
 
       default:
         break;
@@ -59,8 +68,8 @@ const MapWidget = (props) => {
       //console.log(a)
       if (a in hist) hist[a] ++; else hist[a] = 1;
     } );
-    //console.log(hist);
-    //console.log(originallocations)
+    console.log(hist);
+    console.log(thelocations)
 
     var finallocations = []
     for (const [key, value] of Object.entries(hist)) {
