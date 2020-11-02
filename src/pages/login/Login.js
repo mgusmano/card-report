@@ -17,14 +17,27 @@ function Login(props) {
   function postLogin() {
     axios.get("https://skillnetusersapi.azurewebsites.net/api/users?partnerid=434", {
       //auth: {username: 'skillnet',password: 'demo'},
-      auth: {username: userName, password: password + 'demo'},
+      auth: {username: userName, password: 'demo'},
       //userName,
       //password
     }).then(result => {
-      console.log('here')
+      console.log(password)
+      switch (password) {
+        case 'cna':
+          break;
+        case 'gmi':
+          break;
+        default:
+          console.log('bad password')
+          setIsError(true);
+          return
+          break;
+      }
+
+
       console.log(result.data)
       if (result.status === 200) {
-        setAuthTokens(result.data);
+        setAuthTokens(password);
         setLoggedIn(true);
       } else {
         setIsError(true);

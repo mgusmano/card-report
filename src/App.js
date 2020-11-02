@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import queryString from 'query-string'
 
 import { AuthContext } from "./context/auth";
+import { useAuth } from "./context/auth";
 
 import PrivateRoute from './PrivateRoute';
 import Login from "./pages/login/Login";
@@ -49,6 +50,9 @@ function App(props) {
     setAuthTokens(data);
   }
 
+  //const { authTokens } = useAuth();
+  console.log(authTokens)
+
   return (
     <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
     <Router>
@@ -60,11 +64,20 @@ function App(props) {
           <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
           <ul style={{paddingTop:'30px'}}>
             <li><Link to="/">Home</Link></li>
+
+{authTokens === 'cna' &&
+            <>
             <li><Link to="/cardcna">Card CNA</Link></li>
-            <li><Link to="/cardgmi">Card GMI</Link></li>
             <li><Link to="/benchmarkcna">Benchmark CNA</Link></li>
-            <li><Link to="/benchmarkgmisb">Benchmark GMIsb</Link></li>
             <li><Link to="/covidcna">Covid CNA</Link></li>
+            </>
+}
+{authTokens === 'gmi' &&
+            <>
+            <li><Link to="/cardgmi">Card GMI</Link></li>
+            <li><Link to="/benchmarkgmisb">Benchmark GMIsb</Link></li>
+            </>
+}
             <li><Link to="/admin">Admin</Link></li>
           </ul>
           </span>

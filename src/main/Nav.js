@@ -2,6 +2,8 @@ import React from 'react'
 import { useGlobalState } from '../globalstate/GlobalStateProvider';
 import { useHistory } from 'react-router-dom';
 
+import { useAuth } from "./context/auth";
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -43,6 +45,10 @@ const Nav = (props) => {
     //     // }});
     //   })
   };
+
+  const { authTokens } = useAuth();
+  console.log(authTokens)
+
 
   var selectedIndex = 1
   return (
