@@ -97,6 +97,10 @@ const CardWidgetProperties = (props) => {
   const [arrowclass, setArrowclass] = useState('')
   const [treedata, setTreeData] = useState(null)
 
+  const [leaders, setLeaders] = useState([])
+  const [smes, setSmes] = useState([])
+
+
   const [positions, setPositions] = useState([])
   const [locations, setLocations] = useState([])
   const [managers, setManagers] = useState([])
@@ -109,6 +113,8 @@ const CardWidgetProperties = (props) => {
   const [subfunctions, setSubfunctions] = useState(null)
 
   const [ratingsourcesstring, setRatingsourcesString] = useState('')
+  const [leaderidsstring, setLeaderidsString] = useState('')
+  const [smeidsstring, setSmeidsString] = useState('')
   const [jobidsstring, setJobidsString] = useState('')
   const [locationidsstring, setLocationidsString] = useState('')
   const [manageridsstring, setManageridsString] = useState('')
@@ -123,6 +129,14 @@ const CardWidgetProperties = (props) => {
     var suffix = ''
     var idVal = ''
     switch(who) {
+      case 'leaders':
+        suffix = ''
+        idVal = 'LeaderID'
+        break;
+      case 'smes':
+        suffix = ''
+        idVal = 'SmeID'
+        break;
       case 'positions':
         suffix = ':0'
         idVal = 'JobID'
@@ -183,6 +197,12 @@ const CardWidgetProperties = (props) => {
     console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
     switch(who) {
+      case 'leaders':
+        setLeaderidsString(finalString)
+        break;
+      case 'smes':
+        setSmeidsString(finalString)
+        break;
       case 'positions':
         setJobidsString(finalString)
         break;
@@ -294,6 +314,53 @@ const CardWidgetProperties = (props) => {
 
     setRatingsourcesString(props.Partner.ratingsources)
     onApplyClick()
+
+    //Leaders
+    var arrayLeaders = [
+      { LeaderID: 1, LeaderName:'Casualty' },
+      { LeaderID: 2, LeaderName:'Construction' },
+      { LeaderID: 3, LeaderName:'EB' },
+      { LeaderID: 4, LeaderName:'Ergonomics' },
+      { LeaderID: 5, LeaderName:'Industrial Hygiene' },
+      { LeaderID: 6, LeaderName:'Life Sciences' },
+      { LeaderID: 7, LeaderName:'Manufacturing' },
+      { LeaderID: 8, LeaderName:'Property' },
+      { LeaderID: 9, LeaderName:'Technology' },
+    ]
+    setLeaders(arrayLeaders)
+
+    //Smes
+    var arraySmes = [
+      { SmeID: 1, SmeName:'Casualty - Auto' },
+      { SmeID: 2, SmeName:'Casualty - Large Casualty' },
+      { SmeID: 3, SmeName:'Casualty - Premises Operations' },
+      { SmeID: 4, SmeName:'Casualty - Products' },
+      { SmeID: 5, SmeName:'Casualty - Walkway Specialist' },
+      { SmeID: 6, SmeName:'Casualty - WC - Construction' },
+      { SmeID: 7, SmeName:'Casualty - WC - General Industry' },
+      { SmeID: 8, SmeName:'Construction' },
+      { SmeID: 9, SmeName:'Construction - Builders Risk' },
+      { SmeID: 10, SmeName:'Construction - Large Casualty Construction' },
+      { SmeID: 11, SmeName:'Construction - Roofing' },
+      { SmeID: 12, SmeName:'Cyber incl E & O' },
+      { SmeID: 13, SmeName:'EB' },
+      { SmeID: 14, SmeName:'Life Science' },
+      { SmeID: 15, SmeName:'Life Science - EB' },
+      { SmeID: 16, SmeName:'Manufacturing' },
+      { SmeID: 17, SmeName:'Manufacturing - All' },
+      { SmeID: 18, SmeName:'Manufacturing - Auto Parts' },
+      { SmeID: 19, SmeName:'Manufacturing - EB' },
+      { SmeID: 20, SmeName:'Manufacturing - Property' },
+      { SmeID: 21, SmeName:'Property - IR' },
+      { SmeID: 22, SmeName:'Property - Large' },
+      { SmeID: 23, SmeName:'Property - Wildfire' },
+      { SmeID: 24, SmeName:'Real Estate' },
+      { SmeID: 25, SmeName:'Technology' },
+      { SmeID: 26, SmeName:'Technology - EB' }
+    ]
+    setSmes(arraySmes)
+
+
 
     //Positions
     axios
@@ -782,6 +849,15 @@ onClick={e => (e.stopPropagation())}
 {numberofusersdisplayed !== null &&
 <div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
 }
+
+{leaders !== null &&
+<DropDown multiple={true} who="Leaders" onChanged={(event,checked) => filterChanged(checked,'leaders')} options={leaders} name="LeaderName"/>
+}
+
+{smes !== null &&
+<DropDown multiple={true} who="SMEs" onChanged={(event,checked) => filterChanged(checked,'smes')} options={smes} name="SmeName"/>
+}
+
 
 {positions !== null &&
 <DropDown multiple={true} who="Positions" onChanged={(event,checked) => filterChanged(checked,'positions')} options={positions} name="JobName"/>
