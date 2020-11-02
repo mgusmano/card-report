@@ -664,6 +664,8 @@ const CardWidgetProperties = (props) => {
     var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
     'personid=' + PersonID + '&' +
     'groupid=' + GroupID + '&' +
+    // 'leaderids=' + '' + '&' +
+    // 'smeids=' + ''  + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
     'segmentids=' + segmentidsstring  + '&' +
     'functionids=' + functionidsstring  + '&' +

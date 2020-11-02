@@ -17,7 +17,8 @@ const Home = () => {
       </div>
 
 <div style={{padding:'10px'}}>
-      <a target="_blank" rel="noopener noreferrer" href="https://card-report.vercel.app/?report=cardcna">Card Report for CNA without menu</a>
+
+      {/* <a target="_blank" rel="noopener noreferrer" href="https://card-report.vercel.app/?report=cardcna">Card Report for CNA without menu</a>
       <br/><br/>
       <a target="_blank" rel="noopener noreferrer" href="https://card-report.vercel.app/?report=cardgmi">Card Report for GMI without menu</a>
       <br/><br/>
@@ -25,7 +26,7 @@ const Home = () => {
       <br/><br/>
       <a target="_blank" rel="noopener noreferrer" href="https://card-report.vercel.app/?report=benchmarkcna">Benchmark Report for CNA without menu</a>
       <br/><br/>
-      <a target="_blank" rel="noopener noreferrer" href="https://card-report.vercel.app/?report=benchmarkgmi">Benchmark Report for GMI without menu</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://card-report.vercel.app/?report=benchmarkgmi">Benchmark Report for GMI without menu</a> */}
 
 </div>
 
