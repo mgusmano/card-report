@@ -51,7 +51,7 @@ function App(props) {
   }
 
   //const { authTokens } = useAuth();
-  console.log(authTokens)
+  //console.log(authTokens)
 
   return (
     <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
@@ -64,6 +64,12 @@ function App(props) {
           <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
           <ul style={{paddingTop:'30px'}}>
             <li><Link to="/">Home</Link></li>
+
+{authTokens === 'cnasme' &&
+            <>
+            <li><Link to="/cardcnasme">Card CNA SME</Link></li>
+            </>
+}
 
 {authTokens === 'cna' &&
             <>
@@ -85,6 +91,7 @@ function App(props) {
           {/* <Center/> */}
           <Switch>
             <Route path="/" component={() => <Home/>} exact />
+            <PrivateRoute path="/cardcnasme" component={() => <CardReport Partner={PartnerCNA} PartnerID='395' SMEOnly={true}/>} />
             <PrivateRoute path="/cardcna" component={() => <CardReport Partner={PartnerCNA} PartnerID='395'/>} />
             <PrivateRoute path="/cardgmi" component={() => <CardReport Partner={PartnerGMIsb} PartnerID='434'/>} />
             <PrivateRoute path="/benchmarkcna" component={() => <Dashboard Partner={PartnerCNA}/>}  />

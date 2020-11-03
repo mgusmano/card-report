@@ -20,13 +20,13 @@ const MapWidget = (props) => {
       //   break;
 
       case 'filteredusers':
-        console.log(payload)
+        //console.log(payload)
         onChange2(payload)
         break;
 
         case 'fromcardfilteredusers':
-          console.log('in map')
-          console.log(payload.users)
+          //console.log('in map')
+          //console.log(payload.users)
           onChange2(payload.users)
           //setUsers(payload.users)
           //setWaiting(false)
@@ -40,7 +40,7 @@ const MapWidget = (props) => {
   }
 
   const onChange2 = (filteredusers) => {
-    console.log(filteredusers)
+    //console.log(filteredusers)
     var thelocations = []
     filteredusers.map(user => {
       var userlocation = user.Location
@@ -68,8 +68,8 @@ const MapWidget = (props) => {
       //console.log(a)
       if (a in hist) hist[a] ++; else hist[a] = 1;
     } );
-    console.log(hist);
-    console.log(thelocations)
+    //console.log(hist);
+    //console.log(thelocations)
 
     var finallocations = []
     for (const [key, value] of Object.entries(hist)) {
@@ -87,11 +87,11 @@ const MapWidget = (props) => {
 
     var i;
     for (i = 0; i < finallocations.length; i++) {
-      const users = filteredusers.filter(user => user.Location == finallocations[i].LocationName);
+      const users = filteredusers.filter(user => user.Location === finallocations[i].LocationName);
       finallocations[i].users = users
     }
 
-    console.log('finallocations',finallocations)
+    //console.log('finallocations',finallocations)
     setFilteredlocations(finallocations)
   }
 

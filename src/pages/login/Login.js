@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from 'axios';
 //import logoImg from "../img/logo.jpg";
 import logoImg from "../../images/logo.png";
@@ -9,8 +9,8 @@ import { useAuth } from "../../context/auth";
 function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("skillnet");
+  const [password, setPassword] = useState("cnasme");
   const { setAuthTokens } = useAuth();
   const referer = props.location.state.referer || '/';
 
@@ -21,8 +21,9 @@ function Login(props) {
       //userName,
       //password
     }).then(result => {
-      console.log(password)
       switch (password) {
+        case 'cnasme':
+          break;
         case 'cna':
           break;
         case 'gmi':
@@ -34,8 +35,6 @@ function Login(props) {
           break;
       }
 
-
-      console.log(result.data)
       if (result.status === 200) {
         setAuthTokens(password);
         setLoggedIn(true);

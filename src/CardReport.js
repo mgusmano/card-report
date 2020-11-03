@@ -46,6 +46,13 @@ const CardReport = (props) => {
   const [alignment, setAlignment] = React.useState('Card');
 
   const { PartnerID, PartnerName, PersonID } = props.Partner
+  //const { SMEOnly } = props
+  var SMEOnly = props.SMEOnly
+
+  //console.log(SMEOnly)
+  if (SMEOnly == undefined) {
+    SMEOnly = false
+  }
 
   // console.log('PartnerID',PartnerID)
   // console.log('PartnerName',PartnerName)
@@ -172,7 +179,7 @@ const CardReport = (props) => {
       <Splitter/>
       {/* column 2 */}
       <Vertical style={{display:filterdisplay,width:propertywidth}}>
-        <CardWidgetProperties propertywidth={propertywidth} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
+        <CardWidgetProperties propertywidth={propertywidth} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} SMEOnly={SMEOnly}/>
       </Vertical>
     </Horizontal>
   )

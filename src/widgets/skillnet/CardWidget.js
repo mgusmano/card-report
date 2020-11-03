@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import axios from "axios";
+//import axios from "axios";
 import './CardWidget.css'
 import Card from'./Card'
 
@@ -14,7 +14,7 @@ const CardWidget = (props) => {
   //width:1000//width:
   //height:700//height:
 
-  const { PartnerID, PartnerName, PersonID, GroupID} = props.Partner;
+  //const { PartnerID, PartnerName, PersonID, GroupID} = props.Partner;
 
   const cardRef = useRef(null);
   //const [originalusers, setOriginalUsers] = useState(null)
@@ -40,13 +40,13 @@ const CardWidget = (props) => {
         break;
 
       case 'fromcardwaiting':
-        console.log('here')
+        //console.log('here')
         setWaiting(true)
         setUsers([])
         break;
 
       case 'fromcardfilteredusers':
-        console.log(payload.users)
+        //console.log(payload.users)
         setUsers(payload.users)
         setWaiting(false)
         break;

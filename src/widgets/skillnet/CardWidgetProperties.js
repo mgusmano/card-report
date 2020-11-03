@@ -84,7 +84,7 @@ const DropDown = (props) => {
 
 const CardWidgetProperties = (props) => {
   const { PartnerID, PartnerName, PersonID, GroupID } = props.Partner;
-  const {propertywidth} = props
+  const {propertywidth, SMEOnly} = props
   //title:Card Report//title:
   //x:30//x:
   //y:30//y:
@@ -97,16 +97,17 @@ const CardWidgetProperties = (props) => {
   const [arrowclass, setArrowclass] = useState('')
   const [treedata, setTreeData] = useState(null)
 
-  const [leaders, setLeaders] = useState([])
-  const [smes, setSmes] = useState([])
+  const [leaders, setLeaders] = useState(null)
+  const [smes, setSmes] = useState(null)
 
 
-  const [positions, setPositions] = useState([])
-  const [locations, setLocations] = useState([])
-  const [managers, setManagers] = useState([])
+  const [positions, setPositions] = useState(null)
+  const [locations, setLocations] = useState(null)
+  const [managers, setManagers] = useState(null)
   const [percents, setPercents] = useState(null)
-  const [competencygroups, setCompetencyGroups] = useState([])
+  const [competencygroups, setCompetencyGroups] = useState(null)
   const [subjectmatterexperts, setSubjectmatterexperts] = useState(null)
+
   const [filteredsubjectmatterexperts, setFilteredsubjectmatterexperts] = useState([])
   const [segments, setSegments] = useState(null)
   const [functions, setFunctions] = useState(null)
@@ -125,7 +126,7 @@ const CardWidgetProperties = (props) => {
   const [skillidsstring, setSkillidsString] = useState('')
 
   const filterChanged = (checked, who) => {
-    console.log(checked,who)
+    //console.log(checked,who)
     var suffix = ''
     var idVal = ''
     switch(who) {
@@ -173,11 +174,11 @@ const CardWidgetProperties = (props) => {
         suffix = ''
     }
     var checkedString = ''
-    console.log(Array.isArray(checked))
+    //console.log(Array.isArray(checked))
 
     if (Array.isArray(checked)) {
       checked.forEach(check => {
-        console.log(check)
+        //console.log(check)
         if (idVal == '') {
           checkedString = checkedString + check + suffix + ','
         }
@@ -194,7 +195,7 @@ const CardWidgetProperties = (props) => {
         checkedString = ''
       }
     }
-    console.log(checkedString)
+    //console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
     switch(who) {
       case 'leaders':
@@ -315,289 +316,335 @@ const CardWidgetProperties = (props) => {
     setRatingsourcesString(props.Partner.ratingsources)
     onApplyClick()
 
-    //Leaders
-    var arrayLeaders = [
-      { LeaderID: 1, LeaderName:'Casualty' },
-      { LeaderID: 2, LeaderName:'Construction' },
-      { LeaderID: 3, LeaderName:'EB' },
-      { LeaderID: 4, LeaderName:'Ergonomics' },
-      { LeaderID: 5, LeaderName:'Industrial Hygiene' },
-      { LeaderID: 6, LeaderName:'Life Sciences' },
-      { LeaderID: 7, LeaderName:'Manufacturing' },
-      { LeaderID: 8, LeaderName:'Property' },
-      { LeaderID: 9, LeaderName:'Technology' },
-    ]
-    setLeaders(arrayLeaders)
-
-    //Smes
-    var arraySmes = [
-      { SmeID: 1, SmeName:'Casualty - Auto' },
-      { SmeID: 2, SmeName:'Casualty - Large Casualty' },
-      { SmeID: 3, SmeName:'Casualty - Premises Operations' },
-      { SmeID: 4, SmeName:'Casualty - Products' },
-      { SmeID: 5, SmeName:'Casualty - Walkway Specialist' },
-      { SmeID: 6, SmeName:'Casualty - WC - Construction' },
-      { SmeID: 7, SmeName:'Casualty - WC - General Industry' },
-      { SmeID: 8, SmeName:'Construction' },
-      { SmeID: 9, SmeName:'Construction - Builders Risk' },
-      { SmeID: 10, SmeName:'Construction - Large Casualty Construction' },
-      { SmeID: 11, SmeName:'Construction - Roofing' },
-      { SmeID: 12, SmeName:'Cyber incl E & O' },
-      { SmeID: 13, SmeName:'EB' },
-      { SmeID: 14, SmeName:'Life Science' },
-      { SmeID: 15, SmeName:'Life Science - EB' },
-      { SmeID: 16, SmeName:'Manufacturing' },
-      { SmeID: 17, SmeName:'Manufacturing - All' },
-      { SmeID: 18, SmeName:'Manufacturing - Auto Parts' },
-      { SmeID: 19, SmeName:'Manufacturing - EB' },
-      { SmeID: 20, SmeName:'Manufacturing - Property' },
-      { SmeID: 21, SmeName:'Property - IR' },
-      { SmeID: 22, SmeName:'Property - Large' },
-      { SmeID: 23, SmeName:'Property - Wildfire' },
-      { SmeID: 24, SmeName:'Real Estate' },
-      { SmeID: 25, SmeName:'Technology' },
-      { SmeID: 26, SmeName:'Technology - EB' }
-    ]
-    setSmes(arraySmes)
-
-
-
-    //Positions
-    axios
-    .get('https://skillnetpartnerpositionsapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayPositions = response.data.map(item => {
-        return {
-          JobID: item.JobID,
-          JobName: item.JobName
-        }
+    if (SMEOnly === true) {
+      //Leaders
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/Leaders?partnerid=' + PartnerID, {
+        auth: {username: 'skillnet',password: 'demo'}
       })
-      console.log('positions',arrayPositions)
-      setPositions(arrayPositions)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-
-    //Locations
-    axios
-    .get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayLocations = response.data.map(item => {
-        return {
-          LocationID: item.PartnerLocationID,
-          LocationName: item.LocationName
-        }
+      .then((response) => {
+        //console.log('leaders',response.data)
+        var arrayLeaders = response.data.map(item => {
+          return {
+            LeaderID: item.CustomAttributeValueID,
+            LeaderName: item.CustomAttributeValue
+          }
+        })
+        //console.log('leaders',arrayLeaders)
+        setLeaders(arrayLeaders)
       })
-      console.log('locations',arrayLocations)
-      setLocations(arrayLocations)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-
-    //Managers
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      var arrayManagers = response.data.map(item => {
-        return {
-          ManagerID: item.ManagerID,
-          ManagerName: item.ManagerName //+ ' (' + item.ManagerID + ')'
-        }
+      .catch((error) => {
+        console.log(error)
       })
-      console.log('managers',arrayManagers)
-      setManagers(arrayManagers)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 
-    //FitPercents
-    var arrayPercents = [
-      { PercentName:'40% and above', PercentID: 40 },
-      { PercentName:'45% and above', PercentID: 45 },
-      { PercentName:'50% and above', PercentID: 50 },
-      { PercentName:'55% and above', PercentID: 55 },
-      { PercentName:'60% and above', PercentID: 60 },
-      { PercentName:'65% and above', PercentID: 65 },
-      { PercentName:'70% and above', PercentID: 70 },
-      { PercentName:'75% and above', PercentID: 75 },
-      { PercentName:'80% and above', PercentID: 80 },
-      { PercentName:'85% and above', PercentID: 85 },
-      { PercentName:'90% and above', PercentID: 90 },
-      { PercentName:'95% and above', PercentID: 95 },
-    ]
-    setPercents(arrayPercents)
+      // //Leaders
+      // var arrayLeaders = [
+      //   { LeaderID: 1, LeaderName:'Casualty' },
+      //   { LeaderID: 2, LeaderName:'Construction' },
+      //   { LeaderID: 3, LeaderName:'EB' },
+      //   { LeaderID: 4, LeaderName:'Ergonomics' },
+      //   { LeaderID: 5, LeaderName:'Industrial Hygiene' },
+      //   { LeaderID: 6, LeaderName:'Life Sciences' },
+      //   { LeaderID: 7, LeaderName:'Manufacturing' },
+      //   { LeaderID: 8, LeaderName:'Property' },
+      //   { LeaderID: 9, LeaderName:'Technology' },
+      // ]
+      // setLeaders(arrayLeaders)
 
-    if (PartnerName === 'CNA') {
-      var arraySubjectmatterexperts = [
-        { Name:'Gold',   value: 'Gold' },
-        { Name:'Silver', value: 'Silver' },
-        { Name:'Bronze', value: 'Bronze' },
+      //Smes
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/SMEs?partnerid=' + PartnerID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        //console.log('smes',response.data)
+        var arraySmes = response.data.map(item => {
+          return {
+            SmeID: item.CustomAttributeValueID,
+            SmeName: item.CustomAttributeValue
+          }
+        })
+        //console.log('smes',arraySmes)
+        setSmes(arraySmes)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      // //Smes
+      // var arraySmes = [
+      //   { SmeID: 1, SmeName:'Casualty - Auto' },
+      //   { SmeID: 2, SmeName:'Casualty - Large Casualty' },
+      //   { SmeID: 3, SmeName:'Casualty - Premises Operations' },
+      //   { SmeID: 4, SmeName:'Casualty - Products' },
+      //   { SmeID: 5, SmeName:'Casualty - Walkway Specialist' },
+      //   { SmeID: 6, SmeName:'Casualty - WC - Construction' },
+      //   { SmeID: 7, SmeName:'Casualty - WC - General Industry' },
+      //   { SmeID: 8, SmeName:'Construction' },
+      //   { SmeID: 9, SmeName:'Construction - Builders Risk' },
+      //   { SmeID: 10, SmeName:'Construction - Large Casualty Construction' },
+      //   { SmeID: 11, SmeName:'Construction - Roofing' },
+      //   { SmeID: 12, SmeName:'Cyber incl E & O' },
+      //   { SmeID: 13, SmeName:'EB' },
+      //   { SmeID: 14, SmeName:'Life Science' },
+      //   { SmeID: 15, SmeName:'Life Science - EB' },
+      //   { SmeID: 16, SmeName:'Manufacturing' },
+      //   { SmeID: 17, SmeName:'Manufacturing - All' },
+      //   { SmeID: 18, SmeName:'Manufacturing - Auto Parts' },
+      //   { SmeID: 19, SmeName:'Manufacturing - EB' },
+      //   { SmeID: 20, SmeName:'Manufacturing - Property' },
+      //   { SmeID: 21, SmeName:'Property - IR' },
+      //   { SmeID: 22, SmeName:'Property - Large' },
+      //   { SmeID: 23, SmeName:'Property - Wildfire' },
+      //   { SmeID: 24, SmeName:'Real Estate' },
+      //   { SmeID: 25, SmeName:'Technology' },
+      //   { SmeID: 26, SmeName:'Technology - EB' }
+      // ]
+      // setSmes(arraySmes)
+    }
+
+    if (SMEOnly === false) {
+      console.log('right after', SMEOnly)
+      //Positions
+      axios
+      //.get('https://skillnetpartnerpositionsapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
+      .get('https://skillnetusersapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        var arrayPositions = response.data.map(item => {
+          return {
+            JobID: item.JobID,
+            JobName: item.JobName
+          }
+        })
+        console.log('positions',arrayPositions)
+        setPositions(arrayPositions)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
+      //Locations
+      axios
+      //.get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
+      .get('https://skillnetusersapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        var arrayLocations = response.data.map(item => {
+          return {
+            LocationID: item.PartnerLocationID,
+            LocationName: item.LocationName
+          }
+        })
+        console.log('locations',arrayLocations)
+        setLocations(arrayLocations)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //Managers
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/managers?personid=' + PersonID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        var arrayManagers = response.data.map(item => {
+          return {
+            ManagerID: item.ManagerID,
+            ManagerName: item.ManagerName //+ ' (' + item.ManagerID + ')'
+          }
+        })
+        console.log('managers',arrayManagers)
+        setManagers(arrayManagers)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //FitPercents
+      var arrayPercents = [
+        { PercentName:'40% and above', PercentID: 40 },
+        { PercentName:'45% and above', PercentID: 45 },
+        { PercentName:'50% and above', PercentID: 50 },
+        { PercentName:'55% and above', PercentID: 55 },
+        { PercentName:'60% and above', PercentID: 60 },
+        { PercentName:'65% and above', PercentID: 65 },
+        { PercentName:'70% and above', PercentID: 70 },
+        { PercentName:'75% and above', PercentID: 75 },
+        { PercentName:'80% and above', PercentID: 80 },
+        { PercentName:'85% and above', PercentID: 85 },
+        { PercentName:'90% and above', PercentID: 90 },
+        { PercentName:'95% and above', PercentID: 95 },
       ]
-      setSubjectmatterexperts(arraySubjectmatterexperts)
-    }
+      setPercents(arrayPercents)
 
-    if (PartnerName === 'General Mills') {
-
-      //Segments
-      axios
-      .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
-        auth: {username: 'skillnet',password: 'demo'}
-      })
-      .then((response) => {
-        console.log(response.data)
-        var arraySegments = response.data.map(item => {
-          return {
-            SegmentID: item.CustomAttributeValueID,
-            SegmentName: item.CustomAttributeValue
-          }
-        })
-        console.log('segments',arraySegments)
-        setSegments(arraySegments)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-      //Functions
-      axios
-      .get('https://skillnetusersapi.azurewebsites.net/api/functions/', {
-        auth: {username: 'skillnet',password: 'demo'}
-      })
-      .then((response) => {
-        var arrayFunctions = response.data.map(item => {
-          return {
-            FunctionID: item.CustomAttributeValueID,
-            FunctionName: item.CustomAttributeValue
-          }
-        })
-        console.log('functions',arrayFunctions)
-        setFunctions(arrayFunctions)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-      //Subfunctions
-      axios
-      .get('https://skillnetusersapi.azurewebsites.net/api/subfunctions/', {
-        auth: {username: 'skillnet',password: 'demo'}
-      })
-      .then((response) => {
-        var arraySubfunctions = response.data.map(item => {
-          return {
-            SubfunctionID: item.CustomAttributeValueID,
-            SubfunctionName: item.CustomAttributeValue
-          }
-        })
-        console.log('functions',arraySubfunctions)
-        setSubfunctions(arraySubfunctions)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    }
-
-
-    //CompetencyGroups
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/competencygroup?partnerid=' + PartnerID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      console.log('CompetencyGroups-raw',response.data)
-      var arrayCompetencyGroups = response.data.map(item => {
-        return {
-          CompetencyGroupID: item.CompetencyGroupID,
-          CompetencyGroupName: item.CompetencyGroupName,
-          CompetencyGroupIcon: item.CompetencyGroupIcon,
-          CompetencyGroupDisplayOrder: item.CompetencyGroupDisplayOrder
-        }
-      })
-
-      function compare(a, b) {
-        const bandA = a.CompetencyGroupDisplayOrder;
-        const bandB = b.CompetencyGroupDisplayOrder;
-        let comparison = 0;
-        if (bandA > bandB) {
-          comparison = 1;
-        } else if (bandA < bandB) {
-          comparison = -1;
-        }
-        return comparison;
+      if (PartnerName === 'CNA') {
+        var arraySubjectmatterexperts = [
+          { Name:'Gold',   value: 'Gold' },
+          { Name:'Silver', value: 'Silver' },
+          { Name:'Bronze', value: 'Bronze' },
+        ]
+        setSubjectmatterexperts(arraySubjectmatterexperts)
       }
 
-      arrayCompetencyGroups.sort(compare);
-      console.log('CompetencyGroups',arrayCompetencyGroups)
-      setCompetencyGroups(arrayCompetencyGroups)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      if (PartnerName === 'General Mills') {
 
-    //Competencies and Skills
-    var arrayCompetencies = []
-    axios
-    .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=' + PersonID, {
-      auth: {username: 'skillnet',password: 'demo'}
-    })
-    .then((response) => {
-      console.log('competencies-raw',response.data)
-      arrayCompetencies = response.data.map(item => {
-        return {
-          CompetencyID: item.SkillID,
-          CompetencyName: item.SkillName,
-          CompetencyGroupID: item.GroupID,
-        }
-      })
-      console.log('competencies',arrayCompetencies)
-      //setCompetencies(arrayCompetencies)
-
-      var f= 'https://skillnetusersapi.azurewebsites.net/api/skills?groupid=' + GroupID + '&parentskillid='
-      var arrayAxios = []
-      arrayCompetencies.forEach(competency => {
-        arrayAxios.push( axios.get(f+competency.CompetencyID,{auth: {username: 'skillnet',password: 'demo'}}))
-      })
-      Promise.all(arrayAxios)
-        .then(function (results) {
-
-          var tree = []
-          arrayCompetencies.forEach((competency, index) => {
-            var children = []
-            results[index].data.forEach(result => {
-              var c = {
-                id: result.SkillID.toString(),
-                name: result.SkillName
-              }
-              children.push(c)
-            })
-
-            var o = {
-              id: competency.CompetencyID.toString(),
-              name: competency.CompetencyName,
-              children: children
+        //Segments
+        axios
+        .get('https://skillnetusersapi.azurewebsites.net/api/segments/', {
+          auth: {username: 'skillnet',password: 'demo'}
+        })
+        .then((response) => {
+          console.log(response.data)
+          var arraySegments = response.data.map(item => {
+            return {
+              SegmentID: item.CustomAttributeValueID,
+              SegmentName: item.CustomAttributeValue
             }
-            tree.push(o)
           })
-          var data = {
-            id: 'root',
-            name: 'Skills',
-            children: tree
+          console.log('segments',arraySegments)
+          setSegments(arraySegments)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+        //Functions
+        axios
+        .get('https://skillnetusersapi.azurewebsites.net/api/functions/', {
+          auth: {username: 'skillnet',password: 'demo'}
+        })
+        .then((response) => {
+          var arrayFunctions = response.data.map(item => {
+            return {
+              FunctionID: item.CustomAttributeValueID,
+              FunctionName: item.CustomAttributeValue
+            }
+          })
+          console.log('functions',arrayFunctions)
+          setFunctions(arrayFunctions)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+        //Subfunctions
+        axios
+        .get('https://skillnetusersapi.azurewebsites.net/api/subfunctions/', {
+          auth: {username: 'skillnet',password: 'demo'}
+        })
+        .then((response) => {
+          var arraySubfunctions = response.data.map(item => {
+            return {
+              SubfunctionID: item.CustomAttributeValueID,
+              SubfunctionName: item.CustomAttributeValue
+            }
+          })
+          console.log('functions',arraySubfunctions)
+          setSubfunctions(arraySubfunctions)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+
+
+      //CompetencyGroups
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/competencygroup?partnerid=' + PartnerID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('CompetencyGroups-raw',response.data)
+        var arrayCompetencyGroups = response.data.map(item => {
+          return {
+            CompetencyGroupID: item.CompetencyGroupID,
+            CompetencyGroupName: item.CompetencyGroupName,
+            CompetencyGroupIcon: item.CompetencyGroupIcon,
+            CompetencyGroupDisplayOrder: item.CompetencyGroupDisplayOrder
           }
-          setTreeData(data)
-        });
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+        })
+
+        function compare(a, b) {
+          const bandA = a.CompetencyGroupDisplayOrder;
+          const bandB = b.CompetencyGroupDisplayOrder;
+          let comparison = 0;
+          if (bandA > bandB) {
+            comparison = 1;
+          } else if (bandA < bandB) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+        arrayCompetencyGroups.sort(compare);
+        console.log('CompetencyGroups',arrayCompetencyGroups)
+        setCompetencyGroups(arrayCompetencyGroups)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+      //Competencies and Skills
+      var arrayCompetencies = []
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/skills?personid=' + PersonID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('competencies-raw',response.data)
+        arrayCompetencies = response.data.map(item => {
+          return {
+            CompetencyID: item.SkillID,
+            CompetencyName: item.SkillName,
+            CompetencyGroupID: item.GroupID,
+          }
+        })
+        console.log('competencies',arrayCompetencies)
+        //setCompetencies(arrayCompetencies)
+
+        var f= 'https://skillnetusersapi.azurewebsites.net/api/skills?groupid=' + GroupID + '&parentskillid='
+        var arrayAxios = []
+        arrayCompetencies.forEach(competency => {
+          arrayAxios.push( axios.get(f+competency.CompetencyID,{auth: {username: 'skillnet',password: 'demo'}}))
+        })
+        Promise.all(arrayAxios)
+          .then(function (results) {
+
+            var tree = []
+            arrayCompetencies.forEach((competency, index) => {
+              var children = []
+              results[index].data.forEach(result => {
+                var c = {
+                  id: result.SkillID.toString(),
+                  name: result.SkillName
+                }
+                children.push(c)
+              })
+
+              var o = {
+                id: competency.CompetencyID.toString(),
+                name: competency.CompetencyName,
+                children: children
+              }
+              tree.push(o)
+            })
+            var data = {
+              id: 'root',
+              name: 'Skills',
+              children: tree
+            }
+            setTreeData(data)
+          });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
 
 
 
@@ -664,8 +711,8 @@ const CardWidgetProperties = (props) => {
     var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
     'personid=' + PersonID + '&' +
     'groupid=' + GroupID + '&' +
-    // 'leaderids=' + '' + '&' +
-    // 'smeids=' + ''  + '&' +
+    'leaderids=' + leaderidsstring + '&' +
+    'smeids=' + smeidsstring  + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
     'segmentids=' + segmentidsstring  + '&' +
     'functionids=' + functionidsstring  + '&' +
@@ -675,14 +722,14 @@ const CardWidgetProperties = (props) => {
     'managerids=' + manageridsstring + '&' +
     'percentages=' + percentidsstring + '&' +
     'skillids=' + skillidsstring
-    console.log(url)
+    //console.log(url)
 
     axios
     .get(url, {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
-      console.log('filtered users', response)
+      //console.log('filtered users', response)
       setNumberofusersdisplayed(response.data.length)
 
       SendIt('fromcardfilteredusers', {users: response.data})
@@ -937,6 +984,7 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={true} who="Sub Functions" onChanged={(event,checked) => filterChanged(checked,'subfunctions')} options={subfunctions} name="SubfunctionName"/>
 }
 
+{SMEOnly === false &&
 <div style={{marginTop:'20px',padding:'0',border:'0px solid gray'}}>
   <div style={{width:'100%',marginTop:'20px'}} className="MuiInputBase-root MuiInput-root MuiInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd">
     <input aria-invalid="false" placeholder="" type="text" style={{fontWeight:'400',color:'rgba(0, 0, 0, 0.87)'}} className="MuiInputBase-input MuiInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd" aria-autocomplete="list" defaultValue="Skills" id="mui-44339"></input>
@@ -961,11 +1009,13 @@ onClick={e => (e.stopPropagation())}
     </div>
 </div>
 
+
 <div style={{display:checkboxdisplay}}>
   <CheckboxWidget onCheck={(checked) => filterChanged(checked,'skills')}/>
 </div>
 
 </div>
+}
 
 {/* {null !== null &&
 <TreeView
