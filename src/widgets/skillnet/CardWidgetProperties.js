@@ -894,10 +894,16 @@ onClick={e => (e.stopPropagation())}
         {buttonlabel}
       </Button>
 
-
-{numberofusersdisplayed !== null &&
-<div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
+{SMEOnly !== true &&
+        numberofusersdisplayed !== null &&
+        <div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
 }
+
+
+
+{/* {numberofusersdisplayed !== null &&
+<div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
+} */}
 
 {leaders !== null &&
 <DropDown multiple={true} who="Leaders" onChanged={(event,checked) => filterChanged(checked,'leaders')} options={leaders} name="LeaderName"/>

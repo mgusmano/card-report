@@ -102,7 +102,12 @@ const CardReport = (props) => {
 
           <div style={{padding:'5px 0 0 20px',fontSize:'12px'}}>
               <img src={logoImg} alt="SKILLNET" style={{width:'90px'}} />
+              {SMEOnly === true &&
+              <span style={{xmarginLeft:'-2px'}}><i>Risk Control SME Report</i></span>
+              }
+              {SMEOnly !== true &&
               <span style={{xmarginLeft:'-2px'}}><i>Card Report</i></span>
+              }
           </div>
 
           {PartnerName === 'CNA' &&
