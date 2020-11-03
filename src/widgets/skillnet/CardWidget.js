@@ -283,7 +283,7 @@ const CardWidget = (props) => {
           {users !== null &&
             users.map((user, index) => {
               return (
-                <Card key={index} user={user} Partner={props.Partner} />
+                <Card key={index} user={user} Partner={props.Partner} SMEOnly={props.SMEOnly}/>
               )
             })
           }

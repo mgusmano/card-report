@@ -729,7 +729,7 @@ const CardWidgetProperties = (props) => {
       auth: {username: 'skillnet',password: 'demo'}
     })
     .then((response) => {
-      //console.log('filtered users', response)
+      console.log('filtered users', response)
       setNumberofusersdisplayed(response.data.length)
 
       SendIt('fromcardfilteredusers', {users: response.data})

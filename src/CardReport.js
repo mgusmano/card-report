@@ -170,7 +170,7 @@ const CardReport = (props) => {
         </div>
 
         {/* <Separator/> */}
-        <CardWidget flex={cardflex} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} />
+        <CardWidget flex={cardflex} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} SMEOnly={SMEOnly}/>
         <Splitter/>
         <MapWidget flex={mapflex} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID}/>
         {/* <Splitter/>

@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 
 const Card = (props) => {
-  const {user, Partner} = props
+  const {user, Partner, SMEOnly} = props
   const {PartnerName,ratingsources} = Partner
   const [addWidgetOpen, setAddWidgetOpen] = useState(false);
   const [color, setColor] = useState('gold')
@@ -78,6 +78,7 @@ const Card = (props) => {
     }
     //console.log(user.BFirstName.charAt(0))
   }, []);
+  //  }, [user.Avatar, user.BFirstName]);
 
   let show = false;
   let idshow;
@@ -86,7 +87,12 @@ const Card = (props) => {
   } else {
     idshow = <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>&nbsp;</div>
   }
-//  }, [user.Avatar, user.BFirstName]);
+
+  var SMEs = user.SME.split(",");
+  var all = SMEs.map(SME => {
+    return <div>SME: {SME}</div>
+  })
+
   return (
     <div key={user.PersonID} style={{display:'flex',flexDirection:'column',margin:'10px 10px 10px 10px',padding:'10px',width:'300px',xheight:'150px',border:'1px solid lightgray',boxShadow: '0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}}>
 
@@ -96,7 +102,7 @@ const Card = (props) => {
       <div>
         <div className="imgAll imgBig" style={{height:'70px',width:'70px',backgroundImage: `url(${user.Avatar})`}}></div>
         <div style={{display:'flex',alignContent:'center',justifyContent:'center',width:'100%',fontSize:'11px'}}>
-          <div style={{borderBottom:'1px solid gray',marginTop:'10px',cursor:'pointer'}} onClick={() => setAddWidgetOpen(true)}>Profile</div>
+          <div style={{borderBottom:'1px solid gray',marginTop:'1px',cursor:'pointer'}} onClick={() => setAddWidgetOpen(true)}>Profile</div>
         </div>
         <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} />
       </div>
@@ -107,6 +113,13 @@ const Card = (props) => {
         <div style={{fontSize:'11px',marginTop:'10px',textAlign:'right'}}></div>
         <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>&nbsp;{PartnerName}</div>
         <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Location: {user.Location}</div>
+
+{SMEOnly === true &&
+        <>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>Leader: {user.Leader}</div>
+        <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{all}</div>
+        </>
+}
 
         {PartnerName === 'General Mills' &&
         <>
@@ -129,8 +142,10 @@ const Card = (props) => {
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
       <div style={{fontSize:'11px'}}>{user.Email}</div>
       {idshow}
+{SMEOnly !== true &&
       <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{ratinglabel}: {user.Rating}</div>
-    </div>
+}
+      </div>
 
   </div>
 
