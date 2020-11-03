@@ -9,10 +9,11 @@ import { useAuth } from "../../context/auth";
 function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("skillnet");
+  const [password, setPassword] = useState("cnasme");
   const { setAuthTokens } = useAuth();
-  const referer = props.location.state.referer || '/';
+  //const referer = props.location.state.referer || '/';
+  var referer = '/cardcnasme';
 
   function postLogin() {
     axios.get("https://skillnetusersapi.azurewebsites.net/api/users?partnerid=434", {
@@ -21,12 +22,16 @@ function Login(props) {
       //userName,
       //password
     }).then(result => {
+      console.log(password)
       switch (password) {
         case 'cnasme':
+          referer = '/card' + password
           break;
         case 'cna':
+          referer = '/card' + password
           break;
         case 'gmi':
+          referer = '/card' + password
           break;
         default:
           console.log('bad password')
@@ -35,6 +40,7 @@ function Login(props) {
           break;
       }
 
+      console.log(referer)
       if (result.status === 200) {
         setAuthTokens(password);
         setLoggedIn(true);
@@ -42,11 +48,13 @@ function Login(props) {
         setIsError(true);
       }
     }).catch(e => {
+      console.log(e)
       setIsError(true);
     });
   }
 
   if (isLoggedIn) {
+    console.log(referer)
     return <Redirect to={referer} />;
   }
 

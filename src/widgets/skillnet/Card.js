@@ -89,8 +89,8 @@ const Card = (props) => {
   }
 
   var SMEs = user.SME.split(",");
-  var all = SMEs.map(SME => {
-    return <div>SME: {SME}</div>
+  var all = SMEs.map((SME,index) => {
+    return <div key={index} >SME: {SME}</div>
   })
 
   return (

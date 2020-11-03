@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Route, Switch, Link } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 
 import queryString from 'query-string'
@@ -63,7 +63,7 @@ function App(props) {
           {/* <Menu/> */}
           <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
           <ul style={{paddingTop:'30px'}}>
-            <li><Link to="/">Home</Link></li>
+            {/* <li><Link to="/">Home</Link></li> */}
 
 {authTokens === 'cnasme' &&
             <>
@@ -84,13 +84,17 @@ function App(props) {
             <li><Link to="/benchmarkgmisb">Benchmark GMIsb</Link></li>
             </>
 }
-            <li><Link to="/admin">Admin</Link></li>
+            <li><Link to="/admin">Logout</Link></li>
           </ul>
           </span>
           <Splitter/>
           {/* <Center/> */}
           <Switch>
-            <Route path="/" component={() => <Home/>} exact />
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
+            <Route path="/login" default component={Login} />
+            {/* <Route path="/" component={() => <Home/>} exact /> */}
             <PrivateRoute path="/cardcnasme" component={() => <CardReport Partner={PartnerCNA} PartnerID='395' SMEOnly={true}/>} />
             <PrivateRoute path="/cardcna" component={() => <CardReport Partner={PartnerCNA} PartnerID='395'/>} />
             <PrivateRoute path="/cardgmi" component={() => <CardReport Partner={PartnerGMIsb} PartnerID='434'/>} />
@@ -99,7 +103,7 @@ function App(props) {
             <PrivateRoute path="/covidcna" component={() => <CovidReport Partner={PartnerCNA}/>} />
             <PrivateRoute path="/loginx" component={() => <Login Partner={PartnerCNA}/>} />
             <PrivateRoute path="/admin" component={Admin} />
-            <Route path="/login" component={Login} />
+
           </Switch>
           {/* center */}
           {/* <Splitter/>
