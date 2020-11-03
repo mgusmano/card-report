@@ -67,7 +67,7 @@ function App(props) {
 
 {authTokens === 'cnasme' &&
             <>
-            <li><Link to="/cardcnasme">Card CNA SME</Link></li>
+            <li><Link to="/cardcnasme">Risk Control SME</Link></li>
             </>
 }
 
