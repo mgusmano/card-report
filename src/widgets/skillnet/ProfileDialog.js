@@ -73,8 +73,12 @@ const ProfileDialog = (props) => {
     })
     .then((response) => {
       console.log('resume',response.data)
+      var resume = response.data.toString()
+      if (resume.slice(-1) !== '=') {
+        setUserResume(resume)
+      }
 
-      setUserResume(response.data)
+
     })
     .catch((error) => {
       console.log(error)
@@ -117,9 +121,13 @@ const ProfileDialog = (props) => {
           <div className="add-widgets-dialog" style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
             <span>User profile information will be here...</span>
 
-            {/* <a href="{userresume}" download>
-              <div>download</div>
-            </a> */}
+            {userresume !== null &&
+
+            <a href={userresume} download>
+              <div style={{margin:'20px',fontSize:'11px'}}>download</div>
+            </a>
+            }
+
 
 
 
