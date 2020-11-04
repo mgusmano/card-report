@@ -116,16 +116,19 @@ const ProfileDialog = (props) => {
       PaperComponent={PaperComponent}
 
     >
-      <DialogTitle style={{width:'700px',cursor: 'move'}} id="draggable-dialog-title">Profile Dialog</DialogTitle>
+      <DialogTitle style={{width:'700px',cursor: 'move'}} id="draggable-dialog-title">Profile Sheet</DialogTitle>
         <DialogContent style={{width:'700px'}} dividers>
           <div className="add-widgets-dialog" style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
-            <span>User profile information will be here...</span>
+            <span></span>
 
             {userresume !== null &&
-
             <a href={userresume} download>
-              <div style={{margin:'20px',fontSize:'11px'}}>download</div>
+              <div style={{margin:'20px',fontSize:'11px'}}>download profile sheet</div>
             </a>
+            }
+
+            {userresume === null &&
+              <div style={{margin:'20px',fontSize:'11px'}}>no profile sheet available</div>
             }
 
 
