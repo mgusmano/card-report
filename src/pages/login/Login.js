@@ -9,6 +9,7 @@ import { useAuth } from "../../context/auth";
 function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [userName, setUserName] = useState("skillnet");
   const [password, setPassword] = useState("cnasme");
   const { setAuthTokens } = useAuth();
@@ -16,6 +17,8 @@ function Login(props) {
   var referer = '/cardcnasme';
 
   function postLogin() {
+    setIsLoading(true);
+    console.log('postLogin')
     axios.get("https://skillnetusersapi.azurewebsites.net/api/users?partnerid=434", {
       //auth: {username: 'skillnet',password: 'demo'},
       auth: {username: userName, password: 'demo'},
@@ -41,6 +44,7 @@ function Login(props) {
       }
 
       console.log(referer)
+      setIsLoading(false);
       if (result.status === 200) {
         setAuthTokens(password);
         setLoggedIn(true);
@@ -82,6 +86,8 @@ function Login(props) {
       </Form>
       {/* <Link to="/signup">Don't have an account?</Link> */}
         { isError &&<Error>The username or password provided were incorrect!</Error> }
+
+        { isLoading &&<div>Loading...</div> }
     </Card>
   );
 }

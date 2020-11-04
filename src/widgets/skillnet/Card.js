@@ -104,7 +104,7 @@ const Card = (props) => {
         <div style={{display:'flex',alignContent:'center',justifyContent:'center',width:'100%',fontSize:'11px'}}>
           <div style={{borderBottom:'1px solid gray',marginTop:'1px',cursor:'pointer'}} onClick={() => setAddWidgetOpen(true)}>Profile</div>
         </div>
-        <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} />
+        <ProfileDialog open={addWidgetOpen} onClose={handleAddWidgetClose} PersonId={user.PersonID} />
       </div>
     </div>
       <div style={{display:'flex',flexDirection:'column',alignContent:'flex-end'}}>
