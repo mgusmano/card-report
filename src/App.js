@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 
-import { Route, Switch, Link } from 'react-router-dom';
+import Top from './Top';
+import Header from './Header';
+
+import { Route, Switch, Link, useHistory } from 'react-router-dom';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
+import SideMenu from 'react-sidemenu';
 
 import queryString from 'query-string'
 
 import { AuthContext } from "./context/auth";
 import { useAuth } from "./context/auth";
+
 
 import PrivateRoute from './PrivateRoute';
 import Login from "./pages/login/Login";
@@ -21,6 +26,9 @@ import Horizontal from './layout/Horizontal'
 import Vertical from './layout/Vertical'
 import Splitter from './layout/Splitter'
 import Separator from './layout/Separator'
+
+import './side-menu.css'
+
 
 
 var PartnerCNA = {
@@ -47,9 +55,48 @@ var PartnerGMIsb = {
 function App(props) {
   const [authTokens, setAuthTokens] = useState();
 
+  const items = [
+    {label: 'Logout', value: '/admin', icon: 'fa-anchor'}
+
+
+    // {label: 'item 1', value: 'item1', icon: 'fa-search',
+    // children: [
+    //   {divider: true, label: 'Main navigation', value: 'main-nav'},
+    // ]
+    // },
+  ];
+
+  switch (authTokens) {
+    case 'cnasme':
+      items.push({label: 'Risk Control SME', value: '/cardcnasme', icon: 'fa-anchor'})
+      break;
+    case 'cna':
+      items.push({label: 'Card Report - CNA', value: '/cardcna', icon: 'fa-anchor'})
+      items.push({label: 'Benchmark - CNA', value: '/benchmarkcna', icon: 'fa-anchor'})
+      items.push({label: 'Covid - CNA', value: '/covidcna', icon: 'fa-anchor'})
+      break;
+    case 'gmi':
+      items.push({label: 'Card Report - GMI', value: '/cardcna', icon: 'fa-anchor'})
+      items.push({label: 'Benchmark - GMI', value: '/benchmarkgmi', icon: 'fa-anchor'})
+      items.push({label: 'Card GMI', value: '/cardgmi', icon: 'fa-anchor'})
+      break;
+    default:
+      break;
+  }
+
+
+
+  const history = useHistory();
+
   const setTokens = (data) => {
     localStorage.setItem("tokens", JSON.stringify(data));
     setAuthTokens(data);
+  }
+
+  const onMenuItemClick = (value) => {
+    //alert("You just clicked me:" + value)
+    //let history = useHistory();
+    history.push(value);
   }
 
   //const { authTokens } = useAuth();
@@ -57,38 +104,27 @@ function App(props) {
 
   return (
     <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
-    <Router>
+
       <Vertical>
-        {/* <Toolbar/> */}
-        <Separator/>
+        <Top/>
+        <Header/>
+        {/* <Separator/> */}
         <Horizontal style={{width:'100%',background:'blue'}}>
           {/* <Menu/> */}
-          <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
-          <ul style={{paddingTop:'30px'}}>
-            {/* <li><Link to="/">Home</Link></li> */}
 
-{authTokens === 'cnasme' &&
-            <>
-            <li><Link to="/cardcnasme">Risk Control SME</Link></li>
-            </>
-}
+<Vertical style={{height:'100%',background:'black'}}>
 
-{authTokens === 'cna' &&
-            <>
-            <li><Link to="/cardcna">Card CNA</Link></li>
-            <li><Link to="/benchmarkcna">Benchmark CNA</Link></li>
-            <li><Link to="/covidcna">Covid CNA</Link></li>
-            </>
-}
-{authTokens === 'gmi' &&
-            <>
-            <li><Link to="/cardgmi">Card GMI</Link></li>
-            <li><Link to="/benchmarkgmisb">Benchmark GMIsb</Link></li>
-            </>
-}
-            <li><Link to="/admin">Logout</Link></li>
-          </ul>
-          </span>
+<div style={{height:'50px'}}></div>
+
+
+
+
+          <SideMenu
+            items={items}
+            onMenuItemClick={onMenuItemClick}
+          />
+
+</Vertical>
           <Splitter/>
           {/* <Center/> */}
           <Switch>
@@ -107,14 +143,24 @@ function App(props) {
             <PrivateRoute path="/admin" component={Admin} />
 
           </Switch>
+
+
           {/* center */}
           {/* <Splitter/>
           <Context/> */}
         </Horizontal>
+
+
+
+
+
+
+
+
         {/* <Splitter/>
         <div>footer</div> */}
       </Vertical>
-    </Router>
+
     </AuthContext.Provider>
 
 
@@ -125,3 +171,32 @@ function App(props) {
 }
 
 export default App;
+
+
+
+// {/* <span style={{xwidth:'500px',height:'100%',background:'#f1f1f1'}}>
+// <ul style={{paddingTop:'30px'}}>
+//   {/* <li><Link to="/">Home</Link></li> */}
+
+// {authTokens === 'cnasme' &&
+//   <>
+//   <li><Link to="/cardcnasme">Risk Control SME</Link></li>
+//   </>
+// }
+
+// {authTokens === 'cna' &&
+//   <>
+//   <li><Link to="/cardcna">Card CNA</Link></li>
+//   <li><Link to="/benchmarkcna">Benchmark CNA</Link></li>
+//   <li><Link to="/covidcna">Covid CNA</Link></li>
+//   </>
+// }
+// {authTokens === 'gmi' &&
+//   <>
+//   <li><Link to="/cardgmi">Card GMI</Link></li>
+//   <li><Link to="/benchmarkgmisb">Benchmark GMIsb</Link></li>
+//   </>
+// }
+//   <li><Link to="/admin">Logout</Link></li>
+// </ul>
+// </span> */}

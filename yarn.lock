@@ -9236,7 +9236,7 @@ react-router-dom@^5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-router@5.2.0:
+react-router@5.2.0, react-router@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-5.2.0.tgz#424e75641ca8747fbf76e5ecca69781aa37ea293"
   integrity sha512-smz1DUuFHRKdcJC0jobGo8cVbhO3x50tCL4icacOlcwDOEQPq4TMqwx3sY1TP+DvtTgz4nm3thuo7A+BK2U0Dw==
@@ -9320,6 +9320,11 @@ react-select@1.3.0:
     classnames "^2.2.4"
     prop-types "^15.5.8"
     react-input-autosize "^2.1.2"
+
+react-sidemenu@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-sidemenu/-/react-sidemenu-1.1.0.tgz#3c8c9ccd51e38eed99e127a5548a0643b5f82952"
+  integrity sha512-jELlbJ07iKRAcOMgcC4xw3f3wVbpC4XoIbs1cn/zK4ujPfC0ZJnL9oePrXibf+dHIcfeByfiETpjmepvfBz3uA==
 
 react-toastify@^6.0.9:
   version "6.0.9"
