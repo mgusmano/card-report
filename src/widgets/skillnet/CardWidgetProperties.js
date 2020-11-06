@@ -24,7 +24,7 @@ const DropDown = (props) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const { who, onChanged, options, name, multiple} = props
-
+console.log(options)
 
   // {multiple === true &&
   //   renderOption={(options, { selected }) => (
@@ -62,14 +62,6 @@ const DropDown = (props) => {
             {options[name]}
           </React.Fragment>
         ) : undefined}
-
-
-
-
-
-
-
-
       renderInput={(params) => (
         <TextField
           {...params}
@@ -585,8 +577,8 @@ const CardWidgetProperties = (props) => {
               }
               tree.push(o)
             })
-            console.log(tree)
-            console.log(JSON.stringify(tree))
+            //console.log(tree)
+            //console.log(JSON.stringify(tree))
             var data = {
               id: 'root',
               name: 'Skills',
@@ -665,6 +657,7 @@ const CardWidgetProperties = (props) => {
     var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
     'personid=' + PersonID + '&' +
     'groupid=' + GroupID + '&' +
+    'lobids=' + '' + '&' +
     'leaderids=' + leaderidsstring + '&' +
     'smeids=' + smeidsstring  + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
@@ -836,6 +829,8 @@ onClick={e => (e.stopPropagation())}
     }
   };
 
+
+  console.log(leaders)
   //    <div style={{width:propertywidth,padding:'10px'}}>
   return (
     <div style={{width:'100%',padding:'10px'}}>
