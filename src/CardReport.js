@@ -36,6 +36,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = (props) => {
+  const { PartnerID, PartnerName, PersonID } = props.Partner;
   const [addWidgetOpen, setAddWidgetOpen] = useState(false);
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('375px')
@@ -45,7 +46,7 @@ const CardReport = (props) => {
 
   const [alignment, setAlignment] = React.useState('Card');
 
-  const { PartnerID, PartnerName, PersonID } = props.Partner
+
   //const { SMEOnly } = props
   var SMEOnly = props.SMEOnly
 

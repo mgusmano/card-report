@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 
 const Card = (props) => {
-  const {user, Partner, SMEOnly} = props
+  const {user, Partner, SMEOnly, showratings} = props
   const {PartnerName,ratingsources} = Partner
   const [addWidgetOpen, setAddWidgetOpen] = useState(false);
   const [color, setColor] = useState('gold')
@@ -142,7 +142,7 @@ const Card = (props) => {
     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
       <div style={{fontSize:'11px'}}>{user.Email}</div>
       {idshow}
-{SMEOnly !== true &&
+{showratings === true &&
       <div style={{fontSize:'11px',marginTop:'1px',textAlign:'right'}}>{ratinglabel}: {user.Rating}</div>
 }
       </div>

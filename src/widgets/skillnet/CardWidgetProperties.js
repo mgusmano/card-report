@@ -83,8 +83,9 @@ const DropDown = (props) => {
 }
 
 const CardWidgetProperties = (props) => {
-  const { PartnerID, PartnerName, PersonID, GroupID } = props.Partner;
-  const {propertywidth, SMEOnly} = props
+  const {propertywidth, SMEOnly, Partner} = props
+  const { PartnerID, PartnerName, PersonID, GroupID } = Partner;
+
   //title:Card Report//title:
   //x:30//x:
   //y:30//y:
@@ -337,20 +338,6 @@ const CardWidgetProperties = (props) => {
         console.log(error)
       })
 
-      // //Leaders
-      // var arrayLeaders = [
-      //   { LeaderID: 1, LeaderName:'Casualty' },
-      //   { LeaderID: 2, LeaderName:'Construction' },
-      //   { LeaderID: 3, LeaderName:'EB' },
-      //   { LeaderID: 4, LeaderName:'Ergonomics' },
-      //   { LeaderID: 5, LeaderName:'Industrial Hygiene' },
-      //   { LeaderID: 6, LeaderName:'Life Sciences' },
-      //   { LeaderID: 7, LeaderName:'Manufacturing' },
-      //   { LeaderID: 8, LeaderName:'Property' },
-      //   { LeaderID: 9, LeaderName:'Technology' },
-      // ]
-      // setLeaders(arrayLeaders)
-
       //Smes
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/SMEs?partnerid=' + PartnerID, {
@@ -370,44 +357,12 @@ const CardWidgetProperties = (props) => {
       .catch((error) => {
         console.log(error)
       })
-
-      // //Smes
-      // var arraySmes = [
-      //   { SmeID: 1, SmeName:'Casualty - Auto' },
-      //   { SmeID: 2, SmeName:'Casualty - Large Casualty' },
-      //   { SmeID: 3, SmeName:'Casualty - Premises Operations' },
-      //   { SmeID: 4, SmeName:'Casualty - Products' },
-      //   { SmeID: 5, SmeName:'Casualty - Walkway Specialist' },
-      //   { SmeID: 6, SmeName:'Casualty - WC - Construction' },
-      //   { SmeID: 7, SmeName:'Casualty - WC - General Industry' },
-      //   { SmeID: 8, SmeName:'Construction' },
-      //   { SmeID: 9, SmeName:'Construction - Builders Risk' },
-      //   { SmeID: 10, SmeName:'Construction - Large Casualty Construction' },
-      //   { SmeID: 11, SmeName:'Construction - Roofing' },
-      //   { SmeID: 12, SmeName:'Cyber incl E & O' },
-      //   { SmeID: 13, SmeName:'EB' },
-      //   { SmeID: 14, SmeName:'Life Science' },
-      //   { SmeID: 15, SmeName:'Life Science - EB' },
-      //   { SmeID: 16, SmeName:'Manufacturing' },
-      //   { SmeID: 17, SmeName:'Manufacturing - All' },
-      //   { SmeID: 18, SmeName:'Manufacturing - Auto Parts' },
-      //   { SmeID: 19, SmeName:'Manufacturing - EB' },
-      //   { SmeID: 20, SmeName:'Manufacturing - Property' },
-      //   { SmeID: 21, SmeName:'Property - IR' },
-      //   { SmeID: 22, SmeName:'Property - Large' },
-      //   { SmeID: 23, SmeName:'Property - Wildfire' },
-      //   { SmeID: 24, SmeName:'Real Estate' },
-      //   { SmeID: 25, SmeName:'Technology' },
-      //   { SmeID: 26, SmeName:'Technology - EB' }
-      // ]
-      // setSmes(arraySmes)
     }
 
     if (SMEOnly === false) {
-      console.log('right after', SMEOnly)
+
       //Positions
       axios
-      //.get('https://skillnetpartnerpositionsapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
       .get('https://skillnetusersapi.azurewebsites.net/api/PartnerPositions?partnerid=' + PartnerID, {
         auth: {username: 'skillnet',password: 'demo'}
       })
@@ -425,10 +380,8 @@ const CardWidgetProperties = (props) => {
         console.log(error)
       })
 
-
       //Locations
       axios
-      //.get('https://skillnetpartnerlocationsapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
       .get('https://skillnetusersapi.azurewebsites.net//api/PartnerLocations?partnerid=' + PartnerID, {
         auth: {username: 'skillnet',password: 'demo'}
       })
@@ -552,7 +505,6 @@ const CardWidgetProperties = (props) => {
         })
       }
 
-
       //CompetencyGroups
       axios
       .get('https://skillnetusersapi.azurewebsites.net/api/competencygroup?partnerid=' + PartnerID, {
@@ -633,6 +585,8 @@ const CardWidgetProperties = (props) => {
               }
               tree.push(o)
             })
+            console.log(tree)
+            console.log(JSON.stringify(tree))
             var data = {
               id: 'root',
               name: 'Skills',
@@ -1017,7 +971,7 @@ onClick={e => (e.stopPropagation())}
 
 
 <div style={{display:checkboxdisplay}}>
-  <CheckboxWidget onCheck={(checked) => filterChanged(checked,'skills')}/>
+  <CheckboxWidget Partner={Partner} onCheck={(checked) => filterChanged(checked,'skills')}/>
 </div>
 
 </div>

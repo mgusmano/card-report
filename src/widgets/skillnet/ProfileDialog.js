@@ -38,6 +38,18 @@ const ProfileDialog = (props) => {
   useEffect(() => {
     //console.log('useEffect ProfileDialog')
 
+    // async function fetchData() {
+    //   const result = await axios("https://pokeapi.co/api/v2/pokemon");
+    //   console.log(result);
+    //   // Now that our results have returned we can use the useState setter to set our data to be the new results.
+    //   setData(result.data.results);
+    // }
+    // fetchData();
+
+
+
+
+
     // axios
     // .get('https://skillnetusersapi.azurewebsites.net/api/resume?personid=' + props.PersonID, {
     //   auth: {username: 'skillnet',password: 'demo'}

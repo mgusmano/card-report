@@ -6,6 +6,13 @@ import './menu.css';
 
 import * as serviceWorker from './serviceWorker';
 
+ReactDOM.render(
+  <App/>,
+  document.getElementById('root')
+);
+
+serviceWorker.unregister();
+
 
 // import { Route, Switch, Link } from 'react-router-dom';
 // import { BrowserRouter as Router } from 'react-router-dom';
@@ -99,12 +106,7 @@ import * as serviceWorker from './serviceWorker';
 //   ratingsources: '1000' //SelfRating
 // }
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('root')
-);
 
-serviceWorker.unregister();
 
 
 // var type = parsed.report
