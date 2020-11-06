@@ -36,7 +36,8 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const CardReport = (props) => {
-  const { PartnerID, PartnerName, PersonID } = props.Partner;
+  const { showlob, Partner } = props
+  const { PartnerID, PartnerName, PersonID } = Partner;
   const [addWidgetOpen, setAddWidgetOpen] = useState(false);
   const [filterdisplay, setFilterDisplay] = useState('block')
   const [propertywidth] = useState('375px')
@@ -185,7 +186,7 @@ const CardReport = (props) => {
       <Splitter/>
       {/* column 2 */}
       <Vertical style={{display:filterdisplay,width:propertywidth}}>
-        <CardWidgetProperties propertywidth={propertywidth} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} SMEOnly={SMEOnly}/>
+        <CardWidgetProperties propertywidth={propertywidth} Partner={props.Partner} PartnerID={PartnerID} PartnerName={PartnerName} PersonID={PersonID} SMEOnly={SMEOnly} showlob={showlob}/>
       </Vertical>
     </Horizontal>
   )

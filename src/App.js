@@ -97,9 +97,9 @@ function App(props) {
             </Route>
             <Route path="/login" default component={Login} />
             {/* <Route path="/" component={() => <Home/>} exact /> */}
-            <PrivateRoute path="/cardcnasme" component={() => <CardReport Partner={PartnerCNA} PartnerID='395' SMEOnly={true}/>} />
-            <PrivateRoute path="/cardcna" component={() => <CardReport Partner={PartnerCNA} PartnerID='395'/>} />
-            <PrivateRoute path="/cardgmi" component={() => <CardReport Partner={PartnerGMIsb} PartnerID='434'/>} />
+            <PrivateRoute path="/cardcnasme" component={() => <CardReport Partner={PartnerCNA} PartnerID='395' SMEOnly={true} showlob={false}/>} />
+            <PrivateRoute path="/cardcna" component={() => <CardReport Partner={PartnerCNA} PartnerID='395' showlob={true}/>} />
+            <PrivateRoute path="/cardgmi" component={() => <CardReport Partner={PartnerGMIsb} PartnerID='434' showlob={false}/>} />
             <PrivateRoute path="/benchmarkcna" component={() => <Dashboard Partner={PartnerCNA}/>}  />
             <PrivateRoute path="/benchmarkgmisb" component={() => <Dashboard Partner={PartnerGMIsb}/>}  />
             <PrivateRoute path="/covidcna" component={() => <CovidReport Partner={PartnerCNA}/>} />

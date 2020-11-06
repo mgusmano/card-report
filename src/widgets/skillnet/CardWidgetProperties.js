@@ -24,7 +24,7 @@ const DropDown = (props) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const { who, onChanged, options, name, multiple} = props
-console.log(options)
+
 
   // {multiple === true &&
   //   renderOption={(options, { selected }) => (
@@ -75,7 +75,7 @@ console.log(options)
 }
 
 const CardWidgetProperties = (props) => {
-  const {propertywidth, SMEOnly, Partner} = props
+  const {propertywidth, SMEOnly, showlob, Partner} = props
   const { PartnerID, PartnerName, PersonID, GroupID } = Partner;
 
   //title:Card Report//title:
@@ -92,6 +92,7 @@ const CardWidgetProperties = (props) => {
 
   const [leaders, setLeaders] = useState(null)
   const [smes, setSmes] = useState(null)
+  const [lobs, setLobs] = useState(null)
 
 
   const [positions, setPositions] = useState(null)
@@ -109,6 +110,7 @@ const CardWidgetProperties = (props) => {
   const [ratingsourcesstring, setRatingsourcesString] = useState('')
   const [leaderidsstring, setLeaderidsString] = useState('')
   const [smeidsstring, setSmeidsString] = useState('')
+  const [lobidsstring, setLobidsString] = useState('')
   const [jobidsstring, setJobidsString] = useState('')
   const [locationidsstring, setLocationidsString] = useState('')
   const [manageridsstring, setManageridsString] = useState('')
@@ -119,7 +121,7 @@ const CardWidgetProperties = (props) => {
   const [skillidsstring, setSkillidsString] = useState('')
 
   const filterChanged = (checked, who) => {
-    //console.log(checked,who)
+    console.log(checked,who)
     var suffix = ''
     var idVal = ''
     switch(who) {
@@ -130,6 +132,11 @@ const CardWidgetProperties = (props) => {
       case 'smes':
         suffix = ''
         idVal = 'SmeID'
+        break;
+      case 'lobs':
+        console.log('here')
+        suffix = ''
+        idVal = 'LobID'
         break;
       case 'positions':
         suffix = ':0'
@@ -171,7 +178,7 @@ const CardWidgetProperties = (props) => {
 
     if (Array.isArray(checked)) {
       checked.forEach(check => {
-        //console.log(check)
+        console.log(check)
         if (idVal == '') {
           checkedString = checkedString + check + suffix + ','
         }
@@ -188,7 +195,7 @@ const CardWidgetProperties = (props) => {
         checkedString = ''
       }
     }
-    //console.log(checkedString)
+    console.log(checkedString)
     var finalString = checkedString.slice(0, -1)
     switch(who) {
       case 'leaders':
@@ -196,6 +203,10 @@ const CardWidgetProperties = (props) => {
         break;
       case 'smes':
         setSmeidsString(finalString)
+        break;
+      case 'lobs':
+        console.log(finalString)
+        setLobidsString(finalString)
         break;
       case 'positions':
         setJobidsString(finalString)
@@ -308,6 +319,32 @@ const CardWidgetProperties = (props) => {
 
     setRatingsourcesString(props.Partner.ratingsources)
     onApplyClick()
+
+
+
+    if (showlob === true) {
+      //Lobs
+      console.log('LOB')
+      axios
+      .get('https://skillnetusersapi.azurewebsites.net/api/lob?partnerid=' + PartnerID, {
+        auth: {username: 'skillnet',password: 'demo'}
+      })
+      .then((response) => {
+        console.log('lobs',response.data)
+        var arrayLobs = response.data.map(item => {
+          return {
+            LobID: item.CustomAttributeValueID,
+            LobName: item.CustomAttributeValue
+          }
+        })
+        //console.log('lobs',arrayLobs)
+        setLobs(arrayLobs)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+
 
     if (SMEOnly === true) {
       //Leaders
@@ -657,7 +694,7 @@ const CardWidgetProperties = (props) => {
     var url = 'https://skillnetusersapi.azurewebsites.net/api/cardreportusers?' +
     'personid=' + PersonID + '&' +
     'groupid=' + GroupID + '&' +
-    'lobids=' + '' + '&' +
+    'lobids=' + lobidsstring + '&' +
     'leaderids=' + leaderidsstring + '&' +
     'smeids=' + smeidsstring  + '&' +
     'ratingsources=' + ratingsourcesstring + '&' +
@@ -669,7 +706,7 @@ const CardWidgetProperties = (props) => {
     'managerids=' + manageridsstring + '&' +
     'percentages=' + percentidsstring + '&' +
     'skillids=' + skillidsstring
-    //console.log(url)
+    console.log(url)
 
     axios
     .get(url, {
@@ -848,8 +885,6 @@ onClick={e => (e.stopPropagation())}
         <div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
 }
 
-
-
 {/* {numberofusersdisplayed !== null &&
 <div style={{marginTop:'40px'}}>Number of Users Displayed: {numberofusersdisplayed}</div>
 } */}
@@ -858,10 +893,15 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={true} who="Leaders" onChanged={(event,checked) => filterChanged(checked,'leaders')} options={leaders} name="LeaderName"/>
 }
 
+{lobs !== null &&
+<DropDown multiple={true} who="LOBs" onChanged={(event,checked) => filterChanged(checked,'lobs')} options={lobs} name="LobName"/>
+}
+
+
+
 {smes !== null &&
 <DropDown multiple={true} who="SMEs" onChanged={(event,checked) => filterChanged(checked,'smes')} options={smes} name="SmeName"/>
 }
-
 
 {positions !== null &&
 <DropDown multiple={true} who="Positions" onChanged={(event,checked) => filterChanged(checked,'positions')} options={positions} name="JobName"/>
@@ -876,20 +916,9 @@ onClick={e => (e.stopPropagation())}
 <DropDown multiple={false} who="Fit Percent" onChanged={(event,checked) => filterChanged(checked,'percents')} options={percents} name="PercentName"/>
 }
 
-
-
-
-
-
 {/* {null !== null &&
 <DropDown multiple={true} who="Skills" onChanged={skillsChanged} options={skills} name="SkillName"/>
 } */}
-
-
-
-
-
-
 
       {/* {fitpercents !== null &&
         <Autocomplete
