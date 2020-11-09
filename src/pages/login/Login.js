@@ -7,6 +7,7 @@ import { Card, Logo, Form, Input, Button, Error } from "../../components/AuthFor
 import { useAuth } from "../../context/auth";
 
 function Login(props) {
+  const [referer, setReferer] = useState('/'); //var referer = '/cardcnasme';
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ function Login(props) {
   const [password, setPassword] = useState("cnasme");
   const { setAuthTokens } = useAuth();
   //const referer = props.location.state.referer || '/';
-  var referer = '/cardcnasme';
+
 
   function postLogin() {
     setIsLoading(true);
@@ -28,13 +29,16 @@ function Login(props) {
       console.log(password)
       switch (password) {
         case 'cnasme':
-          referer = '/card' + password
+          var where = '/card' + password
+          setReferer(where)
           break;
         case 'cna':
-          referer = '/card' + password
+          var where = '/card' + password
+          setReferer(where)
           break;
         case 'gmi':
-          referer = '/card' + password
+          var where = '/card' + password
+          setReferer(where)
           break;
         default:
           console.log('bad password')

@@ -54,6 +54,7 @@ var PartnerGMIsb = {
 
 function App(props) {
   const [authTokens, setAuthTokens] = useState();
+  const [activemenu, setActivemenu] = useState('/');
 
   const items = [
     {label: 'Logout', value: '/admin', icon: 'fa-anchor'}
@@ -69,15 +70,18 @@ function App(props) {
   switch (authTokens) {
     case 'cnasme':
       items.push({label: 'Risk Control SME', value: '/cardcnasme', icon: 'fa-anchor'})
+      //setActivemenu('/cardcnasme')
       break;
     case 'cna':
       items.push({label: 'Card Report - CNA', value: '/cardcna', icon: 'fa-anchor'})
       items.push({label: 'Benchmark - CNA', value: '/benchmarkcna', icon: 'fa-anchor'})
       items.push({label: 'Covid - CNA', value: '/covidcna', icon: 'fa-anchor'})
+      //setActivemenu('/cardcna')
       break;
     case 'gmi':
       items.push({label: 'Card Report - GMI', value: '/cardgmi', icon: 'fa-anchor'})
       items.push({label: 'Benchmark - GMI', value: '/benchmarkgmi', icon: 'fa-anchor'})
+      //setActivemenu('/cardgmi')
       break;
     default:
       break;
@@ -121,6 +125,7 @@ function App(props) {
           <SideMenu
             items={items}
             onMenuItemClick={onMenuItemClick}
+            activeItem={'/card'+authTokens}
           />
 
 </Vertical>
