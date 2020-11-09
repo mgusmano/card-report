@@ -74,13 +74,13 @@ function App(props) {
       break;
     case 'cna':
       items.push({label: 'Card Report - CNA', value: '/cardcna', icon: 'fa-id-card'})
-      items.push({label: 'Benchmark - CNA', value: '/benchmarkcna', icon: 'fa-battery-three-quarters'})
-      items.push({label: 'Covid - CNA', value: '/covidcna', icon: 'fa-eye'})
+      items.push({label: 'Benchmark - CNA', value: '/benchmarkcna', icon: 'fa-balance-scale'})
+      items.push({label: 'Covid - CNA', value: '/covidcna', icon: 'fa-clipboard'})
       //setActivemenu('/cardcna')
       break;
     case 'gmi':
       items.push({label: 'Card Report - GMI', value: '/cardgmi', icon: 'fa-id-card'})
-      items.push({label: 'Benchmark - GMI', value: '/benchmarkgmi', icon: 'fa-battery-three-quarters'})
+      items.push({label: 'Benchmark - GMI', value: '/benchmarkgmi', icon: 'fa-balance-scale'})
       //setActivemenu('/cardgmi')
       break;
     default:
