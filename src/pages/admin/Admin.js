@@ -10,9 +10,8 @@ function Admin(props) {
   }
 
   return (
-    <div>
-      <div>Admin Page</div>
-      <Button onClick={logOut}>Log out</Button>
+    <div style={{padding:'20px'}}>
+      <Button onClick={logOut}>Click To Log Out</Button>
     </div>
   );
 }
