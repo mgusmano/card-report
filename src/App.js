@@ -76,9 +76,8 @@ function App(props) {
       items.push({label: 'Covid - CNA', value: '/covidcna', icon: 'fa-anchor'})
       break;
     case 'gmi':
-      items.push({label: 'Card Report - GMI', value: '/cardcna', icon: 'fa-anchor'})
+      items.push({label: 'Card Report - GMI', value: '/cardgmi', icon: 'fa-anchor'})
       items.push({label: 'Benchmark - GMI', value: '/benchmarkgmi', icon: 'fa-anchor'})
-      items.push({label: 'Card GMI', value: '/cardgmi', icon: 'fa-anchor'})
       break;
     default:
       break;
